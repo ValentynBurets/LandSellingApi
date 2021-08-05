@@ -6,31 +6,49 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LandSellingWebsite.Models;
+using AutoMapper;
+using LandSellingWebsite.ViewModels;
 
 namespace LandSellingWebsite.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class RolesController : ControllerBase
     {
         private readonly LandSellingDBContext _context;
+        private readonly IMapper _mapper;
 
-        public RolesController(LandSellingDBContext context)
+        public RolesController(LandSellingDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Roles
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> GetRole()
         {
-            return await _context.Roles.ToListAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var roles = await _context.Roles.ToListAsync();
+            var rolesViewModels = _mapper.Map<IEnumerable<Role>, IEnumerable<RoleViewModel>>(roles);
+
+            return Ok(rolesViewModels);
         }
 
         // GET: api/Roles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Role>> GetRole(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var role = await _context.Roles.FindAsync(id);
 
             if (role == null)
@@ -38,7 +56,9 @@ namespace LandSellingWebsite.Controllers
                 return NotFound();
             }
 
-            return role;
+            var roleViewModel = _mapper.Map<Role, RoleViewModel>(role);
+
+            return Ok(roleViewModel);
         }
 
         // PUT: api/Roles/5
@@ -77,12 +97,19 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Role>> PostRole(Role role)
+        public async Task<ActionResult<Role>> PostRole(RoleViewModel role)
         {
-            _context.Roles.Add(role);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return CreatedAtAction("GetRole", new { id = role.Id }, role);
+            Role createdRole = _mapper.Map<RoleViewModel, Role>(role);
+            _context.Roles.Add(createdRole);
+
+            var createdRoleViewModel = _mapper.Map<Role, RoleViewModel>(createdRole);
+
+            return Ok(createdRoleViewModel);
         }
 
         // DELETE: api/Roles/5

@@ -24,6 +24,9 @@ namespace LandSellingWebsite.Options
 
             CreateMap<AppUser, UserViewModel>().MaxDepth(2);
             CreateMap<UserViewModel, AppUser>().MaxDepth(2);
+
+            CreateMap<Role, RoleViewModel>().MaxDepth(2);
+            CreateMap<RoleViewModel, Role>().MaxDepth(2);
         }
     }
 }
