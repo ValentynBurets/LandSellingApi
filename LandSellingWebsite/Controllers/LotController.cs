@@ -108,17 +108,21 @@ namespace LandSellingWebsite.Controllers
             return Ok(createdLotViewModel);
         }
 
-        //// DELETE: api/Cars/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteLot(int id)
-        //{
-        //    if(!_service.Exist(x=>x.Id == id))
-        //    {
-        //        return NotFound();
-        //    }
-        //    await _service.Delete(id);
-        //    return NoContent();
-        //}
+        // DELETE: api/Cars/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Lot>> DeleteLot(int id)
+        {
+            var lot = await _context.Lots.FindAsync(id);
+            if (!LotExists(id) || lot == null)
+            {
+                return NotFound();
+            }
+
+            _context.Lots.Remove(lot);
+
+            return NoContent();
+        }
+
         private bool LotExists(int id)
         {
             return _context.Lots.Any(e => e.Id == id);
