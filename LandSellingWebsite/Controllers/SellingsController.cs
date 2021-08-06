@@ -6,39 +6,120 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LandSellingWebsite.Models;
+using LandSellingWebsite.ViewModels;
+using AutoMapper;
+using LandSellingWebsite.ViewModels.User;
+using LandSellingWebsite.ViewModels.Selling;
 
 namespace LandSellingWebsite.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class SellingsController : ControllerBase
     {
         private readonly LandSellingDBContext _context;
+        private readonly IMapper _mapper;
 
-        public SellingsController(LandSellingDBContext context)
+        public SellingsController(LandSellingDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Sellings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Selling>>> GetSelling()
+        public async Task<IEnumerable<SellingViewModel>> GetSelling()
         {
-            return await _context.Sellings.ToListAsync();
+            ICollection<Selling> sellings = await _context.Sellings.ToListAsync();
+            if (sellings == null)
+            {
+                return (IEnumerable<SellingViewModel>)NotFound();
+            }
+
+            ICollection<SellingViewModel> sellingsViewModels = new List<SellingViewModel>();
+
+            foreach (var selling in sellings)
+            {
+                SellingViewModel sellingViewModel = _mapper.Map<Selling, SellingViewModel>(selling);
+
+                SellingStatusType status = await _context.SellingStatusTypes.FindAsync(selling.SellingStatusId);
+                if (status != null)
+                {
+                    sellingViewModel.SellingStatus = _mapper.Map<SellingStatusType, SellingStatusTypeViewModel>(status).Name;
+                }
+
+                Bid bid = await _context.Bids.FindAsync(selling.BidWinnerId);
+                if (bid != null)
+                {
+                    sellingViewModel.BidWinner = _mapper.Map<Bid, BidViewModel>(bid);
+                }
+
+                Lot lot = await _context.Lots.FindAsync(selling.LotId);
+                if (lot != null)
+                {
+                    sellingViewModel.Lot = _mapper.Map<Lot, LotViewModel>(lot);
+
+                    AppUser customer = await _context.AppUsers.FindAsync(lot.OwnerId);
+                    sellingViewModel.Customer = _mapper.Map<AppUser, UserViewModel>(customer);
+                }
+
+                AppUser manager = await _context.AppUsers.FindAsync(selling.ManagerId);
+                if (manager != null)
+                {
+                    sellingViewModel.Manager = _mapper.Map<AppUser, UserViewModel>(manager);
+                }
+                sellingsViewModels.Add(sellingViewModel);
+            }
+
+            return sellingsViewModels;
         }
 
         // GET: api/Sellings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Selling>> GetSelling(int id)
+        public async Task<ActionResult<SellingViewModel>> GetSelling(int id)
         {
-            var selling = await _context.Sellings.FindAsync(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var selling = await _context.Sellings.FindAsync(id);
             if (selling == null)
             {
                 return NotFound();
             }
 
-            return selling;
+            SellingViewModel sellingViewModel = _mapper.Map<Selling, SellingViewModel>(selling);
+
+            SellingStatusType status = await _context.SellingStatusTypes.FindAsync(selling.SellingStatusId);
+            if (status != null)
+            {
+                sellingViewModel.SellingStatus = _mapper.Map<SellingStatusType, SellingStatusTypeViewModel>(status).Name;
+            }
+
+            Bid bid = await _context.Bids.FindAsync(selling.BidWinnerId);
+            if (bid != null)
+            {
+                sellingViewModel.BidWinner = _mapper.Map<Bid, BidViewModel>(bid);
+            }
+
+            Lot lot = await _context.Lots.FindAsync(selling.LotId);
+            if (lot != null)
+            {
+                sellingViewModel.Lot = _mapper.Map<Lot, LotViewModel>(lot);
+
+                AppUser customer = await _context.AppUsers.FindAsync(lot.OwnerId);
+                sellingViewModel.Customer = _mapper.Map<AppUser, UserViewModel>(customer);
+            }
+            
+            AppUser manager = await _context.AppUsers.FindAsync(selling.ManagerId);
+            if (manager != null)
+            {
+                sellingViewModel.Manager = _mapper.Map<AppUser, UserViewModel>(manager);
+            }
+
+            return sellingViewModel;
         }
 
         // PUT: api/Sellings/5
@@ -77,8 +158,10 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Selling>> PostSelling(Selling selling)
+        public async Task<ActionResult<Selling>> PostSelling(PostSellingViewModel sellingViewModel)
         {
+            var selling = _mapper.Map<PostSellingViewModel, Selling>(sellingViewModel);
+
             _context.Sellings.Add(selling);
             await _context.SaveChangesAsync();
 

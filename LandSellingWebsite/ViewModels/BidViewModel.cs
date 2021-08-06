@@ -13,7 +13,7 @@ namespace LandSellingWebsite.ViewModels
         public int BidderId { get; set; }
         public int LotId { get; set; }
 
-        public static explicit operator BidViewModel(Bid v)
+        public static implicit operator BidViewModel(Bid v)
         {
             throw new NotImplementedException();
         }

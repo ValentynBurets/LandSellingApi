@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LandSellingWebsite.Models;
 using LandSellingWebsite.ViewModels;
+using LandSellingWebsite.ViewModels.Selling;
 using LandSellingWebsite.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,16 @@ namespace LandSellingWebsite.Options
             CreateMap<RentStatusType, RentStatusTypeViewModel>().MaxDepth(2);
             CreateMap<RentStatusTypeViewModel, RentStatusType>().MaxDepth(2);
 
+            CreateMap<SellingStatusType, SellingStatusTypeViewModel>().MaxDepth(2);
+            CreateMap<SellingStatusTypeViewModel, SellingStatusType>().MaxDepth(2);
+
+            CreateMap<Selling, SellingViewModel>().MaxDepth(2);
+            CreateMap<SellingViewModel, Selling>().MaxDepth(2);
+
+            CreateMap<Selling, PostSellingViewModel>().MaxDepth(2);
+            CreateMap<PostSellingViewModel, Selling>().MaxDepth(2);
+
+            
         }
     }
 }

@@ -13,3 +13,4 @@ namespace LandSellingWebsite.Models
         public virtual Lot Lot { get; set; }
     }
 }
+

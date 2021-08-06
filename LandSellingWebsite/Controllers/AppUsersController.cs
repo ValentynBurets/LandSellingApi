@@ -26,18 +26,23 @@ namespace LandSellingWebsite.Controllers
 
         // GET: api/AppUsers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetAppUsers()
+        public async Task<ActionResult<IEnumerable<UserViewModel>>> GetAppUsers()
         {
 
             var users = await _context.AppUsers.ToListAsync();
             var usersViewModel = _mapper.Map<IEnumerable<AppUser>, IEnumerable<UserViewModel>>(users);
+
+            foreach(var user in usersViewModel)
+            {
+                user.RoleName = (await _context.Roles.FindAsync(user.RoleId)).Name;
+            }
 
             return Ok(usersViewModel);
         }
 
         // GET: api/AppUsers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetAppUser(int id)
+        public async Task<ActionResult<UserViewModel>> GetAppUser(int id)
         {
             var appUser = await _context.AppUsers.FindAsync(id);
 
@@ -46,7 +51,9 @@ namespace LandSellingWebsite.Controllers
                 return NotFound();
             }
 
-            return appUser;
+            var appUserViewModel = _mapper.Map<AppUser, UserViewModel>(appUser);
+
+            return appUserViewModel;
         }
 
         // PUT: api/AppUsers/5
@@ -83,12 +90,14 @@ namespace LandSellingWebsite.Controllers
         // POST: api/AppUsers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AppUser>> PostAppUser(AppUser appUser)
+        public async Task<ActionResult<PostUserViewModel>> PostAppUser(PostUserViewModel appUser)
         {
-            _context.AppUsers.Add(appUser);
-            await _context.SaveChangesAsync();
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"EXECUTE AddPerson {appUser.Name}, {appUser.SurName}, {appUser.PhoneNumber}, {appUser.Email}, {appUser.Password},  {appUser.RoleId}");
 
-            return CreatedAtAction("GetAppUser", new { id = appUser.Id }, appUser);
+
+            return appUser;
+
         }
 
         // DELETE: api/AppUsers/5
