@@ -27,6 +27,13 @@ namespace LandSellingWebsite.Options
 
             CreateMap<Role, RoleViewModel>().MaxDepth(2);
             CreateMap<RoleViewModel, Role>().MaxDepth(2);
+
+            CreateMap<LotStatusType, LotStatusTypeViewModel>().MaxDepth(2);
+            CreateMap<LotStatusTypeViewModel, LotStatusType>().MaxDepth(2);
+
+            CreateMap<RentStatusType, RentStatusTypeViewModel>().MaxDepth(2);
+            CreateMap<RentStatusTypeViewModel, RentStatusType>().MaxDepth(2);
+
         }
     }
 }
