@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LandSellingWebsite.Models;
 using LandSellingWebsite.ViewModels;
+using LandSellingWebsite.ViewModels.Address;
 using LandSellingWebsite.ViewModels.Selling;
 using LandSellingWebsite.ViewModels.User;
 using System;
@@ -44,6 +45,8 @@ namespace LandSellingWebsite.Options
             CreateMap<Selling, PostSellingViewModel>().MaxDepth(2);
             CreateMap<PostSellingViewModel, Selling>().MaxDepth(2);
 
+            CreateMap<Address, PostAddressViewModel>().MaxDepth(2);
+            CreateMap<PostAddressViewModel, Address>().MaxDepth(2);
             
         }
     }

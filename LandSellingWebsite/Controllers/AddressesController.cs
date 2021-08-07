@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LandSellingWebsite.Models;
 using AutoMapper;
 using LandSellingWebsite.ViewModels;
+using LandSellingWebsite.ViewModels.Address;
 
 namespace LandSellingWebsite.Controllers
 {
@@ -83,8 +84,9 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Address>> PostAddress(Address address)
+        public async Task<ActionResult<Address>> PostAddress(PostAddressViewModel postAddressViewModel)
         {
+            var address = _mapper.Map<PostAddressViewModel, Address>(postAddressViewModel);
             _context.Addresses.Add(address);
             await _context.SaveChangesAsync();
 
