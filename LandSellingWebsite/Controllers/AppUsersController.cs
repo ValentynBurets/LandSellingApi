@@ -30,14 +30,14 @@ namespace LandSellingWebsite.Controllers
         {
 
             var users = await _context.AppUsers.ToListAsync();
-            var usersViewModel = _mapper.Map<IEnumerable<AppUser>, IEnumerable<UserViewModel>>(users);
+            var usersViewModels = _mapper.Map<IEnumerable<AppUser>, IEnumerable<UserViewModel>>(users);
 
-            foreach(var user in usersViewModel)
+            foreach(var user in usersViewModels)
             {
                 user.RoleName = (await _context.Roles.FindAsync(user.RoleId)).Name;
             }
 
-            return Ok(usersViewModel);
+            return Ok(usersViewModels);
         }
 
         // GET: api/AppUsers/5
@@ -59,14 +59,13 @@ namespace LandSellingWebsite.Controllers
         // PUT: api/AppUsers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppUser(int id, AppUser appUser)
+        public async Task<IActionResult> PutAppUser(int id, PostUserViewModel appUser)
         {
-            if (id != appUser.Id)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(appUser).State = EntityState.Modified;
+            AppUser user = _mapper.Map<PostUserViewModel, AppUser>(appUser);
+            user.Id = id;
+            
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -95,9 +94,7 @@ namespace LandSellingWebsite.Controllers
             await _context.Database.ExecuteSqlInterpolatedAsync(
                 $"EXECUTE AddPerson {appUser.Name}, {appUser.SurName}, {appUser.PhoneNumber}, {appUser.Email}, {appUser.Password},  {appUser.RoleId}");
 
-
             return appUser;
-
         }
 
         // DELETE: api/AppUsers/5

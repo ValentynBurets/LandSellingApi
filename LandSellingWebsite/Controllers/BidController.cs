@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LandSellingWebsite.ViewModels;
 using AutoMapper;
 using LandSellingWebsite.Models;
+using LandSellingWebsite.ViewModels.Bid;
 
 namespace LandSellingWebsite.Controllers
 {
@@ -83,8 +84,10 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Bid>> PostBid(Bid bid)
+        public async Task<ActionResult<Bid>> PostBid(PostBidViewModel postBid)
         {
+            Bid bid = _mapper.Map<PostBidViewModel, Bid>(postBid);
+
             _context.Bids.Add(bid);
             await _context.SaveChangesAsync();
 

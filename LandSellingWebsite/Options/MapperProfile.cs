@@ -2,6 +2,7 @@
 using LandSellingWebsite.Models;
 using LandSellingWebsite.ViewModels;
 using LandSellingWebsite.ViewModels.Address;
+using LandSellingWebsite.ViewModels.Bid;
 using LandSellingWebsite.ViewModels.Selling;
 using LandSellingWebsite.ViewModels.User;
 using System;
@@ -23,6 +24,9 @@ namespace LandSellingWebsite.Options
 
             CreateMap<Bid, BidViewModel>().MaxDepth(2);
             CreateMap<BidViewModel, Bid>().MaxDepth(2);
+
+            CreateMap<Bid, PostBidViewModel>().MaxDepth(2);
+            CreateMap<PostBidViewModel, Bid>().MaxDepth(2);
 
             CreateMap<AppUser, UserViewModel>().MaxDepth(2);
             CreateMap<UserViewModel, AppUser>().MaxDepth(2);
