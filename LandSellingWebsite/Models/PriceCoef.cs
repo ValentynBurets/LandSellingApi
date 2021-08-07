@@ -9,11 +9,9 @@ namespace LandSellingWebsite.Models
     {
         public int Id { get; set; }
         public int? LotId { get; set; }
-        public int? DurationTypeId { get; set; }
-        public int DurationCount { get; set; }
+        public int DaysCount { get; set; }
         public decimal Value { get; set; }
 
-        public virtual DurationType DurationType { get; set; }
         public virtual Lot Lot { get; set; }
     }
 }

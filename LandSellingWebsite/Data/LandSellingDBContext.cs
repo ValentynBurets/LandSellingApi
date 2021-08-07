@@ -20,7 +20,6 @@ namespace LandSellingWebsite.Models
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AppUser> AppUsers { get; set; }
         public virtual DbSet<Bid> Bids { get; set; }
-        public virtual DbSet<DurationType> DurationTypes { get; set; }
         public virtual DbSet<House> Houses { get; set; }
         public virtual DbSet<Land> Lands { get; set; }
         public virtual DbSet<Lot> Lots { get; set; }
@@ -111,15 +110,6 @@ namespace LandSellingWebsite.Models
                     .HasConstraintName("FK__Bid__LotId__3C69FB99");
             });
 
-            modelBuilder.Entity<DurationType>(entity =>
-            {
-                entity.ToTable("DurationType");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100);
-            });
-
             modelBuilder.Entity<House>(entity =>
             {
                 entity.ToTable("House");
@@ -198,16 +188,9 @@ namespace LandSellingWebsite.Models
             {
                 entity.ToTable("PriceCoef");
 
-                entity.HasIndex(e => e.DurationTypeId, "IX_PriceCoef_DurationTypeId");
-
                 entity.HasIndex(e => e.LotId, "IX_PriceCoef_LotId");
 
                 entity.Property(e => e.Value).HasColumnType("smallmoney");
-
-                entity.HasOne(d => d.DurationType)
-                    .WithMany(p => p.PriceCoefs)
-                    .HasForeignKey(d => d.DurationTypeId)
-                    .HasConstraintName("FK__PriceCoef__Durat__7D439ABD");
 
                 entity.HasOne(d => d.Lot)
                     .WithMany(p => p.PriceCoefs)

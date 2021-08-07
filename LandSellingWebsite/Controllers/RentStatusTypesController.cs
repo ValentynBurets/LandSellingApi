@@ -106,6 +106,7 @@ namespace LandSellingWebsite.Controllers
 
             RentStatusType createdRentStatusType = _mapper.Map<RentStatusTypeViewModel, RentStatusType>(rentStatusType);
             _context.RentStatusTypes.Add(createdRentStatusType);
+            await _context.SaveChangesAsync();
 
             var createdRentStatusTypeViewModel = _mapper.Map<RentStatusType, RentStatusTypeViewModel>(createdRentStatusType);
 

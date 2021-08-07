@@ -106,6 +106,7 @@ namespace LandSellingWebsite.Controllers
 
             Role createdRole = _mapper.Map<RoleViewModel, Role>(role);
             _context.Roles.Add(createdRole);
+            await _context.SaveChangesAsync();
 
             var createdRoleViewModel = _mapper.Map<Role, RoleViewModel>(createdRole);
 

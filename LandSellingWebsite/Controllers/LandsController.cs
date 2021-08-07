@@ -80,66 +80,12 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<VLand>> PostLand(PostLandViewModel land)
+        public async Task<ActionResult<PostLandViewModel>> PostLand(PostLandViewModel land)
         {
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+               $"EXECUTE AddLand {land.Country}, {land.Region}, {land.City}, {land.Street}, {land.Building},  {land.Latitude},  {land.Longitude},  {land.OwnerId},  {land.Square},  {land.Description},  {land.ImageUrl}");
 
-
-            //_context.Lands
-            //    .FromSql($"AddLand {land.Id}")
-            //_context.AddLand(land);
-            //string params = $"'{land.Country}' '{land.Region}' '{land.City}' '{land.Street}' '{land.Building}' '{land.Latitude}' '{land.Longitude}' '{land.OwnerId}' '{land.Square}' '{land.Description}'";
-            //SqlParameter pCountry = new SqlParameter("@Country", land.Country);
-            //SqlParameter pRegion = new SqlParameter("@Region", land.Region);
-            //SqlParameter pCity = new SqlParameter("@City", land.City);
-            //SqlParameter pStreet = new SqlParameter("@Street", land.Street);
-            //SqlParameter pBuilding = new SqlParameter("@Building", land.Building);
-            //SqlParameter pLatitude = new SqlParameter("@Latitude", land.Latitude);
-            //SqlParameter pLongitude = new SqlParameter("@Longitude", land.Longitude);
-            //SqlParameter pOwnerId = new SqlParameter("@OwnerId", land.OwnerId);
-            //SqlParameter pSquare = new SqlParameter("@Square", land.Square);
-            //SqlParameter pDescription = new SqlParameter("@Description", land.Description);
-            //SqlParameter pImageUrl = new SqlParameter("@ImageUrl", land.ImageUrl);
-
-            _context.Lands.FromSqlRaw("EXECUTE AddLand " +
-                                            $"{land.Country} " +
-                                            $"{land.Region} " +
-                                            $"{land.City} " +
-                                            $"{land.Street} " +
-                                            $"{land.Building} " +
-                                            $"{land.Latitude} " +
-                                            $"{land.Longitude} " +
-                                            $"{land.OwnerId} " +
-                                            $"{land.Square} " +
-                                            $"{land.Description} ",
-                                            $"{land.ImageUrl} ");
-
-            return CreatedAtAction("GetLand", new { ImageUrl = land.ImageUrl }, land);
-
-            //_context.Lands.FromSqlRaw("EXECUTE AddLand " +
-            //                               "@Country " +
-            //                               "@Region " +
-            //                               "@City " +
-            //                               "@Street " +
-            //                               "@Building " +
-            //                               "@Latitude " +
-            //                               "@Longitude " +
-            //                               "@OwnerId " +
-            //                               "@Square " +
-            //                               "@Description",
-            //                               pCountry,
-            //                               pRegion,
-            //                               pCity,
-            //                               pStreet,
-            //                               pBuilding,
-            //                               pLatitude,
-            //                               pLongitude,
-            //                               pOwnerId,
-            //                               pSquare,
-            //                               pDescription,
-            //                               pImageUrl);
-
-            await _context.SaveChangesAsync();
-            //return CreatedAtAction("GetLand", new { id = land.Id }, land);
+            return land;
         }
 
         // DELETE: api/Lands/5

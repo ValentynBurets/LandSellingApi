@@ -52,8 +52,11 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBid(int id, Bid bid)
+        public async Task<IActionResult> PutBid(int id, PostBidViewModel putBid)
         {
+            Bid bid = _mapper.Map<PostBidViewModel, Bid>(putBid);
+            bid.Id = id;
+
             if (id != bid.Id)
             {
                 return BadRequest();
@@ -91,7 +94,7 @@ namespace LandSellingWebsite.Controllers
             _context.Bids.Add(bid);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBidViewModel", new { id = bid.Id }, bid);
+            return CreatedAtAction("GetPostBidViewModel", new { id = bid.Id }, bid);
         }
 
         // DELETE: api/Bid/5

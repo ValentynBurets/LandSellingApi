@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LandSellingWebsite.Models;
+using LandSellingWebsite.ViewModels.House;
 
 namespace LandSellingWebsite.Controllers
 {
@@ -77,12 +78,12 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<House>> PostHouse(House house)
+        public async Task<ActionResult<PostHouseViewModel>> PostHouse(PostHouseViewModel house)
         {
-            _context.Houses.Add(house);
-            await _context.SaveChangesAsync();
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+            $"EXECUTE AddLand {house.Country}, {house.Region}, {house.City}, {house.Street}, {house.Building},  {house.Latitude},  {house.Longitude},  {house.OwnerId},  {house.Square},  {house.Description},  {house.ImageUrl},  {house.Rooms},  {house.Floor},  {house.Person},  {house.Floor},  {house.Parking},  {house.Furniture}");
 
-            return CreatedAtAction("GetHouse", new { id = house.Id }, house);
+            return house;
         }
 
         // DELETE: api/Houses/5

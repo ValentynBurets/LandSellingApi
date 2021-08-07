@@ -102,7 +102,8 @@ namespace LandSellingWebsite.Controllers
             }
             Lot createdLot = _mapper.Map<LotViewModel, Lot>(lot);
             _context.Lots.Add(createdLot);
-            
+            await _context.SaveChangesAsync();
+
             var createdLotViewModel = _mapper.Map<Lot, LotViewModel>(createdLot);
 
             return Ok(createdLotViewModel);
