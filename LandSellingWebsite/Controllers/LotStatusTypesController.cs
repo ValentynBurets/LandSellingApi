@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LandSellingWebsite.Models;
+using LandSellingWebsite.ViewModels;
+using AutoMapper;
+using LandSellingWebsite.ViewModels.LotStatusType;
 
 namespace LandSellingWebsite.Controllers
 {
@@ -14,22 +17,33 @@ namespace LandSellingWebsite.Controllers
     public class LotStatusTypesController : ControllerBase
     {
         private readonly LandSellingDBContext _context;
+        private readonly IMapper _mapper;
 
-        public LotStatusTypesController(LandSellingDBContext context)
+        public LotStatusTypesController(LandSellingDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/LotStatusTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LotStatusType>>> GetLotStatusType()
+        public async Task<ActionResult<IEnumerable<LotStatusTypeViewModel>>> GetLotStatusType()
         {
-            return await _context.LotStatusTypes.ToListAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var lotStatusTypes = await _context.LotStatusTypes.ToListAsync();
+            var lotStatusTypeViewModels = _mapper.Map<IEnumerable<LotStatusType>, IEnumerable<LotStatusTypeViewModel>>(lotStatusTypes);
+
+            return Ok(lotStatusTypeViewModels);
+
         }
 
         // GET: api/LotStatusTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<LotStatusType>> GetLotStatusType(int id)
+        public async Task<ActionResult<LotStatusTypeViewModel>> GetLotStatusType(int id)
         {
             var lotStatusType = await _context.LotStatusTypes.FindAsync(id);
 
@@ -38,19 +52,19 @@ namespace LandSellingWebsite.Controllers
                 return NotFound();
             }
 
-            return lotStatusType;
+            var lotStatusTypeViewModel = _mapper.Map<LotStatusType, LotStatusTypeViewModel>(lotStatusType);
+
+            return lotStatusTypeViewModel;
         }
 
         // PUT: api/LotStatusTypes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLotStatusType(int id, LotStatusType lotStatusType)
+        public async Task<IActionResult> PutLotStatusType(int id, PostLotStatusTypeViewModel lotStatusTypeViewModel)
         {
-            if (id != lotStatusType.Id)
-            {
-                return BadRequest();
-            }
+            var lotStatusType = _mapper.Map<PostLotStatusTypeViewModel, LotStatusType>(lotStatusTypeViewModel);
+            lotStatusType.Id = id;
 
             _context.Entry(lotStatusType).State = EntityState.Modified;
 
@@ -77,12 +91,15 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<LotStatusType>> PostLotStatusType(LotStatusType lotStatusType)
+        public async Task<ActionResult<PostLotStatusTypeViewModel>> PostLotStatusType(PostLotStatusTypeViewModel postLotStatusType)
         {
+            LotStatusType lotStatusType = _mapper.Map<PostLotStatusTypeViewModel, LotStatusType>(postLotStatusType);
+
             _context.LotStatusTypes.Add(lotStatusType);
+            
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLotStatusType", new { id = lotStatusType.Id }, lotStatusType);
+            return postLotStatusType;
         }
 
         // DELETE: api/LotStatusTypes/5

@@ -63,8 +63,10 @@ namespace LandSellingWebsite.Controllers
         // PUT: api/Cars/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutLot(int id, Lot lot)
+        public async Task<ActionResult> PutLot(int id, LotViewModel lotViewModel)
         {
+            Lot lot = _mapper.Map<LotViewModel, Lot>(lotViewModel);
+
             if(id != lot.Id)
             {
                 return BadRequest();

@@ -3,6 +3,7 @@ using LandSellingWebsite.Models;
 using LandSellingWebsite.ViewModels;
 using LandSellingWebsite.ViewModels.Address;
 using LandSellingWebsite.ViewModels.Bid;
+using LandSellingWebsite.ViewModels.LotStatusType;
 using LandSellingWebsite.ViewModels.Selling;
 using LandSellingWebsite.ViewModels.User;
 using System;
@@ -36,6 +37,9 @@ namespace LandSellingWebsite.Options
 
             CreateMap<LotStatusType, LotStatusTypeViewModel>().MaxDepth(2);
             CreateMap<LotStatusTypeViewModel, LotStatusType>().MaxDepth(2);
+
+            CreateMap<LotStatusType, PostLotStatusTypeViewModel>().MaxDepth(2);
+            CreateMap<PostLotStatusTypeViewModel, LotStatusType>().MaxDepth(2);
 
             CreateMap<RentStatusType, RentStatusTypeViewModel>().MaxDepth(2);
             CreateMap<RentStatusTypeViewModel, RentStatusType>().MaxDepth(2);
