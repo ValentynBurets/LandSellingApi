@@ -91,7 +91,7 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<PostLotStatusTypeViewModel>> PostLotStatusType(PostLotStatusTypeViewModel postLotStatusType)
+        public async Task<ActionResult<LotStatusTypeViewModel>> PostLotStatusType(PostLotStatusTypeViewModel postLotStatusType)
         {
             LotStatusType lotStatusType = _mapper.Map<PostLotStatusTypeViewModel, LotStatusType>(postLotStatusType);
 
@@ -99,7 +99,9 @@ namespace LandSellingWebsite.Controllers
             
             await _context.SaveChangesAsync();
 
-            return postLotStatusType;
+            var lotStatusTypeViewModel = _mapper.Map<LotStatusType, LotStatusTypeViewModel>(lotStatusType);
+
+            return Ok(lotStatusTypeViewModel);
         }
 
         // DELETE: api/LotStatusTypes/5

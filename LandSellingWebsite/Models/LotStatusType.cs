@@ -9,8 +9,5 @@ namespace LandSellingWebsite.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? LotId { get; set; }
-
-        public virtual Lot Lot { get; set; }
     }
 }

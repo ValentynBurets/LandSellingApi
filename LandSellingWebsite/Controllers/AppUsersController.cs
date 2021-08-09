@@ -30,12 +30,14 @@ namespace LandSellingWebsite.Controllers
         public async Task<ActionResult<IEnumerable<UserViewModel>>> GetAppUsers()
         {
 
-            var users = await _context.AppUsers.ToListAsync();
-            var usersViewModels = _mapper.Map<IEnumerable<AppUser>, IEnumerable<UserViewModel>>(users);
+            var users = await _context.AppUsers.Include(Item => Item.Role).ToListAsync();
+            var usersViewModels = new List<UserViewModel>();
 
-            foreach(var user in usersViewModels)
+            foreach (var user in users)
             {
-                user.RoleName = (await _context.Roles.FindAsync(user.RoleId)).Name;
+                var userViewModel = _mapper.Map<AppUser, UserViewModel>(user);
+                userViewModel.RoleName = user.Role.Name;
+                usersViewModels.Add(userViewModel);
             }
 
             return Ok(usersViewModels);

@@ -52,15 +52,15 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBid(int id, PostBidViewModel putBid)
+        public async Task<IActionResult> PutBid(int id, BidViewModel putBid)
         {
-            Bid bid = _mapper.Map<PostBidViewModel, Bid>(putBid);
-            bid.Id = id;
-
-            if (id != bid.Id)
+            if (id != putBid.Id)
             {
                 return BadRequest();
             }
+
+            Bid bid = _mapper.Map<BidViewModel, Bid>(putBid);
+            bid.Id = id;
 
             _context.Entry(bid).State = EntityState.Modified;
 
@@ -86,16 +86,16 @@ namespace LandSellingWebsite.Controllers
         // POST: api/Bid
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Bid>> PostBid(PostBidViewModel postBid)
-        {
-            Bid bid = _mapper.Map<PostBidViewModel, Bid>(postBid);
+        //[HttpPost]
+        //public async Task<ActionResult<Bid>> PostBid(PostBidViewModel postBid)
+        //{
+        //    Bid bid = _mapper.Map<PostBidViewModel, Bid>(postBid);
 
-            _context.Bids.Add(bid);
-            await _context.SaveChangesAsync();
+        //    _context.Bids.Add(bid);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPostBidViewModel", new { id = bid.Id }, bid);
-        }
+        //    return CreatedAtAction("GetPostBidViewModel", new { bid.Value, bid.LotId, bid.BidderId }, bid);
+        //}
 
         // DELETE: api/Bid/5
         [HttpDelete("{id}")]

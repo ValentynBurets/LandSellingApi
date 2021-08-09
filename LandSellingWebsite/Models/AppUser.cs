@@ -14,7 +14,7 @@ namespace LandSellingWebsite.Models
             Lots = new HashSet<Lot>();
             RentCustomers = new HashSet<Rent>();
             RentManagers = new HashSet<Rent>();
-            Roles = new HashSet<Role>();
+            //Roles = new HashSet<Role>();
             Sellings = new HashSet<Selling>();
         }
 
@@ -40,7 +40,7 @@ namespace LandSellingWebsite.Models
         public virtual ICollection<Lot> Lots { get; set; }
         public virtual ICollection<Rent> RentCustomers { get; set; }
         public virtual ICollection<Rent> RentManagers { get; set; }
-        public virtual ICollection<Role> Roles { get; set; }
+        public virtual Role Role { get; set; }
         public virtual ICollection<Selling> Sellings { get; set; }
     }
 }

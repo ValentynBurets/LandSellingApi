@@ -1,4 +1,5 @@
 ﻿using LandSellingWebsite.Models;
+using LandSellingWebsite.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace LandSellingWebsite.ViewModels
         public int BidderId { get; set; }
         public int LotId { get; set; }
 
-        public virtual AppUser Bidder { get; set; }
-        public virtual Lot Lot { get; set; }
+        //public virtual UserViewModel Bidder { get; set; }
+        //public virtual LotViewModel Lot { get; set; }
     }
 }

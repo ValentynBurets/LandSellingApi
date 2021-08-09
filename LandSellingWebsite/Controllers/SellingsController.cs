@@ -31,7 +31,15 @@ namespace LandSellingWebsite.Controllers
         [HttpGet]
         public async Task<IEnumerable<SellingViewModel>> GetSelling()
         {
-            ICollection<Selling> sellings = await _context.Sellings.ToListAsync();
+            ICollection<Selling> sellings = await _context.Sellings
+                                                          .Include(Item => Item.Lot)
+                                                              .ThenInclude(Lot => Lot.Owner)
+                                                          .Include(Item => Item.Manager)
+                                                              .ThenInclude(Manager => Manager.Role)
+                                                          .Include(Item => Item.BidWinner)
+                                                              .ThenInclude(BidWinner => BidWinner.Bidder)
+                                                          .Include(Item => Item.SellingStatus)
+                                                          .ToListAsync();
             if (sellings == null)
             {
                 return (IEnumerable<SellingViewModel>)NotFound();
@@ -41,34 +49,44 @@ namespace LandSellingWebsite.Controllers
 
             foreach (var selling in sellings)
             {
+                //selling.Lot
+
                 SellingViewModel sellingViewModel = _mapper.Map<Selling, SellingViewModel>(selling);
 
-                SellingStatusType status = await _context.SellingStatusTypes.FindAsync(selling.SellingStatusId);
-                if (status != null)
-                {
-                    sellingViewModel.SellingStatus = _mapper.Map<SellingStatusType, SellingStatusTypeViewModel>(status).Name;
-                }
+                sellingViewModel.Lot = _mapper.Map<Lot, LotViewModel>(selling.Lot);
 
-                Bid bid = await _context.Bids.FindAsync(selling.BidWinnerId);
-                if (bid != null)
-                {
-                    sellingViewModel.BidWinner = _mapper.Map<Bid, BidViewModel>(bid);
-                }
+                sellingViewModel.Owner = _mapper.Map<AppUser, UserViewModel>(selling.Lot.Owner);
+                
+                sellingViewModel.Customer = _mapper.Map<AppUser, UserViewModel>(selling.BidWinner.Bidder);
 
-                Lot lot = await _context.Lots.FindAsync(selling.LotId);
-                if (lot != null)
-                {
-                    sellingViewModel.Lot = _mapper.Map<Lot, LotViewModel>(lot);
+                sellingViewModel.Manager = _mapper.Map<AppUser, UserViewModel>(selling.Manager);
 
-                    AppUser customer = await _context.AppUsers.FindAsync(lot.OwnerId);
-                    sellingViewModel.Customer = _mapper.Map<AppUser, UserViewModel>(customer);
-                }
+                //SellingStatusType status = await _context.SellingStatusTypes.FindAsync(selling.SellingStatusId);
+                //if (status != null)
+                //{
+                //    sellingViewModel.SellingStatus = _mapper.Map<SellingStatusType, SellingStatusTypeViewModel>(status).Name;
+                //}
 
-                AppUser manager = await _context.AppUsers.FindAsync(selling.ManagerId);
-                if (manager != null)
-                {
-                    sellingViewModel.Manager = _mapper.Map<AppUser, UserViewModel>(manager);
-                }
+                //Bid bid = await _context.Bids.FindAsync(selling.BidWinnerId);
+                //if (bid != null)
+                //{
+                //    sellingViewModel.BidWinner = _mapper.Map<Bid, BidViewModel>(bid);
+                //}
+
+                //Lot lot = await _context.Lots.FindAsync(selling.LotId);
+                //if (lot != null)
+                //{
+                //    sellingViewModel.Lot = _mapper.Map<Lot, LotViewModel>(lot);
+
+                //    AppUser customer = await _context.AppUsers.FindAsync(lot.OwnerId);
+                //    sellingViewModel.Customer = _mapper.Map<AppUser, UserViewModel>(customer);
+                //}
+
+                //AppUser manager = await _context.AppUsers.FindAsync(selling.ManagerId);
+                //if (manager != null)
+                //{
+                //    sellingViewModel.Manager = _mapper.Map<AppUser, UserViewModel>(manager);
+                //}
                 sellingsViewModels.Add(sellingViewModel);
             }
 

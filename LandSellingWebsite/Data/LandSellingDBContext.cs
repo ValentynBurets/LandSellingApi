@@ -173,15 +173,9 @@ namespace LandSellingWebsite.Models
             {
                 entity.ToTable("LotStatusType");
 
-                entity.HasIndex(e => e.LotId, "IX_LotStatusType_LotId");
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100);
-
-                entity.HasOne(d => d.Lot)
-                    .WithMany(p => p.LotStatusTypes)
-                    .HasForeignKey(d => d.LotId);
             });
 
             modelBuilder.Entity<PriceCoef>(entity =>
@@ -254,15 +248,9 @@ namespace LandSellingWebsite.Models
             {
                 entity.ToTable("Role");
 
-                entity.HasIndex(e => e.AppUserId, "IX_Role_AppUserId");
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100);
-
-                entity.HasOne(d => d.AppUser)
-                    .WithMany(p => p.Roles)
-                    .HasForeignKey(d => d.AppUserId);
             });
 
             modelBuilder.Entity<Selling>(entity =>
