@@ -16,8 +16,8 @@ namespace LandSellingWebsite.ViewModels
 
         public virtual BidViewModel BidWinner { get; set; }
         public virtual LotViewModel Lot { get; set; }
-        public virtual UserViewModel Customer { get; set; }
-        public virtual UserViewModel Owner { get; set; }
-        public virtual UserViewModel Manager { get; set; }
+        public virtual SimpleUserViewModel Customer { get; set; }
+        public virtual SimpleUserViewModel Owner { get; set; }
+        public virtual SimpleUserViewModel Manager { get; set; }
     }
 }
