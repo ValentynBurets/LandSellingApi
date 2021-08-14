@@ -20,7 +20,7 @@ namespace LandSellingWebsite.ViewModels.House
         public decimal? Longitude { get; set; }
         public string ImageUrl { get; set; }
         public byte? Rooms { get; set; }
-        public byte? Floor { get; set; }
+        public byte? Storeys { get; set; }
         public byte? Person { get; set; }
         public bool? Parking { get; set; }
         public bool? Furniture { get; set; }

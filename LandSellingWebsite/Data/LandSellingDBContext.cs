@@ -85,6 +85,11 @@ namespace LandSellingWebsite.Models
                 entity.Property(e => e.PhoneNumber).HasMaxLength(100);
 
                 entity.Property(e => e.SurName).HasMaxLength(100);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AppUsers)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("FK__AppUser__RoleId__2739D489");
             });
 
             modelBuilder.Entity<Bid>(entity =>
@@ -116,9 +121,9 @@ namespace LandSellingWebsite.Models
 
                 entity.HasIndex(e => e.LotId, "IX_House_LotId");
 
-                entity.HasIndex(e => e.Floor, "ix_FloorHouse");
+                entity.HasIndex(e => e.Storeys, "ix_FloorHouse");
 
-                entity.HasIndex(e => new { e.Rooms, e.Floor, e.Person }, "ix_House");
+                entity.HasIndex(e => new { e.Rooms, e.Storeys, e.Person }, "ix_House");
 
                 entity.HasIndex(e => e.Person, "ix_PersonHouse");
 
@@ -162,6 +167,11 @@ namespace LandSellingWebsite.Models
                     .WithMany(p => p.Lots)
                     .HasForeignKey(d => d.AddressId)
                     .HasConstraintName("FK__Lot__AddressId__286302EC");
+
+                entity.HasOne(d => d.LotStatus)
+                    .WithMany(p => p.Lots)
+                    .HasForeignKey(d => d.LotStatusId)
+                    .HasConstraintName("FK__Lot__LotStatusId__14270015");
 
                 entity.HasOne(d => d.Owner)
                     .WithMany(p => p.Lots)
@@ -301,8 +311,6 @@ namespace LandSellingWebsite.Models
                     .IsRequired()
                     .HasMaxLength(100);
             });
-
-            OnModelCreatingPartial(modelBuilder);
 
             modelBuilder.Entity<VHouse>(entity =>
             {

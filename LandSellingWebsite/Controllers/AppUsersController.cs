@@ -31,6 +31,7 @@ namespace LandSellingWebsite.Controllers
         {
 
             var users = await _context.AppUsers.Include(Item => Item.Role).ToListAsync();
+            //var users = await _context.AppUsers.ToListAsync();
             var usersViewModels = new List<UserViewModel>();
 
             foreach (var user in users)

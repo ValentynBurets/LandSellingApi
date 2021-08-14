@@ -14,7 +14,6 @@ namespace LandSellingWebsite.Models
             Lots = new HashSet<Lot>();
             RentCustomers = new HashSet<Rent>();
             RentManagers = new HashSet<Rent>();
-            //Roles = new HashSet<Role>();
             Sellings = new HashSet<Selling>();
         }
 
@@ -26,15 +25,11 @@ namespace LandSellingWebsite.Models
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
 
+
         public string GetFullName()
         {
             return $"{this.Name}, {this.SurName}";
         }
-
-        //public string GetRoleName()
-        //{
-        //    return (from x in Roles where x.Id == RoleId select x).First().Name;
-        //}
 
         public virtual ICollection<Bid> Bids { get; set; }
         public virtual ICollection<Lot> Lots { get; set; }
