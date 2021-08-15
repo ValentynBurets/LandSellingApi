@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LandSellingWebsite.Models;
 using LandSellingWebsite.ViewModels.House;
+using AutoMapper;
+using LandSellingWebsite.ViewModels;
 
 namespace LandSellingWebsite.Controllers
 {
@@ -15,10 +17,12 @@ namespace LandSellingWebsite.Controllers
     public class HousesController : ControllerBase
     {
         private readonly LandSellingDBContext _context;
+        private readonly IMapper _mapping;
 
-        public HousesController(LandSellingDBContext context)
+        public HousesController(LandSellingDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapping = mapper;
         }
 
         // GET: api/Houses
@@ -46,12 +50,12 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHouse(int id, House house)
+        public async Task<IActionResult> PutHouse(int id, HouseViewModel houseViewModel)
         {
-            if (id != house.Id)
-            {
-                return BadRequest();
-            }
+            var house = _mapping.Map<HouseViewModel, House>(houseViewModel);
+            house.Id = id;
+            var lot = _mapping.Map<LotViewModel, Lot>(houseViewModel.Lot);
+            house.LotId = lot.Id;
 
             _context.Entry(house).State = EntityState.Modified;
 
@@ -81,7 +85,7 @@ namespace LandSellingWebsite.Controllers
         public async Task<ActionResult<PostHouseViewModel>> PostHouse(PostHouseViewModel house)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-            $"EXECUTE AddLand {house.Country}, {house.Region}, {house.City}, {house.Street}, {house.Building},  {house.Latitude},  {house.Longitude},  {house.OwnerId},  {house.Square},  {house.Description},  {house.ImageUrl},  {house.Rooms},  {house.Storeys},  {house.Person},  {house.Parking},  {house.Furniture}, {house.ImageUrl}");
+            $"EXECUTE AddHouse {house.Country}, {house.Region}, {house.City}, {house.Street}, {house.Building}, {house.Latitude}, {house.Longitude}, {house.OwnerId}, {house.Square}, {house.Description}, {house.Rooms}, {house.Storeys}, {house.Person}, {house.Parking}, {house.Furniture}, {house.ImageUrl}");
 
             return house;
         }

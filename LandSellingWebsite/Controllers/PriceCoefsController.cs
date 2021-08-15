@@ -26,7 +26,7 @@ namespace LandSellingWebsite.Controllers
 
         // GET: api/PriceCoefs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PriceCoef>>> GetPriceCoefs()
+        public async Task<ActionResult<IEnumerable<PriceCoefViewModel>>> GetPriceCoefs()
         {
             var priceCoefs = await _context.PriceCoefs.ToListAsync();
             var priceCoefViewModels = _mapper.Map<IEnumerable<PriceCoef>, IEnumerable<PriceCoefViewModel>>(priceCoefs);
@@ -79,17 +79,24 @@ namespace LandSellingWebsite.Controllers
             return NoContent();
         }
 
-        //// POST: api/PriceCoefs
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<PriceCoefViewModel>> PostPriceCoef(PriceCoefViewModel PriceCoefViewModel)
-        //{
+        // POST: api/PriceCoefs
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<PriceCoefViewModel>> PostPriceCoef(PostPriceCoefViewModel postPriceCoefViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    _context.PriceCoefs.Add(priceCoef);
-        //    await _context.SaveChangesAsync();
+            var priceCoef = _mapper.Map<PostPriceCoefViewModel, PriceCoef>(postPriceCoefViewModel);
+            _context.PriceCoefs.Add(priceCoef);
+            await _context.SaveChangesAsync();
 
-        //    return CreatedAtAction("GetPriceCoef", new { id = priceCoef.Id }, priceCoef);
-        //}
+            var priceCoefViewModel = _mapper.Map<PriceCoef, PostPriceCoefViewModel>(priceCoef);
+
+            return Ok(priceCoefViewModel);
+        }
 
         // DELETE: api/PriceCoefs/5
         [HttpDelete("{id}")]
