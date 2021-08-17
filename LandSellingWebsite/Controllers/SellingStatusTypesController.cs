@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LandSellingWebsite.Models;
+using AutoMapper;
+using LandSellingWebsite.ViewModels;
 
 namespace LandSellingWebsite.Controllers
 {
@@ -14,22 +16,27 @@ namespace LandSellingWebsite.Controllers
     public class SellingStatusTypesController : ControllerBase
     {
         private readonly LandSellingDBContext _context;
+        private readonly IMapper _mapper;
 
-        public SellingStatusTypesController(LandSellingDBContext context)
+        public SellingStatusTypesController(LandSellingDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/SellingStatusTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SellingStatusType>>> GetSellingStatusType()
+        public async Task<ActionResult<IEnumerable<SellingStatusTypeViewModel>>> GetSellingStatusType()
         {
-            return await _context.SellingStatusTypes.ToListAsync();
+            var statuses = await _context.SellingStatusTypes.ToListAsync();
+            var statusViewModels = _mapper.Map<IEnumerable<SellingStatusType>, IEnumerable<SellingStatusTypeViewModel>>(statuses);
+
+            return Ok(statusViewModels);
         }
 
         // GET: api/SellingStatusTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SellingStatusType>> GetSellingStatusType(int id)
+        public async Task<ActionResult<SellingStatusTypeViewModel>> GetSellingStatusType(int id)
         {
             var sellingStatusType = await _context.SellingStatusTypes.FindAsync(id);
 
@@ -38,19 +45,23 @@ namespace LandSellingWebsite.Controllers
                 return NotFound();
             }
 
-            return sellingStatusType;
+            var sellingStatusViewModel = _mapper.Map<SellingStatusType, SellingStatusTypeViewModel>(sellingStatusType);
+
+            return Ok(sellingStatusViewModel);
         }
 
         // PUT: api/SellingStatusTypes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSellingStatusType(int id, SellingStatusType sellingStatusType)
+        public async Task<IActionResult> PutSellingStatusType(int id, SellingStatusTypeViewModel sellingStatusTypeViewModel)
         {
-            if (id != sellingStatusType.Id)
+            if (id != sellingStatusTypeViewModel.Id)
             {
                 return BadRequest();
             }
+
+            var sellingStatusType = _mapper.Map<SellingStatusTypeViewModel, SellingStatusType>(sellingStatusTypeViewModel);
 
             _context.Entry(sellingStatusType).State = EntityState.Modified;
 
@@ -77,8 +88,10 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<SellingStatusType>> PostSellingStatusType(SellingStatusType sellingStatusType)
+        public async Task<ActionResult<SellingStatusType>> PostSellingStatusType(SellingStatusTypeViewModel sellingStatusTypeViewModel)
         {
+            var sellingStatusType = _mapper.Map<SellingStatusTypeViewModel, SellingStatusType>(sellingStatusTypeViewModel);
+            
             _context.SellingStatusTypes.Add(sellingStatusType);
             await _context.SaveChangesAsync();
 
