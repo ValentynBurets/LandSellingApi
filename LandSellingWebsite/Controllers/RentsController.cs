@@ -59,26 +59,8 @@ namespace LandSellingWebsite.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRent(int id, PostRentViewModel postRent)
         {
-            Rent rent = _mapper.Map<PostRentViewModel, Rent>(postRent);
-
-            _context.Entry(rent).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+              $"EXECUTE AddRent {postRent.LotId}, {postRent.CustomerId}, {postRent.ManagerId}, {postRent.BeginDate}, {postRent.EndDate}");
             return NoContent();
         }
 
@@ -88,9 +70,8 @@ namespace LandSellingWebsite.Controllers
         [HttpPost]
         public async Task<ActionResult<PostRentViewModel>> PostRent(PostRentViewModel postRent)
         {
-            var rent = _mapper.Map<PostRentViewModel, Rent>(postRent);
-            _context.Rents.Add(rent);
-            await _context.SaveChangesAsync();
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+              $"EXECUTE AddRent {postRent.LotId}, {postRent.CustomerId}, {postRent.ManagerId}, {postRent.BeginDate}, {postRent.EndDate}");
 
             return postRent;
         }
