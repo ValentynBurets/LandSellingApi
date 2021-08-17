@@ -110,18 +110,17 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSelling(int id, Selling selling)
+        public async Task<IActionResult> PutSelling(int id, PostSellingViewModel postSelling)
         {
-            if (id != selling.Id)
-            {
-                return BadRequest();
-            }
-
+            var selling = _mapper.Map<PostSellingViewModel, SellingViewModel>(postSelling);
+            selling.Id = id;
+            
             _context.Entry(selling).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.Database.ExecuteSqlInterpolatedAsync(
+              $"EXECUTE AddSelling {postSelling.LotId}, {postSelling.ManagerId}, {postSelling.MinPrice}, {postSelling.PriceBuyItNow}");
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -142,14 +141,12 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Selling>> PostSelling(PostSellingViewModel sellingViewModel)
+        public async Task<ActionResult<Selling>> PostSelling(PostSellingViewModel postSelling)
         {
-            var selling = _mapper.Map<PostSellingViewModel, Selling>(sellingViewModel);
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+              $"EXECUTE AddSelling {postSelling.LotId}, {postSelling.ManagerId}, {postSelling.MinPrice}, {postSelling.PriceBuyItNow}");
 
-            _context.Sellings.Add(selling);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetSelling", new { id = selling.Id }, selling);
+            return CreatedAtAction("GetSelling", new { LotId = postSelling.LotId }, postSelling);
         }
 
         // DELETE: api/Sellings/5

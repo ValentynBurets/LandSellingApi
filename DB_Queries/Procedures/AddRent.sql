@@ -10,9 +10,9 @@ CREATE PROCEDURE [dbo].AddRent
     ,@ManagerId int
     ,@BeginDate date
     ,@EndDate date
-    ,@Price money
 AS
 	DECLARE @Res int
+	DECLARE @Price money
 
 	SELECT @Res = Id
 	FROM Rent
@@ -21,7 +21,6 @@ AS
 		  AND ManagerId = @ManagerId 
 		  AND BeginDate = @BeginDate 
 		  AND EndDate = @EndDate 
-		  AND Price = @Price
 
 	IF(@Res IS NOT NULL)
 	BEGIN 
@@ -42,9 +41,9 @@ AS
 	,@BeginDate
 	,@EndDate)
 
-	--set @pass=dbo.function_to_be_called(@user) 
-
-	PRINT(dbo.CalculateTotalPrice(@LotId, @BeginDate, @EndDate))
+	PRINT(@Price)
+	
+	--PRINT(dbo.CalculateTotalPrice(@LotId, @BeginDate, @EndDate))
 
 	IF(@Res IS NOT NULL)
 	BEGIN 
@@ -54,7 +53,6 @@ AS
 		SET  BeginDate = @BeginDate 
 		     ,EndDate = @EndDate 
 		     ,Price = @Price
-
 		RETURN
 	END
 
