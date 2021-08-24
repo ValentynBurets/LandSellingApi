@@ -3,6 +3,8 @@ using LandSellingWebsite.Models;
 using LandSellingWebsite.ViewModels;
 using LandSellingWebsite.ViewModels.Address;
 using LandSellingWebsite.ViewModels.Bid;
+using LandSellingWebsite.ViewModels.Lot;
+using LandSellingWebsite.ViewModels.Lot.Image;
 using LandSellingWebsite.ViewModels.Lot.PriceCoef;
 using LandSellingWebsite.ViewModels.LotStatusType;
 using LandSellingWebsite.ViewModels.Rent;
@@ -55,6 +57,13 @@ namespace LandSellingWebsite.Options
 
             CreateMap<Address, PostAddressViewModel>().MaxDepth(2);
             CreateMap<PostAddressViewModel, Address>().MaxDepth(2);
+
+            CreateMap<Image, ImageViewModel>().MaxDepth(2);
+            CreateMap<ImageViewModel, Image>().MaxDepth(2);
+
+            CreateMap<Image, PostImageViewModel>().MaxDepth(2);
+            CreateMap<PostImageViewModel, Image>().MaxDepth(2);
+
             #endregion
 
             #region Rent

@@ -23,6 +23,7 @@ namespace LandSellingWebsite.Models
         public virtual DbSet<House> Houses { get; set; }
         public virtual DbSet<Land> Lands { get; set; }
         public virtual DbSet<Lot> Lots { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<LotStatusType> LotStatusTypes { get; set; }
         public virtual DbSet<PriceCoef> PriceCoefs { get; set; }
         public virtual DbSet<Rent> Rents { get; set; }
@@ -159,8 +160,6 @@ namespace LandSellingWebsite.Models
 
                 entity.Property(e => e.Description).HasColumnType("text");
 
-                entity.Property(e => e.ImageUrl).HasMaxLength(500);
-
                 entity.Property(e => e.PublicationDate).HasColumnType("date");
 
                 entity.HasOne(d => d.Address)
@@ -177,6 +176,19 @@ namespace LandSellingWebsite.Models
                     .WithMany(p => p.Lots)
                     .HasForeignKey(d => d.OwnerId)
                     .HasConstraintName("FK__Lot__OwnerId__29572725");
+            });
+
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.ToTable("Image");
+
+                entity.Property(e => e.ImageData).IsRequired();
+
+                entity.HasOne(d => d.Lot)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.LotId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Image__LotId__6BE40491");
             });
 
             modelBuilder.Entity<LotStatusType>(entity =>

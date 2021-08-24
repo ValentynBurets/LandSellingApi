@@ -79,7 +79,7 @@ CREATE TABLE [dbo].[Lot](
 	PublicationDate DATE NOT NULL,
 	LotStatusId INT NOT NULL,
 	[Square] REAL,
-	ImageUrl nvarchar(500) NOT NULL,
+	--ImageUrl nvarchar(500) NOT NULL,
 	[Description] TEXT,
 	FOREIGN KEY (AddressId)  REFERENCES [dbo].[Address](Id),
 	FOREIGN KEY (OwnerId)  REFERENCES [dbo].[AppUser](Id),
@@ -91,11 +91,27 @@ CREATE TABLE [dbo].[Lot](
 		) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
---ALTER TABLE Lot
---DROP COLUMN LotStatusId
+CREATE TABLE [dbo].[Image](
+	Id INT IDENTITY(1,1) NOT NULL,
+	LotId INT NOT NULL,
+	[Name] nvarchar(100),
+	ImageData VARBINARY(MAX) NOT NULL,
+
+	FOREIGN KEY (LotId)  REFERENCES [dbo].[Lot](Id),
+	
+	CONSTRAINT [PK_Image] PRIMARY KEY CLUSTERED(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+		) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+--ALTER TABLE [Image]
+--DROP COLUMN [Name]
 
 --ALTER TABLE Lot
 --ADD LotStatusId INT FOREIGN KEY REFERENCES LotStatusType(Id)
+
 --ALTER TABLE Lot
 --ADD ImageUrl nvarchar(500)
 	

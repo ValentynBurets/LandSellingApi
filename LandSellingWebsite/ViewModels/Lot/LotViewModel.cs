@@ -10,7 +10,7 @@ namespace LandSellingWebsite.ViewModels
     {
         public LotViewModel()
         {
-            //PriceCoefLots = new HashSet<PriceCoef>();   
+            Images = new HashSet<Image>();   
         }
 
         public int Id { get; set; }
@@ -19,8 +19,9 @@ namespace LandSellingWebsite.ViewModels
         public DateTime PublicationDate { get; set; }
         public int LotStatusId { get; set; }
         public float? Square { get; set; }
-        public string ImageUrl { get; set; }
         public string Description { get; set; }
+
+        public virtual ICollection<Image> Images { get; set; }
 
         //public virtual Address Address { get; set; }
         //public virtual AppUser Owner { get; set; }
