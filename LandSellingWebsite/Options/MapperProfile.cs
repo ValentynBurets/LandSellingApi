@@ -4,6 +4,7 @@ using LandSellingWebsite.ViewModels;
 using LandSellingWebsite.ViewModels.Address;
 using LandSellingWebsite.ViewModels.Bid;
 using LandSellingWebsite.ViewModels.Lot;
+using LandSellingWebsite.ViewModels.Lot.Favorite;
 using LandSellingWebsite.ViewModels.Lot.Image;
 using LandSellingWebsite.ViewModels.Lot.PriceCoef;
 using LandSellingWebsite.ViewModels.LotStatusType;
@@ -63,6 +64,12 @@ namespace LandSellingWebsite.Options
 
             CreateMap<Image, PostImageViewModel>().MaxDepth(2);
             CreateMap<PostImageViewModel, Image>().MaxDepth(2);
+
+            CreateMap<Favorite, FavoriteViewModel>().MaxDepth(2);
+            CreateMap<FavoriteViewModel, Favorite>().MaxDepth(2);
+
+            CreateMap<Favorite, PostFavoriteViewModel>().MaxDepth(2);
+            CreateMap<PostFavoriteViewModel, Favorite>().MaxDepth(2);
 
             #endregion
 

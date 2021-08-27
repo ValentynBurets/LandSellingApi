@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using LandSellingWebsite.ViewModels.Lot.Favorite;
 
 #nullable disable
 
@@ -31,6 +32,7 @@ namespace LandSellingWebsite.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Selling> Sellings { get; set; }
         public virtual DbSet<SellingStatusType> SellingStatusTypes { get; set; }
+        public virtual DbSet<Favorite> Favorites { get; set; }
         public virtual DbSet<VHouse> VHouses { get; set; }
         public virtual DbSet<VLand> VLands { get; set; }
 
@@ -114,6 +116,22 @@ namespace LandSellingWebsite.Models
                     .HasForeignKey(d => d.LotId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Bid__LotId__3C69FB99");
+            });
+
+
+            modelBuilder.Entity<Favorite>(entity =>
+            {
+                entity.HasOne(d => d.Lot)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.LotId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Favorites__LotId__7755B73D");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Favorites__LotId__76619304");
             });
 
             modelBuilder.Entity<House>(entity =>
@@ -414,5 +432,7 @@ namespace LandSellingWebsite.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<LandSellingWebsite.ViewModels.Lot.Favorite.FavoriteViewModel> FavoriteViewModel { get; set; }
     }
 }

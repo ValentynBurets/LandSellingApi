@@ -13,7 +13,8 @@ export const ButtonResult = (props) => {
 
   const newPage = (path) => {
     history.push({
-      pathname: '/user/' + path + UserData?.id, // userId must be here
+      pathname: '/user/' + path, // userId must be here
+      //pathname: '/user/' + UserData?.id + '/' + path, // userId must be here
       state: { personId: UserData?.id }, // here too
     })
   }

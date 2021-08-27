@@ -29,3 +29,6 @@ namespace LandSellingWebsite.ViewModels.User
         public string Password { get; set; }
     }
 }
+
+
+//Add avatar to user

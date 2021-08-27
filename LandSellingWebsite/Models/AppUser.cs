@@ -12,6 +12,7 @@ namespace LandSellingWebsite.Models
         {
             Bids = new HashSet<Bid>();
             Lots = new HashSet<Lot>();
+            Favorites = new HashSet<Favorite>();
             RentCustomers = new HashSet<Rent>();
             RentManagers = new HashSet<Rent>();
             Sellings = new HashSet<Selling>();
@@ -19,6 +20,7 @@ namespace LandSellingWebsite.Models
 
         public int Id { get; set; }
         public int RoleId { get; set; }
+        public byte[] Avatar { get; set; }
         public string Name { get; set; }
         public string SurName { get; set; }
         public string Email { get; set; }
@@ -37,5 +39,6 @@ namespace LandSellingWebsite.Models
         public virtual ICollection<Rent> RentManagers { get; set; }
         public virtual Role Role { get; set; }
         public virtual ICollection<Selling> Sellings { get; set; }
+        public virtual ICollection<Favorite> Favorites { get; set; }
     }
 }

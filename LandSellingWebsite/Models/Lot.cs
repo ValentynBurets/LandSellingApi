@@ -10,6 +10,7 @@ namespace LandSellingWebsite.Models
         public Lot()
         {
             Bids = new HashSet<Bid>();
+            Favorites = new HashSet<Favorite>();
             Houses = new HashSet<House>();
             Images = new HashSet<Image>();
             Lands = new HashSet<Land>();
@@ -36,5 +37,6 @@ namespace LandSellingWebsite.Models
         public virtual ICollection<PriceCoef> PriceCoefs { get; set; }
         public virtual ICollection<Rent> Rents { get; set; }
         public virtual ICollection<Selling> Sellings { get; set; }
+        public virtual ICollection<Favorite> Favorites { get; set; }
     }
 }
