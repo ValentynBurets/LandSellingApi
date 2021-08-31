@@ -26,42 +26,69 @@ namespace LandSellingWebsite.Controllers
 
         // GET: api/Houses? sroted = ""
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VHouse>>> GetHouse([Required] bool sorted, int? sortType)
+        public async Task<ActionResult<IEnumerable<House>>> GetHouse([Required] bool sorted, int? sortType)
         {
-            if (!sorted)
-                return await _context.VHouses.ToListAsync();
-            else
-            {
-                if (sortType != null)
-                {
-                    if (sortType == 1)
-                    {
-                        //Sort by city
-                        var houses = await _context.VHouses.ToListAsync();
-                        houses.Sort((first, second) => first.City.CompareTo(second.City));
+            int[] numbers = { 1, 2, 3, 4, 10, 34, 55, 66, 77, 88 };
 
-                        return houses;
-                    }
-                    if (sortType == 2)
-                    {
-                        //Sort by country
-                        var houses = await _context.VHouses.ToListAsync();
-                        houses.Sort((first, second) => first.Country.CompareTo(second.Country));
+            IEnumerable<int> evens = from i in numbers
+                                     where i % 2 == 0 && i > 10
+                                     select i;
+            foreach (int i in evens)
+                Console.WriteLine(i);
 
-                        return houses;
-                    }
-                    else
-                    {
-                        // Sort by Id
-                        var houses = await _context.VHouses.ToListAsync();
-                        houses.Sort((first, second) => first.Id.CompareTo(second.Id));
+            var coefs = await _context.PriceCoefs.ToListAsync();
+            var lotIds = from coef in coefs
+                         select coef.LotId;
 
-                        return houses;
-                    }
-                }
+            var rentHouses = (await _context.Houses.ToListAsync()).Where(item => lotIds.Contains(item.LotId));
 
-            }
-            return null;
+            return Ok(rentHouses);
+
+                //from item in await _context.Houses.ToListAsync()
+                             
+                //             where 
+                //             (
+                //                from coef in coefs
+                //                where item.LotId == coef.LotId
+                //                select coef.LotId
+                //             )
+                //             select item;
+
+
+            //if (!sorted)
+            //    return await _context.VHouses.ToListAsync();
+            //else
+            //{
+            //    if (sortType != null)
+            //    {
+            //        if (sortType == 1)
+            //        {
+            //            //Sort by city
+            //            var houses = await _context.VHouses.ToListAsync();
+            //            houses.Sort((first, second) => first.City.CompareTo(second.City));
+
+            //            return houses;
+            //        }
+            //        if (sortType == 2)
+            //        {
+            //            //Sort by country
+            //            var houses = await _context.VHouses.ToListAsync();
+            //            houses.Sort((first, second) => first.Country.CompareTo(second.Country));
+
+            //            return houses;
+            //        }
+            //        else
+            //        {
+            //            // Sort by Id
+            //            var houses = await _context.VHouses.ToListAsync();
+            //            houses.Sort((first, second) => first.Id.CompareTo(second.Id));
+
+            //            return houses;
+            //        }
+            //    }
+
+            //}
+            //return null;
         }
     }
 }

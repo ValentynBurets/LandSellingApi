@@ -95,7 +95,7 @@ namespace LandSellingWebsite.Controllers
         public async Task<IActionResult> PutHouse(int id,  PostHouseViewModel house)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-            $"EXECUTE AddHouse {house.Country}, {house.Region}, {house.City}, {house.Street}, {house.Building}, {house.Latitude}, {house.Longitude}, {house.OwnerId}, {house.Square}, {house.Description}, {house.Rooms}, {house.Storeys}, {house.Person}, {house.Parking}, {house.Furniture}, {house.ImageUrl}");
+            $"EXECUTE AddHouse {house.Country}, {house.Region}, {house.City}, {house.Street}, {house.Building}, {house.Latitude}, {house.Longitude}, {house.OwnerId}, {house.Square}, {house.Description}, {house.Rooms}, {house.Storeys}, {house.Person}, {house.Parking}, {house.Furniture}");
 
             return NoContent();
         }

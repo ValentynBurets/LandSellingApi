@@ -83,7 +83,7 @@ namespace LandSellingWebsite.Controllers
         public async Task<ActionResult<PostLandViewModel>> PostLand(PostLandViewModel land)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-               $"EXECUTE AddLand {land.Country}, {land.Region}, {land.City}, {land.Street}, {land.Building},  {land.Latitude},  {land.Longitude},  {land.OwnerId},  {land.Square},  {land.Description},  {land.ImageUrl}");
+               $"EXECUTE AddLand {land.Country}, {land.Region}, {land.City}, {land.Street}, {land.Building},  {land.Latitude},  {land.Longitude},  {land.OwnerId},  {land.Square},  {land.Description}");
 
             return land;
         }
