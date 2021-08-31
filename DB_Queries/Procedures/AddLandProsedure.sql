@@ -16,7 +16,6 @@ CREATE PROCEDURE [dbo].AddLand
 	,@OwnerId int
 	,@Square real
 	,@Description text
-	,@ImageUrl nvarchar(100)
 AS
 
 	DECLARE @LotId int, @AddressId int
@@ -55,7 +54,6 @@ AS
 		   ,@OwnerId
 		   ,@Square
 		   ,@Description
-		   ,@ImageUrl
 
 
 	SELECT @LotId = Id 
@@ -94,7 +92,6 @@ EXEC [dbo].[AddLand]
 		   ,1
 		   ,60
 		   ,'description'
-		   ,'https://www.planradar.com/wp-content/uploads/2020/02/Dubai.jpg'
 
 
 --SELECT *

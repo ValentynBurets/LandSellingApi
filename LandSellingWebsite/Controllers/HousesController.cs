@@ -26,11 +26,53 @@ namespace LandSellingWebsite.Controllers
         }
 
         // GET: api/Houses
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<VHouse>>> GetHouse()
-        {
-            return await _context.VHouses.ToListAsync();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<VHouse>>> GetHouse()
+        //{
+        //    return await _context.VHouses.ToListAsync();
+        //}
+
+        //// GET: api/Houses
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<VHouse>>> GetSortByCity()
+        //{
+        //    var houses = await _context.VHouses.ToListAsync();
+        //    houses.Sort((first, second) => first.City.CompareTo(second.City));
+
+        //    return houses;
+        //}
+
+        //// GET: api/Houses
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<VHouse>>> GetSortByCountry()
+        //{
+        //    var houses = await _context.VHouses.ToListAsync();
+        //    houses.Sort((first, second) => first.Country.CompareTo(second.Country));
+
+        //    return houses;
+        //}
+
+
+        //// GET: api/Houses
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<VHouse>>> GetSortById()
+        //{
+        //    var houses = await _context.VHouses.ToListAsync();
+        //    houses.Sort((first, second) => first.Id.CompareTo(second.Id));
+
+        //    return houses;
+        //}
+
+        //// GET: api/Houses
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<House>>> GetSortByMinPricePerDay()
+        //{
+        //    var houses = await _context.Houses.ToListAsync();
+        //    houses.Sort((first, second) => first..CompareTo(second.Id));
+
+        //    return houses;
+        //}
+
 
         // GET: api/Houses/5
         [HttpGet("{id}")]
@@ -50,30 +92,10 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHouse(int id, HouseViewModel houseViewModel)
+        public async Task<IActionResult> PutHouse(int id,  PostHouseViewModel house)
         {
-            var house = _mapping.Map<HouseViewModel, House>(houseViewModel);
-            house.Id = id;
-            var lot = _mapping.Map<LotViewModel, Lot>(houseViewModel.Lot);
-            house.LotId = lot.Id;
-
-            _context.Entry(house).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HouseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+            $"EXECUTE AddHouse {house.Country}, {house.Region}, {house.City}, {house.Street}, {house.Building}, {house.Latitude}, {house.Longitude}, {house.OwnerId}, {house.Square}, {house.Description}, {house.Rooms}, {house.Storeys}, {house.Person}, {house.Parking}, {house.Furniture}, {house.ImageUrl}");
 
             return NoContent();
         }
@@ -82,12 +104,23 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<PostHouseViewModel>> PostHouse(PostHouseViewModel house)
+        public async Task<ActionResult<HouseViewModel>> PostHouse(PostHouseViewModel posthouse)
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(
-            $"EXECUTE AddHouse {house.Country}, {house.Region}, {house.City}, {house.Street}, {house.Building}, {house.Latitude}, {house.Longitude}, {house.OwnerId}, {house.Square}, {house.Description}, {house.Rooms}, {house.Storeys}, {house.Person}, {house.Parking}, {house.Furniture}, {house.ImageUrl}");
+            $"EXECUTE AddHouse {posthouse.Country}, {posthouse.Region}, {posthouse.City}, {posthouse.Street}, {posthouse.Building}, {posthouse.Latitude}, {posthouse.Longitude}, {posthouse.OwnerId}, {posthouse.Square}, {posthouse.Description}, {posthouse.Rooms}, {posthouse.Storeys}, {posthouse.Person}, {posthouse.Parking}, {posthouse.Furniture}");
 
-            return house;
+            var houses = await _context.Houses.Include(Item => Item.Lot).ToListAsync();
+
+            var houseViewModels = new List<HouseViewModel>();
+            
+            foreach(var house in houses)
+            {
+                var houseViewModel = _mapping.Map<House, HouseViewModel>(house);
+                houseViewModel.Lot = _mapping.Map<Lot, LotViewModel>(house.Lot);
+                houseViewModels.Add(houseViewModel);
+            }
+
+            return Ok(houseViewModels);
         }
 
         // DELETE: api/Houses/5

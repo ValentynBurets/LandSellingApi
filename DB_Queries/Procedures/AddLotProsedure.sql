@@ -16,7 +16,6 @@ CREATE PROCEDURE [dbo].AddLot
 	,@OwnerId int
 	,@Square real
 	,@Description text
-	,@ImageUrl nvarchar(100)
 
 AS
 
@@ -89,16 +88,14 @@ AS
            ,[LotStatusId]
 		   ,[OwnerId]
 		   ,[Square]
-           ,[Description]
-		   ,[ImageUrl])
+           ,[Description])
      VALUES
            (@AddressId
 		   ,@DateNow
            ,@LotStatusId
 		   ,@OwnerId
 		   ,@Square
-           ,@Description
-		   ,@ImageUrl)
+           ,@Description)
 
 	PRINT('Inserted new value in Lot table')
 --end of AddLot prosedure
@@ -115,8 +112,7 @@ EXEC [dbo].[AddLot]
 		   ,1
 		   ,100
 		   ,'land for selling'
-		   ,'https://images.squarespace-cdn.com/content/v1/57c096ed5016e1bcc916d23b/1508953112397-ING9GSQGIN6EMSYCESL0/fullsizeoutput_22.jpeg'
-
+		   
 SELECT *
 FROM [dbo].[Lot]
 

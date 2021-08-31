@@ -21,7 +21,6 @@ CREATE PROCEDURE [dbo].AddHouse
     ,@Person int
     ,@Parking bit
     ,@Furniture bit
-	,@ImageUrl nvarchar(100)
 AS
 
 	DECLARE @LotId int, @res bit
@@ -37,7 +36,6 @@ AS
 		   ,@OwnerId
 		   ,@Square
 		   ,@Description
-		   ,@ImageUrl
 
 
 	SELECT @LotId = Id 

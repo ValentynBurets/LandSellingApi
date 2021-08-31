@@ -32,12 +32,9 @@ namespace LandSellingWebsite.Controllers
         public async Task<IEnumerable<SellingViewModel>> GetSelling()
         {
             ICollection<Selling> sellings = await _context.Sellings
-                                                          .Include(Item => Item.Lot)
-                                                              .ThenInclude(Lot => Lot.Owner)
-                                                          .Include(Item => Item.Manager)
-                                                              .ThenInclude(Manager => Manager.Role)
-                                                          .Include(Item => Item.BidWinner)
-                                                              .ThenInclude(BidWinner => BidWinner.Bidder)
+                                                          .Include(Item => Item.Lot.Owner)
+                                                          .Include(Item => Item.Manager.Role)
+                                                          .Include(Item => Item.BidWinner.Bidder)
                                                           .Include(Item => Item.SellingStatus)
                                                           .ToListAsync();
             if (sellings == null)

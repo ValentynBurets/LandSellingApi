@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace LandSellingWebsite.Models
+namespace LandSellingWebsite.ViewModels.House
 {
-    public partial class VHouse
+    public class VHouseViewModel
     {
         public int Id { get; set; }
         public byte? Rooms { get; set; }
@@ -23,22 +24,14 @@ namespace LandSellingWebsite.Models
         public string Password { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string Country { get; set; }
-        public string Region { get; set; }
-        public string City { get; set; }
-        public string Street { get; set; }
-        public int? Building { get; set; }
+
+        [Display(Name = "Full Address")]
+        public string FullAddress { get; set; }
+
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
 
-        public string GetFullAddress()
-        {
-            return $"{this.Country}, {this.Region}, {this.City}, {this.Street}, {this.Building}";
-        }
-
-        public string GetAdditionalDescription()
-        {
-            return $"Rooms - {this.Rooms}, Storeys - {this.Storeys}, Person - {this.Person}, Parking - {this.Parking}, Furniture - {this.Furniture}, Square - {this.Square}";
-        }
+        [Display(Name = "AdditionalDescription")]
+        public string AdditionalDescription { get; set; }
     }
 }

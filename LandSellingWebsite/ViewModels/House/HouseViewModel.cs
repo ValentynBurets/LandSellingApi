@@ -7,6 +7,7 @@ namespace LandSellingWebsite.ViewModels.House
 {
     public class HouseViewModel
     {
+        public int Id { get; set; }
         public byte? Rooms { get; set; }
         public byte? Storeys { get; set; }
         public byte? Person { get; set; }

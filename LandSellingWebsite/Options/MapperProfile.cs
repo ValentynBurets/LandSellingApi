@@ -3,6 +3,7 @@ using LandSellingWebsite.Models;
 using LandSellingWebsite.ViewModels;
 using LandSellingWebsite.ViewModels.Address;
 using LandSellingWebsite.ViewModels.Bid;
+using LandSellingWebsite.ViewModels.House;
 using LandSellingWebsite.ViewModels.Lot;
 using LandSellingWebsite.ViewModels.Lot.Favorite;
 using LandSellingWebsite.ViewModels.Lot.Image;
@@ -38,6 +39,7 @@ namespace LandSellingWebsite.Options
             #endregion
 
             #region Lot
+
             CreateMap<Lot, LotViewModel>().MaxDepth(2);
             CreateMap<LotViewModel, Lot>().MaxDepth(2);
 
@@ -82,6 +84,14 @@ namespace LandSellingWebsite.Options
 
             CreateMap<Rent, PostRentViewModel>().MaxDepth(2);
             CreateMap<PostRentViewModel, Rent>().MaxDepth(2);
+
+            //houses
+            CreateMap<House, RentHouseViewModel>().MaxDepth(2);
+            CreateMap<RentHouseViewModel, House>().MaxDepth(2);
+
+            CreateMap<House, HouseViewModel>().MaxDepth(2);
+            CreateMap<HouseViewModel, House>().MaxDepth(2);
+            //------
 
             #endregion Rent
 

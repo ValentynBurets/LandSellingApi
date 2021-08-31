@@ -18,7 +18,6 @@ namespace LandSellingWebsite.ViewModels.House
         public int? Building { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
-        public string ImageUrl { get; set; }
         public byte? Rooms { get; set; }
         public byte? Storeys { get; set; }
         public byte? Person { get; set; }

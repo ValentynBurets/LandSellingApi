@@ -1,6 +1,12 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
+import OneItemSelector from './Components/OneItemSelector'
+import RangeSelectorElement from './Components/RangeSelectorElement'
+import MultiItemSelector from './Components/MultiItemSelector'
+//import LotCardsDeck from './Components/LotCardsDeck'
+//import http from '../../http-copmmon'
+
 function BuildingRent() {
   return (
     <>
@@ -90,7 +96,7 @@ function BuildingRent() {
             {/* Car cards*/}
           </Col>
           <Col lg={9}>
-            <CarCardsDeck id='cars-list' postArray={sortedBooks} />
+            {/* <LotCardsDeck id='cars-list' postArray={sortedBooks} /> */}
           </Col>
         </Row>
       </Container>

@@ -25,5 +25,11 @@ namespace LandSellingWebsite.Models
         public int? Building { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
+
+        public string GetFullAddress()
+        {
+            return $"{this.Country}, {this.Region}, {this.City}, {this.Street}, {this.Building}";
+        }
+
     }
 }
