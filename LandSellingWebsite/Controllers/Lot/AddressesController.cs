@@ -28,10 +28,10 @@ namespace LandSellingWebsite.Controllers
 
         // GET: api/Addresses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AddressViewModel>>> GetAddress()
+        public async Task<ActionResult<IEnumerable<SimpleAddressViewModel>>> GetAddress()
         {
             var address = await _context.Addresses.ToListAsync();
-            return Ok(_mapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(address));
+            return Ok(_mapper.Map<IEnumerable<Address>, IEnumerable<SimpleAddressViewModel>>(address));
         }
 
         // GET: api/Addresses/5
@@ -84,9 +84,9 @@ namespace LandSellingWebsite.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Address>> PostAddress(PostAddressViewModel postAddressViewModel)
+        public async Task<ActionResult<Address>> PostAddress(AddressViewModel postAddressViewModel)
         {
-            var address = _mapper.Map<PostAddressViewModel, Address>(postAddressViewModel);
+            var address = _mapper.Map<AddressViewModel, Address>(postAddressViewModel);
             _context.Addresses.Add(address);
             await _context.SaveChangesAsync();
 

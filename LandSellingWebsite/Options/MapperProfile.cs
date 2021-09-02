@@ -55,11 +55,11 @@ namespace LandSellingWebsite.Options
             CreateMap<PriceCoef, PriceCoefViewModel>().MaxDepth(2);
             CreateMap<PriceCoefViewModel, PriceCoef>().MaxDepth(2);
 
+            CreateMap<Address, SimpleAddressViewModel>().MaxDepth(2);
+            CreateMap<SimpleAddressViewModel, Address>().MaxDepth(2);
+
             CreateMap<Address, AddressViewModel>().MaxDepth(2);
             CreateMap<AddressViewModel, Address>().MaxDepth(2);
-
-            CreateMap<Address, PostAddressViewModel>().MaxDepth(2);
-            CreateMap<PostAddressViewModel, Address>().MaxDepth(2);
 
             CreateMap<Image, ImageViewModel>().MaxDepth(2);
             CreateMap<ImageViewModel, Image>().MaxDepth(2);
@@ -91,6 +91,10 @@ namespace LandSellingWebsite.Options
 
             CreateMap<House, HouseViewModel>().MaxDepth(2);
             CreateMap<HouseViewModel, House>().MaxDepth(2);
+
+            CreateMap<House, PostRentHouseViewModel>().MaxDepth(2);
+            CreateMap<PostRentHouseViewModel, House>().MaxDepth(2);
+
             //------
 
             #endregion Rent

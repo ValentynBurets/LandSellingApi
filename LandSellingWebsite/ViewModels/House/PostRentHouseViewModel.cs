@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LandSellingWebsite.ViewModels.House
 {
-    public class HouseViewModel
+    public class PostRentHouseViewModel
     {
         public int Id { get; set; }
         public byte? Rooms { get; set; }
@@ -17,6 +17,7 @@ namespace LandSellingWebsite.ViewModels.House
         public bool? Furniture { get; set; }
 
         public virtual LotViewModel Lot { get; set; }
+        public virtual AddressViewModel Address { get; set; }
         public virtual ICollection<PriceCoefViewModel> PriceCoefs { get; set; }
     }
 }

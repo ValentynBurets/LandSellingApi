@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace LandSellingWebsite.Data
 {
-    public class SortType
+    public enum RentSortType
     {
+        Id,
+        City,
+        Country,
     }
 }
