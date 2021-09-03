@@ -11,8 +11,8 @@ namespace LandSellingWebsite.Data.SortTypes
         City,
         Country,
         LowestPriceFirst,
-        HighestPriceFirst,
+        //HighestPriceFirst,
         LowestBidFirst,
-        HighestBidFirst,
+        //HighestBidFirst,
     }
 }

@@ -9,6 +9,8 @@ namespace LandSellingWebsite.ViewModels
 {
     public class SellingViewModel
     {
+        SellingViewModel() => Bids = new HashSet<BidViewModel>();
+
         public int Id { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? PriceBuyItNow { get; set; }
@@ -19,5 +21,7 @@ namespace LandSellingWebsite.ViewModels
         public virtual SimpleUserViewModel Customer { get; set; }
         public virtual SimpleUserViewModel Owner { get; set; }
         public virtual SimpleUserViewModel Manager { get; set; }
+
+        public virtual ICollection<BidViewModel> Bids { get; set; }
     }
 }

@@ -3,7 +3,10 @@ using LandSellingWebsite.Data;
 using LandSellingWebsite.Data.SortTypes;
 using LandSellingWebsite.Models;
 using LandSellingWebsite.ViewModels;
+using LandSellingWebsite.ViewModels.Address;
 using LandSellingWebsite.ViewModels.House;
+using LandSellingWebsite.ViewModels.Lot;
+using LandSellingWebsite.ViewModels.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +22,7 @@ namespace LandSellingWebsite.Controllers.House
     [ApiController]
     public class SellingHousesController : ControllerBase
     {
-   
+
         private readonly LandSellingDBContext _context;
         private readonly IMapper _mapper;
 
@@ -31,85 +34,92 @@ namespace LandSellingWebsite.Controllers.House
 
         // GET: api/Houses? sroted = ""
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HouseViewModel>>> GetHouse([Required] bool sorted, SellingSortType? sortType)
+        public async Task<ActionResult<IEnumerable<SellingViewModel>>> GetHouse([Required] bool sorted, SellingSortType? sortType)
         {
             var sellingHouses = await _context.Sellings.Include(Item => Item.Lot)
                                                        .Include(Item => Item.Lot.Images)
                                                        .Include(Item => Item.Lot.Houses)
                                                        .Include(Item => Item.Lot.Address)
-                                                       
+                                                       .Include(Item => Item.Manager)
+                                                       .Include(Item => Item.Lot.Owner)
+                                                       .Include(Item => Item.Lot.Bids)
                                                        .ToListAsync();
 
-            var sellingHouseViewModels = new List<HouseViewModel>();
+            var sellingHouseViewModels = new List<SellingViewModel>();
 
-            foreach(var house in sellingHouses)
+            foreach (var house in sellingHouses)
             {
                 var sellingViewModel = _mapper.Map<Selling, SellingViewModel>(house);
                 sellingViewModel.Lot = _mapper.Map<Lot, LotViewModel>(house.Lot);
-                sellingViewModel.Lot.Address
+                sellingViewModel.Lot.Address = _mapper.Map<Address, AddressViewModel>(house.Lot.Address);
+                sellingViewModel.Manager = _mapper.Map<AppUser, SimpleUserViewModel>(house.Manager);
+                sellingViewModel.Owner = _mapper.Map<AppUser, SimpleUserViewModel>(house.Lot.Owner);
+                sellingViewModel.BidWinner = _mapper.Map<Bid, BidViewModel>(house.BidWinner);
+                sellingViewModel.Lot.Images = _mapper.Map<ICollection<Image>, ICollection<ImageViewModel>>(house.Lot.Images);
+                var bids = _mapper.Map<ICollection<Bid>, ICollection<BidViewModel>>(house.Lot.Bids);
+
+                sellingViewModel.Bids = (ICollection<BidViewModel>)
+                                        (from item in bids
+                                        orderby item.Value descending
+                                        select item);
+
+                sellingHouseViewModels.Add(sellingViewModel);
             }
-            
-            var lotIds = from coef in coefs
-                         select coef.LotId;
-            var lots = await _context.Lots.ToListAsync();
 
-            var lotIds = from lot in lots
-                         where(Item => Item.Contain(lot.Id != 
-                         select lot.Id;
 
-            var sellingHouses = (await _context.Houses
-                                                   .Include(Item => Item.Lot)
-                                                   .Include(Item => Item.Lot.Images)
-                                                   .Include(Item => Item.Lot.Address)
-                                                   .ToListAsync())
-                                                   .Where(item => lotIds.Contains(item.LotId));
 
-            var houseViewModels = new List<HouseViewModel>();
 
-            foreach (var rentHouse in rentHouses)
-            {
-                var house = _mapper.Map<House, HouseViewModel>(rentHouse);
-                house.Lot = _mapper.Map<Lot, LotViewModel>(rentHouse.Lot);
-
-                if (rentHouse.Lot.Images != null)
-                    house.Lot.Images = _mapper.Map<ICollection<Image>, ICollection<ImageViewModel>>(rentHouse.Lot.Images);
-                if (rentHouse.Lot.Address != null)
-                    house.Address = _mapper.Map<Address, AddressViewModel>(rentHouse.Lot.Address);
-
-                houseViewModels.Add(house);
-            }
 
             if (!sorted)
-                return Ok(houseViewModels);
+                return Ok(sellingHouseViewModels);
             else
             {
                 if (sortType != null)
                 {
-                    if (sortType == RentSortType.City)
+                    if (sortType == SellingSortType.City)
                     {
                         //Sort by city
 
-                        houseViewModels.Sort((first, second) => first.Address.City.CompareTo(second.Address.City));
+                        sellingHouseViewModels.Sort((first, second) => first.Lot.Address.City.CompareTo(second.Lot.Address.City));
 
-                        return houseViewModels;
+                        return Ok(sellingHouseViewModels);
                     }
-                    if (sortType == RentSortType.Country)
+                    if (sortType == SellingSortType.Country)
                     {
                         //Sort by country
-                        houseViewModels.Sort((first, second) => first.Address.Country.CompareTo(second.Address.Country));
+                        sellingHouseViewModels.Sort((first, second) => first.Lot.Address.Country.CompareTo(second.Lot.Address.Country));
 
-                        return houseViewModels;
+                        return Ok(sellingHouseViewModels);
                     }
-                    if (sortType == RentSortType.Id)
+                    if (sortType == SellingSortType.Id)
                     {
                         // Sort by Id
-                        houseViewModels.Sort((first, second) => first.Id.CompareTo(second.Id));
+                        sellingHouseViewModels.Sort((first, second) => first.Id.CompareTo(second.Id));
 
-                        return houseViewModels;
+                        return Ok(sellingHouseViewModels);
+                    }
+                    if (sortType == SellingSortType.LowestBidFirst)
+                    {
+                        //Sort by price
+                        var sortedSellings = from Item in sellingHouseViewModels
+                                             orderby Item.Bids.ElementAt(0).Value
+                                             select Item;
+
+                        return Ok(sortedSellings);
+                    }
+                    if (sortType == SellingSortType.LowestPriceFirst)
+                    {
+                        //Sort by price
+                        var sortedSellings = from Item in sellingHouseViewModels
+                                             orderby Item.PriceBuyItNow
+                                             select Item;
+
+                        return Ok(sortedSellings);
                     }
                 }
             }
 
-            return Ok(houseViewModels);
+            return Ok(sellingHouseViewModels);
         }
     }
+}
