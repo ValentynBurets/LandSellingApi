@@ -30,7 +30,7 @@ namespace LandSellingWebsite.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Houses? sroted = ""
+        // GET: api/RentHouses? sroted = ""
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HouseViewModel>>> GetHouse([Required] bool sorted, RentSortType? sortType)
         {
