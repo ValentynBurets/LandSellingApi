@@ -1,0 +1,17 @@
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\bin\Debug\net5.0\Business.Contract.deps.json
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\bin\Debug\net5.0\Business.Contract.dll
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\bin\Debug\net5.0\ref\Business.Contract.dll
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\bin\Debug\net5.0\Business.Contract.pdb
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\Business.Contract.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\Business.Contract.AssemblyInfoInputs.cache
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\Business.Contract.AssemblyInfo.cs
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\Business.Contract.csproj.CoreCompileInputs.cache
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\Business.Contract.dll
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\ref\Business.Contract.dll
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\Business.Contract.pdb
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\bin\Debug\net5.0\Data.Identity.dll
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\bin\Debug\net5.0\Domain.dll
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\bin\Debug\net5.0\Data.Identity.pdb
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\bin\Debug\net5.0\Domain.pdb
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\Business.Contract.csproj.AssemblyReference.cache
+C:\Users\vab\source\repos\LandSellingWebsite\Business.Contract\obj\Debug\net5.0\Business.Contract.csproj.CopyComplete
