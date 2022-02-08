@@ -18,6 +18,11 @@ namespace Data.Identity
                {
                    Name = "Admin",
                    NormalizedName = "ADMIN"
+               },
+               new IdentityRole
+               {
+                   Name = "Admin",
+                   NormalizedName = "ADMIN"
                });
         }
     }

@@ -4,12 +4,11 @@ using System;
 
 namespace Domain.Entity
 {
-    public partial class PriceCoef: EntityBase
+    public partial class Land: EntityBase
     {
         public Guid? LotId { get; set; }
-        public Guid DaysCount { get; set; }
-        public decimal Value { get; set; }
 
         public virtual Lot Lot { get; set; }
     }
 }
+

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.Entity.Constants;
+using Microsoft.Spatial;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Entity
@@ -14,18 +16,18 @@ namespace Domain.Entity
             Lands = new HashSet<Land>();
             PriceCoefs = new HashSet<PriceCoef>();
             Rents = new HashSet<Rent>();
-            Sellings = new HashSet<Selling>();
         }
 
-        public int Id { get; set; }
-        public int? AddressId { get; set; }
-        public int? OwnerId { get; set; }
+        public Guid Id { get; set; }
+        public Guid? OwnerId { get; set; }
         public DateTime PublicationDate { get; set; }
         public float? Square { get; set; }
         public string Description { get; set; }
-        public int? LotStatusId { get; set; }
-
-        public virtual Address Address { get; set; }
+        public LotState Status { get; set; }
+        public Guid ManagerId {  get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? MaxPrice { get; set; }
+        public Geometry Location { get; set; }
         public virtual Customer Owner { get; set; }
         public virtual ICollection<Bid> Bids { get; set; }
         public virtual ICollection<House> Houses { get; set; }
