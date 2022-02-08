@@ -21,8 +21,8 @@ namespace Data.Identity
                },
                new IdentityRole
                {
-                   Name = "Admin",
-                   NormalizedName = "ADMIN"
+                   Name = "Manager",
+                   NormalizedName = "MANAGER"
                });
         }
     }

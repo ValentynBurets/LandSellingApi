@@ -11,5 +11,9 @@ namespace Domain.Entity.Users
         public Manager(Guid idLink) : base(idLink)
         {
         }
+        public decimal Salary {  get; set; }
+        public float YearsOfExperience { get; set; }
+
+        public virtual ICollection<Lot> Lots { get; set; }
     }
 }

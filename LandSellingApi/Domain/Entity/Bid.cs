@@ -8,7 +8,7 @@ namespace Domain.Entity
     {
         public Bid()
         {
-            Sellings = new HashSet<Selling>();
+            Lots = new HashSet<Lot>();
         }
 
         public decimal Value { get; set; }
@@ -17,6 +17,6 @@ namespace Domain.Entity
 
         public virtual Customer Bidder { get; set; }
         public virtual Lot Lot { get; set; }
-        public virtual ICollection<Selling> Sellings { get; set; }
+        public virtual ICollection<Lot> Lots { get; set; }
     }
 }

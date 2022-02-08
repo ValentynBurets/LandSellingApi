@@ -4,14 +4,16 @@ using Data.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Identity.Migrations
 {
     [DbContext(typeof(LandSellingIdentityContext))]
-    partial class LandSellingIdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20220208184403_IdentityUsersMigration")]
+    partial class IdentityUsersMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,22 +115,22 @@ namespace Data.Identity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a8e9f3d4-89e5-46fb-b239-a7239ffab06c",
-                            ConcurrencyStamp = "41a6e97b-1fe5-4fbd-b207-854ee2201951",
+                            Id = "be01da68-d3d0-47e5-88ee-f6f01b9dc1da",
+                            ConcurrencyStamp = "72df7551-726d-45f7-a418-e7db754d0b05",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "928162a0-b868-4155-afd9-06a478ffcd6d",
-                            ConcurrencyStamp = "8ba5bf8d-e866-4468-857c-f1cbbc02867e",
+                            Id = "6401e6d0-2b3c-4b58-ac90-03d50e223c2c",
+                            ConcurrencyStamp = "e543ff03-f751-4ef8-9521-fdf1364d4910",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "1031149f-9b7c-43fe-a26c-e1f27f89f915",
-                            ConcurrencyStamp = "c0e7e87f-cb23-4bce-9669-0bb8d33274be",
+                            Id = "867f4bcc-6e1a-4dd1-95da-8068931f96e7",
+                            ConcurrencyStamp = "0b666430-85f7-449d-a618-147e3e676cd3",
                             Name = "Manager",
                             NormalizedName = "MANA"
                         });

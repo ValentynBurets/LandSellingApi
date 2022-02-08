@@ -7,5 +7,6 @@ namespace Domain.Entity
         public Admin(Guid idLink) : base(idLink)
         {
         }
+        public decimal Salary { get; set; }
     }
 }

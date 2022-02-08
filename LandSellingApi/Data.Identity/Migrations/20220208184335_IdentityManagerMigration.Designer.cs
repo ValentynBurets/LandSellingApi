@@ -4,14 +4,16 @@ using Data.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Identity.Migrations
 {
     [DbContext(typeof(LandSellingIdentityContext))]
-    partial class LandSellingIdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20220208184335_IdentityManagerMigration")]
+    partial class IdentityManagerMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,24 +115,10 @@ namespace Data.Identity.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a8e9f3d4-89e5-46fb-b239-a7239ffab06c",
-                            ConcurrencyStamp = "41a6e97b-1fe5-4fbd-b207-854ee2201951",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "928162a0-b868-4155-afd9-06a478ffcd6d",
-                            ConcurrencyStamp = "8ba5bf8d-e866-4468-857c-f1cbbc02867e",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "1031149f-9b7c-43fe-a26c-e1f27f89f915",
-                            ConcurrencyStamp = "c0e7e87f-cb23-4bce-9669-0bb8d33274be",
+                            Id = "a1726dd7-76bf-41b2-b692-0503c4720752",
+                            ConcurrencyStamp = "43834ddd-138f-4f5a-8c4a-7711c64d3e77",
                             Name = "Manager",
-                            NormalizedName = "MANA"
+                            NormalizedName = "MANAGER"
                         });
                 });
 
