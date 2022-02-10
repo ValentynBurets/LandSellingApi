@@ -8,15 +8,14 @@ namespace Domain.Entity
     {
         public Bid()
         {
-            Lots = new HashSet<Lot>();
         }
 
         public decimal Value { get; set; }
         public Guid BidderId { get; set; }
-        public Guid LotId { get; set; }
+        public Guid SellingId { get; set; }
+        public bool IsWinner { get ; set; }
 
         public virtual Customer Bidder { get; set; }
-        public virtual Lot Lot { get; set; }
-        public virtual ICollection<Lot> Lots { get; set; }
+        public virtual Selling Selling { get; set; }
     }
 }

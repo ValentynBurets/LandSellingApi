@@ -7,9 +7,10 @@ namespace Domain.Entity
     public partial class PriceCoef: EntityBase
     {
         public Guid LotId { get; set; }
-        public Guid DaysCount { get; set; }
+        public int DaysCount { get; set; }
         public decimal Value { get; set; }
 
         public virtual Lot Lot { get; set; }
+        public virtual Rent Rent { get; set; }
     }
 }
