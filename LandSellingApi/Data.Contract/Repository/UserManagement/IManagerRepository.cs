@@ -3,7 +3,7 @@ using Domain.Entity.Users;
 
 namespace Data.Contract.Repository.Authentication
 {
-    internal interface IManagerRepository : IEntityRepository<Manager>
+    public interface IManagerRepository : IEntityRepository<Manager>
     {
     }
 }
