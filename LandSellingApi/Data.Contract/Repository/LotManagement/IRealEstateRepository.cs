@@ -9,6 +9,8 @@ namespace Data.Contract.Repository.LotManagement
     public interface IRealEstateRepository : IEntityRepository<RealEstate>
     {
         Task<RealEstate> GetByLotId(Guid lotId);
-        Task<IEnumerable<RealEstate>> GetBySquare(float squareId); 
+        Task<IEnumerable<RealEstate>> GetBySquare(float square);
+        Task<IEnumerable<RealEstate>> GetBySquarDescending();
+        Task<IEnumerable<RealEstate>> GetBySquareRaising();
     }
 }

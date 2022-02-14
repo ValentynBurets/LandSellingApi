@@ -9,7 +9,7 @@ namespace Data.Contract.Repository
     public interface IPriceCoefRepository : IEntityRepository<PriceCoef>
     {
         Task<IEnumerable<PriceCoef>> GetByLotId(Guid lotId);
-        Task<IEnumerable<PriceCoef>> GetByDaysCount(int DaysCount);
+        Task<IEnumerable<PriceCoef>> GetByDaysCount(int daysCount);
         Task<IEnumerable<PriceCoef>> GetByValue(decimal value);
     }
 }

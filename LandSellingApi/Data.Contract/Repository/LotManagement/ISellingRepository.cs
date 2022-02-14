@@ -9,8 +9,12 @@ namespace Data.Contract.Repository.LotManagement
     public interface ISellingRepository : IEntityRepository<Selling>
     {
         Task<Selling> GetByLotId(Guid lotId);
-        Task<Selling> GetByCustomerId(Guid customerId);
-        Task<Selling> GetByMangerId(Guid managerId);
-        Task<IEnumerable<Selling>> GetBySellingPrice();
+        Task<IEnumerable<Selling>> GetByCustomerId(Guid customerId);
+        Task<IEnumerable<Selling>> GetByMangerId(Guid managerId);
+        Task<IEnumerable<Selling>> GetBySellingPrice(decimal price);
+
+        Task<IEnumerable<Selling>> GetBySellingPriceRaising();
+
+        Task<IEnumerable<Selling>> GetBySellingPriceDescending();
     }
 }

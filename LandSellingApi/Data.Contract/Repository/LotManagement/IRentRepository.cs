@@ -12,6 +12,9 @@ namespace Data.Contract.Repository.LotManagement
         Task<Rent> GetByManagerId(Guid managerId);
         Task<Rent> GetByLotId(Guid lotId);
         Task<Rent> GetByPriceCoefId(Guid priceCoefId);
-        Task<IEnumerable<Rent>> GetByDate(DateTime date);
+        Task<IEnumerable<Rent>> GetByBeginDateRaising(DateTime date);
+        Task<IEnumerable<Rent>> GetByEndDateRaising(DateTime date);
+        Task<IEnumerable<Rent>> GetByBeginDateDescending(DateTime date);
+        Task<IEnumerable<Rent>> GetByEndDateDescending(DateTime date);
     }
 }

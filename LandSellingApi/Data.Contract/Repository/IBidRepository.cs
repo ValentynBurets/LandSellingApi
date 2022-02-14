@@ -8,11 +8,9 @@ namespace Data.Contract.Repository
 {
     public interface IBidRepository : IEntityRepository<Bid>
     {
-        Task<Bid> GetByBidderId(Guid bidderId);
-        Task<Bid> GetBySellingId(Guid sellingId);
+        Task<IEnumerable<Bid>> GetByBidderId(Guid bidderId);
+        Task<IEnumerable<Bid>> GetBySellingId(Guid sellingId);
         Task<IEnumerable<Bid>> GetByValue(decimal value);
         Task<IEnumerable<Bid>> GetBidsWinners();
-        
-
     }
 }

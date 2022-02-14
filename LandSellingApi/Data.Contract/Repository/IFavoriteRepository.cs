@@ -8,7 +8,7 @@ namespace Data.Contract.Repository
 {
     public interface IFavoriteRepository : IEntityRepository<Favorite>
     {
-        Task<IEnumerable<Bid>> GetByCustomerId(Guid customerId);
-        Task<IEnumerable<Bid>> GetByLotId(Guid lotId);
+        Task<IEnumerable<Favorite>> GetByCustomerId(Guid customerId);
+        Task<IEnumerable<Favorite>> GetByLotId(Guid lotId);
     }
 }
