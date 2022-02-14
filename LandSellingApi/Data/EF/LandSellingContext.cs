@@ -30,7 +30,8 @@ namespace Data.EF
         public virtual DbSet<Favorite> Favorites { get; set; }
         public virtual DbSet<Selling> Sellings { get; set; }
         public virtual DbSet<Rent> Rents { get; set; }
-     
+        public virtual DbSet<Bid> Bids { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
