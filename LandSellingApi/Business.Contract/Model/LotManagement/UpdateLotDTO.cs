@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Contract.Model.LotManagement.Lot
+namespace Business.Contract.Model.LotManagement
 {
     public class UpdateLotDTO
     {

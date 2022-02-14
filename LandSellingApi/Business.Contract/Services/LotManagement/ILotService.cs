@@ -1,4 +1,4 @@
-﻿using Business.Contract.Model.LotManagement.Lot;
+﻿using Business.Contract.Model.LotManagement;
 using System;
 using System.Threading.Tasks;
 
