@@ -21,10 +21,11 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(CreateLotDTO createLot)
+        public async Task Create(CreateLotDTO createLot, Guid id)
         {
 
             Lot newLot = _mapper.Map<Lot>(createLot);
+            newLot.OwnerId = id;
             await _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.Save();
         }
