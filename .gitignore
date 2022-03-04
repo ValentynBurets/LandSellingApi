@@ -22,3 +22,5 @@
 /LandSellingApi/.vs/LandSellingWebsite/DesignTimeBuild
 /LandSellingApi/.vs/LandSellingWebsite/v17
 /LandSellingApi/.vs/LandSellingWebsite/project-colors.json
+/LandSellingApi/bin
+/LandSellingApi/obj
