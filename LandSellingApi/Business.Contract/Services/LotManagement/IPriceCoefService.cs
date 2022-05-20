@@ -7,7 +7,7 @@ namespace Business.Contract.Services.LotManagement
 {
     public interface IPriceCoefService
     {
-        public Task Create(PriceCoefDTO createPriceCoef);
+        public Task Create(PriceCoefDTO createPriceCoef, Guid lotId);
         public Task Delete(Guid id);
         public Task Update(PriceCoefDTO updatePriceCoef, Guid priceCoefId);
         public Task<IEnumerable<PriceCoefDTO>> GetAllByLotId(Guid lotId);

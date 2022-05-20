@@ -20,6 +20,7 @@ namespace Business.Services.LotManagement.AgreementManagement
         public async Task Create(AgreementDTO createAgreement)
         {
             Agreement newAgreement = _mapper.Map<Agreement>(createAgreement);
+            newAgreement.CreationDate = DateTime.Now;
             await _unitOfWork.AgreementRepository.Add(newAgreement);
             await _unitOfWork.Save();
         }

@@ -21,14 +21,15 @@ namespace Business.Services.PaymentManagement.PaymentManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(PaymentDTO createPayment)
+        public async Task Create(PaymentDTO createPayment, Guid userId)
         {
             Payment newPayment = _mapper.Map<Payment>(createPayment);
+            newPayment.UserId = userId;
             await _unitOfWork.PaymentRepository.Add(newPayment);
             await _unitOfWork.Save();
         }
 
-        public async Task<PaymentDTO> Get(Guid paymentId)
+        public async Task<PaymentDTO> GetById(Guid paymentId)
         {
             Payment Payment = await _unitOfWork.PaymentRepository.GetById(paymentId);
             return _mapper.Map<PaymentDTO>(Payment);

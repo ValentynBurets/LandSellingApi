@@ -23,6 +23,7 @@ namespace Business.Services.LotManagement
         {
             Lot newLot = _mapper.Map<Lot>(createLot);
             newLot.OwnerId = ownerId;
+            newLot.PublicationDate = DateTime.Now;
             await _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.Save();
         }
@@ -41,9 +42,9 @@ namespace Business.Services.LotManagement
             await _unitOfWork.Save();
         }
 
-        public async Task<LotDTO> Get(Guid lotid)
+        public async Task<LotDTO> GetById(Guid lotId)
         {
-            Lot lot = await _unitOfWork.LotRepository.GetById(lotid);
+            Lot lot = await _unitOfWork.LotRepository.GetById(lotId);
             return _mapper.Map<LotDTO>(lot);
         }
 

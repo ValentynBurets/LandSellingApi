@@ -20,9 +20,10 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(PriceCoefDTO createPriceCoef)
+        public async Task Create(PriceCoefDTO createPriceCoef, Guid lotId)
         {
             var newPriceCoef = _mapper.Map<PriceCoef>(createPriceCoef);
+            newPriceCoef.LotId = lotId;
             await _unitOfWork.PriceCoefRepository.Add(newPriceCoef);
             await _unitOfWork.Save();
         }

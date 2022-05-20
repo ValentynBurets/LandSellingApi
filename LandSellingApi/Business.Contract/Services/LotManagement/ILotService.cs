@@ -10,7 +10,7 @@ namespace Business.Contract.Services.LotManagement
         public Task Create(LotDTO createLot, Guid ownerId);
         public Task Delete(Guid id);
         public Task Update(LotDTO updateLot, Guid lotId);
-        public Task<LotDTO> Get(Guid lotid);
+        public Task<LotDTO> GetById(Guid lotId);
         public Task<IEnumerable<LotDTO>> GetAll();
     }
 }

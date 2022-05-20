@@ -21,14 +21,17 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(BidDTO createBid)
+        public async Task Create(BidDTO createBid, Guid lotId, Guid userId)
         {
             Bid newBid = _mapper.Map<Bid>(createBid);
+            newBid.BidderId = userId;
+            newBid.LotId = lotId;
+            newBid.Date = DateTime.Now;
             await _unitOfWork.BidRepository.Add(newBid);
             await _unitOfWork.Save();
         }
 
-        public async Task<BidDTO> Get(Guid bidId)
+        public async Task<BidDTO> GetById(Guid bidId)
         {
             Bid bid = await _unitOfWork.BidRepository.GetById(bidId);
             return _mapper.Map<BidDTO>(bid);
