@@ -1,10 +1,10 @@
 ﻿using Data.Identity.Repository.Base;
 using Domain.Entity;
 using Domain.Entity.Constants;
-using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Location = Domain.Entity.Location;
 
 namespace Data.Contract.Repository.LotManagement
 {
@@ -14,11 +14,9 @@ namespace Data.Contract.Repository.LotManagement
         Task<IEnumerable<Lot>> GetByMangerId(Guid managerId);
         Task<IEnumerable<Lot>> GetByPublicationDate(DateTime date);
         Task<IEnumerable<Lot>> GetByState(State state);
-        Task<IEnumerable<Lot>> GetByLocation(Geometry location);
-        Task<IEnumerable<Lot>> GetByMinCostRaising();
-        Task<IEnumerable<Lot>> GetByMinСostDescending();
-        Task<IEnumerable<Lot>> GetByMaxCostRaising();
-        Task<IEnumerable<Lot>> GetByMaxСostDescending();
-
+        Task<IEnumerable<Lot>> GetByLocation(Location location);
+        Task<IEnumerable<Lot>> GetByCostRaising();
+        Task<IEnumerable<Lot>> GetByСostDescending();
+        
     }
 }

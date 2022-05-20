@@ -4,11 +4,11 @@ using Data.Repository.Base;
 using Domain.Entity;
 using Domain.Entity.Constants;
 using Microsoft.EntityFrameworkCore;
-using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Location = Domain.Entity.Location;
 
 namespace Data.Repository.LotManagement
 {
@@ -18,7 +18,16 @@ namespace Data.Repository.LotManagement
         {
         }
 
-        public async Task<IEnumerable<Lot>> GetByLocation(Geometry location)
+        public async Task<IEnumerable<Lot>> GetByCostRaising()
+        {
+            return await _DbContext.Lots.OrderBy(l => l.BuyPrice).ToListAsync();
+        }
+        public async Task<IEnumerable<Lot>> GetByСostDescending()
+        {
+            return await _DbContext.Lots.OrderByDescending(l => l.BuyPrice).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Lot>> GetByLocation(Location location)
         {
             return await _DbContext.Lots.Where(l => l.Location == location).ToListAsync();
         }
@@ -26,26 +35,6 @@ namespace Data.Repository.LotManagement
         public async Task<IEnumerable<Lot>> GetByMangerId(Guid managerId)
         {
             return await _DbContext.Lots.Where(l => l.ManagerId == managerId).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Lot>> GetByMaxCostRaising()
-        {
-            return await _DbContext.Lots.OrderBy(l => l.MaxPrice).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Lot>> GetByMaxСostDescending()
-        {
-            return await _DbContext.Lots.OrderByDescending(l => l.MaxPrice).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Lot>> GetByMinCostRaising()
-        {
-            return await _DbContext.Lots.OrderBy(l => l.MinPrice).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Lot>> GetByMinСostDescending()
-        {
-            return await _DbContext.Lots.OrderByDescending(l => l.MinPrice).ToListAsync();
         }
 
         public async Task<IEnumerable<Lot>> GetByOwnerId(Guid ownerId)

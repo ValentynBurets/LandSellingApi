@@ -9,18 +9,17 @@ namespace Data.Identity.UnitOfWork
     public class AuthentificationUnitOfWork : IAuthentificationUnitOfWork
     {
         private LandSellingContext _landSellingContext;
-        private ICustomerRepository _customerRepository;
+        private IUserRepository _userRepository;
         private IAdminRepository _adminRepository;
 
         public AuthentificationUnitOfWork(LandSellingContext domainDbContext)
         {
             _landSellingContext = domainDbContext;
         }
-        public ICustomerRepository CustomerRepository => _customerRepository ??= new CustomerRepository(_landSellingContext);
+        public IUserRepository UserRepository => _userRepository ??= new UserRepository(_landSellingContext);
 
         public IAdminRepository AdminRepository => _adminRepository ??= new AdminRepository(_landSellingContext);
 
         public async Task<int> Save() => await _landSellingContext.SaveChangesAsync();
-
     }
 }

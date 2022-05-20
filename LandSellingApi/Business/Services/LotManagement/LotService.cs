@@ -5,13 +5,11 @@ using Data.Contract.UnitOfWork;
 using Domain.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Services.LotManagement
 {
-    internal class LotService : ILotService
+    public class LotService : ILotService
     {
         private IMapper _mapper;
         private readonly ILotUnitOfWork _unitOfWork;
@@ -21,11 +19,10 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(CreateLotDTO createLot, Guid id)
+        public async Task Create(LotDTO createLot, Guid ownerId)
         {
-
             Lot newLot = _mapper.Map<Lot>(createLot);
-            newLot.OwnerId = id;
+            newLot.OwnerId = ownerId;
             await _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.Save();
         }
@@ -37,11 +34,23 @@ namespace Business.Services.LotManagement
             await _unitOfWork.Save();
         }
 
-        public async Task Update(UpdateLotDTO updateLot, Guid lotId)
+        public async Task Update(LotDTO updateLot, Guid lotId)
         {
             Lot newLot = _mapper.Map<Lot>(updateLot);
             await _unitOfWork.LotRepository.Update(newLot);
             await _unitOfWork.Save();
+        }
+
+        public async Task<LotDTO> Get(Guid lotid)
+        {
+            Lot lot = await _unitOfWork.LotRepository.GetById(lotid);
+            return _mapper.Map<LotDTO>(lot);
+        }
+
+        public async Task<IEnumerable<LotDTO>> GetAll()
+        {
+            IEnumerable<Lot> lots = await _unitOfWork.LotRepository.GetAll();
+            return _mapper.Map<IEnumerable<LotDTO>>(lots);
         }
     }
 }

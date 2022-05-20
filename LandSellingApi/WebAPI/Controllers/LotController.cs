@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> Create(CreateLotDTO newLot)
+        public async Task<ActionResult> Create(LotDTO newLot)
         {
             try
             {

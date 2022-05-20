@@ -6,7 +6,7 @@ namespace Data.Contract.UnitOfWork
 {
     public interface IAuthentificationUnitOfWork : IUnitOfWorkBase
     {
-        ICustomerRepository CustomerRepository { get; }
+        IUserRepository UserRepository { get; }
         IAdminRepository AdminRepository { get; }
     }
 }
