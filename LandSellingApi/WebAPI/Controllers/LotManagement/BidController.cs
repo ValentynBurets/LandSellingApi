@@ -19,11 +19,11 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> Create(BidDTO createBid, Guid lotId)
+        public async Task<ActionResult> Create(BidDTO createBid)
         {
             try
             {
-                await _bidService.Create(createBid, lotId, GetUserId());
+                await _bidService.Create(createBid, GetUserId());
                 return Ok("new bid created");
             }
             catch (Exception ex)

@@ -18,12 +18,12 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> Create(ImageDTO newImage, Guid lotId)
+        public async Task<ActionResult> Create(ImageDTO newImage)
         {
             try
             {
-                await _imageService.Create(newImage, lotId);
-                return Ok("new image created for the lot " + lotId);
+                await _imageService.Create(newImage);
+                return Ok("new image created for the lot " + newImage.LotId);
             }
             catch (Exception ex)
             {

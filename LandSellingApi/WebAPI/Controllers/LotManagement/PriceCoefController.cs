@@ -18,11 +18,11 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> Create(PriceCoefDTO newPriceCoef, Guid lotId)
+        public async Task<ActionResult> Create(PriceCoefDTO newPriceCoef)
         {
             try
             {
-                await _priceCoefService.Create(newPriceCoef, lotId);
+                await _priceCoefService.Create(newPriceCoef);
                 return Ok("new priceCoef craeted");
             }
             catch (Exception ex)

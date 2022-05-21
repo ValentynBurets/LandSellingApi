@@ -9,6 +9,6 @@ namespace Business.Contract.Model.LotManagement
     public class ImageDTO
     {
         public Guid LotId { get; set; }
-        public byte[] ImageData { get; set; }
+        public string ImageData { get; set; }
     }
 }

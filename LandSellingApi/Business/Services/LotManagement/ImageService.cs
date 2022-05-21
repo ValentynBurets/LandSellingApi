@@ -19,10 +19,18 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(ImageDTO createImage, Guid lotId)
+        public async Task Create(ImageDTO createImage)
         {
-            Image newImage = _mapper.Map<Image>(createImage);
-            newImage.LotId = lotId;
+            Image newImage = new Image();
+
+            string imageDataString = createImage.ImageData;
+
+            if (imageDataString.Contains("base64,"))
+            {
+                imageDataString = imageDataString.Split("base64,")[1];
+            }
+
+            newImage.ImageData = Convert.FromBase64String(imageDataString);
             await _unitOfWork.ImageRepository.Add(newImage);
             await _unitOfWork.Save();
         }
@@ -44,7 +52,18 @@ namespace Business.Services.LotManagement
         public async Task<IEnumerable<ImageDTO>> GetAllByLotId(Guid lotId)
         {
             IEnumerable<Image> images = await _unitOfWork.ImageRepository.GetByLotId(lotId);
-            return _mapper.Map<IEnumerable<ImageDTO>>(images);
+
+            List<ImageDTO> imageDTOs = new List<ImageDTO>();
+
+            foreach (Image image in images)
+            {
+                ImageDTO imageDTO = new ImageDTO();
+                imageDTO.ImageData = Convert.ToBase64String(image.ImageData);
+                imageDTO.LotId = image.LotId;
+                imageDTOs.Add(imageDTO);
+            }
+
+            return imageDTOs;
         }
     }
 }

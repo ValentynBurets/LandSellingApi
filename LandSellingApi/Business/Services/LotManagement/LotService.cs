@@ -24,6 +24,21 @@ namespace Business.Services.LotManagement
             Lot newLot = _mapper.Map<Lot>(createLot);
             newLot.OwnerId = ownerId;
             newLot.PublicationDate = DateTime.Now;
+                
+            Location location = new Location()
+            {
+                Latitude = createLot.Location.Latitude,
+                Longitude = createLot.Location.Longitude,
+                Country = createLot.Location.Country,
+                Region = createLot.Location.Region,
+                City = createLot.Location.City,
+                Street = createLot.Location.Street
+            };
+            await _unitOfWork.LocationRepository.Add(location);
+            await _unitOfWork.Save();
+
+            newLot.LocationId = await _unitOfWork.LocationRepository.GetByLongitudeAndLatitude(createLot.Location.Longitude, createLot.Location.Latitude);
+
             await _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.Save();
         }

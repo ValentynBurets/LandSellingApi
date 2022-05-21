@@ -11,9 +11,10 @@ namespace Data.Contract.UnitOfWork
         ILotRepository LotRepository { get; }
         IBidRepository BidRepository { get; }
         IImageRepository ImageRepository { get; }
+        ILocationRepository LocationRepository { get; }
         IPriceCoefRepository PriceCoefRepository { get; }
         IUserRepository UserRepository { get;  }
-        IAdminRepository ManagerRepository { get; }
+        IAdminRepository AdminRepository { get; }
         IAgreementRepository AgreementRepository { get; }
         IPaymentRepository PaymentRepository { get; }
     }

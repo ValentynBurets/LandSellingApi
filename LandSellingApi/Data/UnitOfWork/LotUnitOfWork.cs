@@ -26,10 +26,11 @@ namespace Data.UnitOfWork
         private IBidRepository _bidRepository;
 
         private IImageRepository _imageRepository;
+        private ILocationRepository _locationRepository;
         private IPaymentRepository _paymentRepository;
         private IPriceCoefRepository _priceCoefRepository;
 
-        private IUserRepository _customerRepository;
+        private IUserRepository _userRepository;
 
         private IAdminRepository _adminRepository;
 
@@ -42,11 +43,11 @@ namespace Data.UnitOfWork
         public IAgreementRepository AgreementRepository => _agreementRepository ??= new AgreementRepository(_dbContext);
         public IBidRepository BidRepository => _bidRepository ??= new BidRepository(_dbContext);
         public IImageRepository ImageRepository => _imageRepository ??= new ImageRepository(_dbContext);
+        public ILocationRepository LocationRepository => _locationRepository ??= new LocationRepository(_dbContext);
         public IPaymentRepository PaymentRepository => _paymentRepository ??= new PaymentRepository(_dbContext);
         public IPriceCoefRepository PriceCoefRepository => _priceCoefRepository ??= new PriceCoefRepository(_dbContext);
-        public IAdminRepository ManagerRepository => _adminRepository ??= new AdminRepository(_dbContext);
-        public IUserRepository UserRepository => throw new NotImplementedException();
-        
+        public IUserRepository UserRepository => _userRepository ??= new UserRepository(_dbContext);
+        public IAdminRepository AdminRepository => _adminRepository ??= new AdminRepository(_dbContext);
         public async Task<int> Save() => await _dbContext.SaveChangesAsync();
     }
 }
