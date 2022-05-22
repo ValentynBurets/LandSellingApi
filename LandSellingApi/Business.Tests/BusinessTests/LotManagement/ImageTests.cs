@@ -53,7 +53,8 @@ namespace Business.Tests.BusinessTests.LotManagement
 
         [SetUp]
         public void SetUp()
-        {        
+        {
+            // Arrange
             IImageRepository imageRepository =
                 Mock.Of<IImageRepository>(iR => iR.GetByLotId(It.IsAny<Guid>()) == Task.FromResult(images) &&
                                                 iR.Add(It.IsAny<Image>()) == Task.CompletedTask);
