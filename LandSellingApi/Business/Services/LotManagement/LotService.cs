@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Contract.Model.LotManagement;
+using Business.Contract.Model.LotManagement.Lot;
 using Business.Contract.Services.LotManagement;
 using Data.Contract.UnitOfWork;
 using Domain.Entity;
@@ -57,16 +58,30 @@ namespace Business.Services.LotManagement
             await _unitOfWork.Save();
         }
 
-        public async Task<LotDTO> GetById(Guid lotId)
+        public async Task<ReturnLotDTO> GetById(Guid lotId)
         {
             Lot lot = await _unitOfWork.LotRepository.GetById(lotId);
-            return _mapper.Map<LotDTO>(lot);
+            Location location = await _unitOfWork.LocationRepository.GetById(lot.LocationId);
+            LocationDTO locationDTO = _mapper.Map<LocationDTO>(location);
+            ReturnLotDTO lotDTO = _mapper.Map<ReturnLotDTO>(lot);
+            lotDTO.Location = locationDTO;
+            return lotDTO;
         }
 
-        public async Task<IEnumerable<LotDTO>> GetAll()
+        public async Task<IEnumerable<ReturnLotDTO>> GetAll()
         {
             IEnumerable<Lot> lots = await _unitOfWork.LotRepository.GetAll();
-            return _mapper.Map<IEnumerable<LotDTO>>(lots);
+            List<ReturnLotDTO> lotDTOs = new List<ReturnLotDTO>();
+
+            foreach (Lot lot in lots)
+            {
+                ReturnLotDTO lotDTO = _mapper.Map<ReturnLotDTO>(lot);
+                Location location = await _unitOfWork.LocationRepository.GetById(lot.LocationId);
+                LocationDTO locationDTO = _mapper.Map<LocationDTO>(location);
+                lotDTO.Location = locationDTO;
+                lotDTOs.Add(lotDTO);
+            }
+            return lotDTOs;
         }
     }
 }

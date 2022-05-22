@@ -9,8 +9,9 @@ namespace Data.Contract.Repository.LotManagement
     public interface IAgreementRepository : IEntityRepository<Agreement>
     {
         Task<IEnumerable<Agreement>> GetByOwnerId(Guid ownerId);
-        Task<IEnumerable<Agreement>> GetByMangerId(Guid managerId);
+        Task<IEnumerable<Agreement>> GetByManagerId(Guid managerId);
         Task<IEnumerable<Agreement>> GetByCustomerId(Guid customerId);
+        Task<Agreement> GetByLotId(Guid lotId);
         Task<IEnumerable<Agreement>> GetByDate(DateTime date);
     }
 }

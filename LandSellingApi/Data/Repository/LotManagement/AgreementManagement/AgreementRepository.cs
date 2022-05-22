@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Repository.LotManagement.AgreementManagement
@@ -27,7 +26,12 @@ namespace Data.Repository.LotManagement.AgreementManagement
             return await _DbContext.Agreements.Where(i => i.StartDate == date).ToListAsync();
         }
 
-        public async Task<IEnumerable<Agreement>> GetByMangerId(Guid managerId)
+        public async Task<Agreement> GetByLotId(Guid lotId)
+        {
+            return await _DbContext.Agreements.Where(i => i.LotId == lotId).FirstAsync();
+        }
+
+        public async Task<IEnumerable<Agreement>> GetByManagerId(Guid managerId)
         {
             var lots = await _DbContext.Lots.Where(i => i.ManagerId == managerId).ToListAsync();
             List <Agreement> Agreements = new List<Agreement>();
