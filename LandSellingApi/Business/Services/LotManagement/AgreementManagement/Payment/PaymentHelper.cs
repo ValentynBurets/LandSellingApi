@@ -1,12 +1,13 @@
 ﻿using Braintree;
 using Business.Contract.Model.LotManagement.AgreementManagement;
+using Business.Contract.Services.LotManagement.AgreementManagement.Payment;
 using Data.Contract.UnitOfWork;
 using System;
 using System.Threading.Tasks;
 
 namespace Business.Services.LotManagement.AgreementManagement
 {
-    public class PaymentHelper
+    public class PaymentHelper: IPaymentHelper
     {
         private BraintreeGateway _gateway;
         private readonly ILotUnitOfWork _unitOfWork;

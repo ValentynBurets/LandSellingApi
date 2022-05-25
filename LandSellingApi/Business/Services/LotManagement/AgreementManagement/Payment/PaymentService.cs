@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Business.Contract.Model.LotManagement.AgreementManagement;
 using Business.Contract.Services.LotManagement.AgreementManagement;
-using Business.Services.LotManagement.AgreementManagement;
+using Business.Contract.Services.LotManagement.AgreementManagement.Payment;
 using Data.Contract.UnitOfWork;
 using Domain.Entity;
 using System;
@@ -14,8 +14,8 @@ namespace Business.Services.PaymentManagement.PaymentManagement
     {
         private IMapper _mapper;
         private readonly ILotUnitOfWork _unitOfWork;
-        private PaymentHelper _paymentHelper;
-        public PaymentService(IMapper mapper, ILotUnitOfWork unitOfWork, PaymentHelper paymentHelper)
+        private IPaymentHelper _paymentHelper;
+        public PaymentService(IMapper mapper, ILotUnitOfWork unitOfWork, IPaymentHelper paymentHelper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;

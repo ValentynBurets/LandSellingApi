@@ -10,6 +10,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Business.Services.Authentication;
 using Business.Contract.Services.Authentication;
+using Business.Contract.Services.LotManagement;
+using Business.Services.LotManagement;
+using Business.Contract.Services.LotManagement.AgreementManagement;
+using Business.Services.LotManagement.AgreementManagement;
+using Business.Services.PaymentManagement.PaymentManagement;
+using Business.Contract.Services.LotManagement.AgreementManagement.Payment;
 
 namespace WebAPI
 {
@@ -17,8 +23,17 @@ namespace WebAPI
     {
         public static IServiceCollection AddRepository(this IServiceCollection services)
         {
-            //add here new services
             services.AddTransient<ILotUnitOfWork, LotUnitOfWork>();
+
+            //add here new services
+            services.AddTransient<ILotService, LotService>();
+            services.AddTransient<IPriceCoefService, PriceCoefService>();
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IBidService, BidService>();
+            services.AddTransient<IAgreementService, AgreementService>();
+            services.AddTransient<IPaymentService, PaymentService>();
+            services.AddTransient<IPaymentHelper, PaymentHelper>();
+
             services.AddTransient<IAuthentificationUnitOfWork, AuthentificationUnitOfWork>();
             services.AddTransient<IProfileRegistrationService, ProfileRegistrationService>();
 
