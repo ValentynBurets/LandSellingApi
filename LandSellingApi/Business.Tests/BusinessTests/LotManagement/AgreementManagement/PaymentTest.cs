@@ -27,7 +27,7 @@ namespace Business.Tests.BusinessTests.LotManagement.AgreementManagement
         {
             // Arrange
             IUserRepository paymentRepository =
-            Mock.Of<IUserRepository>(iR => iR.GetUserCustomerIdAsync(It.IsAny<Guid>()) == Task.FromResult<string>(CustomerId)));
+            Mock.Of<IUserRepository>(iR => iR.GetUserCustomerIdAsync(It.IsAny<Guid>()) == Task.FromResult<string>(CustomerId));
 
             ILotUnitOfWork unitOfWork =
                 Mock.Of<ILotUnitOfWork>(of => of.ImageRepository == null &&
@@ -60,7 +60,7 @@ namespace Business.Tests.BusinessTests.LotManagement.AgreementManagement
             var result = paymentService.GetToken(userId);
 
             // Assert
-            Assert.That(result.Exception, Is.NotNull);
+            Assert.That(result.Exception, !Is.Null);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Business.Services.LotManagement.AgreementManagement
                     if (result.Transaction.Status == TransactionStatus.SETTLED ||
                         result.Transaction.Status == TransactionStatus.SUBMITTED_FOR_SETTLEMENT)
                     {
-                        string? customerId = await _unitOfWork.UserRepository.GetUserCustomerIdAsync(data.UserId);
+                        string customerId = await _unitOfWork.UserRepository.GetUserCustomerIdAsync(data.UserId);
                         if (customerId == null)
                         {
                             var newId = result.Transaction.CustomerDetails.Id;
@@ -85,7 +85,7 @@ namespace Business.Services.LotManagement.AgreementManagement
                     {
                         if (result.Target.Status == TransactionStatus.SUBMITTED_FOR_SETTLEMENT)
                         {
-                            string? customerId = await _unitOfWork.UserRepository.GetUserCustomerIdAsync(data.UserId);
+                            string customerId = await _unitOfWork.UserRepository.GetUserCustomerIdAsync(data.UserId);
                             if (customerId == null)
                             {
                                 var newId = result.Target.CustomerDetails.Id;

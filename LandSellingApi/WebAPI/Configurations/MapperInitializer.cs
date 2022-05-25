@@ -18,20 +18,20 @@ namespace WebAPI.Configurations
             CreateMap<AuthorisationUser, RegisterUserModel>().ReverseMap();
            
             CreateMap<Lot, UpdateLotDTO>()
-                .ForMember("State", opt => opt.MapFrom(lot => lot.Status.ToString()));
+                .ForMember("Status", opt => opt.MapFrom(lot => lot.Status.ToString()));
             CreateMap<CreateLotDTO, Lot>();
             CreateMap<Lot, ReturnLotDTO>()
-                .ForMember("State", opt => opt.MapFrom(lot => lot.Status.ToString()));
+                .ForMember("Status", opt => opt.MapFrom(lot => lot.Status.ToString()));
             CreateMap<UpdateLotDTO, Lot>()
-                .ForMember("State", opt => opt.MapFrom(lot => (State)Enum.Parse(typeof(State), lot.Status)));
+                .ForMember("Status", opt => opt.MapFrom(lot => (State)Enum.Parse(typeof(State), lot.Status)));
 
             CreateMap<CreateAgreementDTO, Agreement>();
 
             CreateMap<Agreement, AgreementDTO>()
-                .ForMember("State", opt => opt.MapFrom(lot => lot.Status.ToString()));
+                .ForMember("Status", opt => opt.MapFrom(lot => lot.Status.ToString()));
             
             CreateMap<AgreementDTO, Agreement > ()
-                .ForMember("State", opt => opt.MapFrom(lot => (State)Enum.Parse(typeof(State), lot.Status)));
+                .ForMember("Status", opt => opt.MapFrom(lot => (State)Enum.Parse(typeof(State), lot.Status)));
 
             CreateMap<Payment, PaymentDTO>().ReverseMap();
             CreateMap<Bid, BidDTO>().ReverseMap();
