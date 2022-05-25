@@ -2,6 +2,9 @@
 using Data.EF;
 using Data.Repository.Base;
 using Domain.Entity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace Data.Repository.Authentication
 {
@@ -11,5 +14,9 @@ namespace Data.Repository.Authentication
         {
         }
 
+        public async Task<Admin> GetByIdLink(Guid idLink)
+        {
+            return await _DbContext.Admins.FirstAsync(e => e.IdLink == idLink);
+        }
     }
 }

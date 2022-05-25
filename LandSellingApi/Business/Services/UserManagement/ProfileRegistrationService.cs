@@ -23,7 +23,7 @@ namespace Business.Services.Authentication
         public async Task<bool> CreateProfile(AuthorisationUser user, string firstName, string lastName)
         {
             IList<string> role = await _userManager.GetRolesAsync(user);
-            if (role.Contains("Customer"))
+            if (role.Contains("User"))
             {
                 await _unitOfWork.UserRepository.Add(new User(Guid.Parse(user.Id))
                 {

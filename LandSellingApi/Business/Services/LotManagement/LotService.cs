@@ -20,9 +20,10 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(LotDTO createLot, Guid ownerId)
+        public async Task Create(CreateLotDTO createLot, Guid ownerId)
         {
             Lot newLot = _mapper.Map<Lot>(createLot);
+            newLot.Status = Domain.Entity.Constants.State.Open;
             newLot.OwnerId = ownerId;
             newLot.PublicationDate = DateTime.Now;
                 
@@ -51,9 +52,10 @@ namespace Business.Services.LotManagement
             await _unitOfWork.Save();
         }
 
-        public async Task Update(LotDTO updateLot, Guid lotId)
+        public async Task Update(UpdateLotDTO updateLot, Guid lotId)
         {
             Lot newLot = _mapper.Map<Lot>(updateLot);
+            newLot.Id = lotId;
             await _unitOfWork.LotRepository.Update(newLot);
             await _unitOfWork.Save();
         }

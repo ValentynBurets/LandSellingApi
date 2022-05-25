@@ -27,11 +27,22 @@ namespace Business.Tests.BusinessTests.LotManagement
             Street = "Bandery"
         };
 
-        static LotDTO lotDTO = new LotDTO()
+        static UpdateLotDTO lotDTO = new UpdateLotDTO()
         {
             OwnerId = new Guid("09bb8262-8971-48f4-a"),
             ManagerId = new Guid("fe24830d-cb22-4a05-92b7-c9483109f5e8"),
             Status = "Open",
+            Description = "description",
+            BuyPrice = 100,
+            MinBidPrice = 90,
+            IsRent = false,
+            IsAuction = false,
+            Location = locationDTO
+        };
+
+        static CreateLotDTO createLotDTO = new CreateLotDTO()
+        {
+            ManagerId = new Guid("fe24830d-cb22-4a05-92b7-c9483109f5e8"),
             Description = "description",
             BuyPrice = 100,
             MinBidPrice = 90,
@@ -72,7 +83,7 @@ namespace Business.Tests.BusinessTests.LotManagement
 
         Guid locationId = new Guid("3617f605-4f80-4a06-bac9-ae2b73c1f805");
 
-        IEnumerable<LotDTO> lotDTOs = new List<LotDTO>()
+        IEnumerable<UpdateLotDTO> lotDTOs = new List<UpdateLotDTO>()
         {
             lotDTO
         };
@@ -114,7 +125,7 @@ namespace Business.Tests.BusinessTests.LotManagement
         public void CreateNewLot()
         {
             // Act
-            var result = lotService.Create(lotDTO, new Guid("4a08f0b7-4268-43d8-8092-4f2dfc17635e"));
+            var result = lotService.Create(createLotDTO, new Guid("4a08f0b7-4268-43d8-8092-4f2dfc17635e"));
 
             // Assert
             Assert.That(result.Exception, Is.Null);
@@ -127,7 +138,7 @@ namespace Business.Tests.BusinessTests.LotManagement
             var result = lotService.GetById(lot.Id);
 
             // Assert
-            Assert.That(result.Result as IEnumerable<LotDTO>, Is.EqualTo(returnLotDTO));
+            Assert.That(result.Result as IEnumerable<UpdateLotDTO>, Is.EqualTo(returnLotDTO));
         }
 
         [Test]
@@ -137,7 +148,7 @@ namespace Business.Tests.BusinessTests.LotManagement
             var result = lotService.GetAll();
 
             // Assert
-            Assert.That(result.Result as IEnumerable<LotDTO>, Is.EqualTo(lotDTOs));
+            Assert.That(result.Result as IEnumerable<UpdateLotDTO>, Is.EqualTo(lotDTOs));
         }
     }
 }

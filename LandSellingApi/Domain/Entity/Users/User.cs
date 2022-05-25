@@ -12,6 +12,8 @@ namespace Domain.Entity
             Agreements = new HashSet<Agreement>();
             Payments = new HashSet<Payment>();
         }
+
+        public string CustomerId { get; set; }
         public virtual ICollection<Lot> Lots { get; set; }
         public virtual ICollection<Bid> Bids { get; set; }
         public virtual ICollection<Agreement> Agreements { get; set; }

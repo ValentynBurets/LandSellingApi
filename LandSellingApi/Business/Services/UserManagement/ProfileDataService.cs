@@ -6,7 +6,6 @@ using Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Services.Authentication
@@ -26,12 +25,11 @@ namespace Business.Services.Authentication
 
         public async Task<UserInfoViewModel> GetCustomerProfileInfoById(Guid id)
         {
-            //var student = await _unitOfWork.StudentRepository.GetById(id);
             var customer = await _unitOfWork.UserRepository.FirstOrDefault(x => x.IdLink == id);
             var email = await _profileManager.GetEmailByUserId(id);
             if (customer == null)
             {
-                throw new Exception("Student with this id was not found!");
+                throw new Exception("User with this id was not found!");
             }
 
             var profileInfo = _mapper.Map<Person, UserInfoViewModel>(customer);

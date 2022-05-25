@@ -17,11 +17,12 @@ namespace WebAPI.Configurations
         {
             CreateMap<AuthorisationUser, RegisterUserModel>().ReverseMap();
            
-            CreateMap<Lot, LotDTO>()
+            CreateMap<Lot, UpdateLotDTO>()
                 .ForMember("State", opt => opt.MapFrom(lot => lot.Status.ToString()));
+            CreateMap<CreateLotDTO, Lot>();
             CreateMap<Lot, ReturnLotDTO>()
                 .ForMember("State", opt => opt.MapFrom(lot => lot.Status.ToString()));
-            CreateMap<LotDTO, Lot>()
+            CreateMap<UpdateLotDTO, Lot>()
                 .ForMember("State", opt => opt.MapFrom(lot => (State)Enum.Parse(typeof(State), lot.Status)));
 
             CreateMap<CreateAgreementDTO, Agreement>();

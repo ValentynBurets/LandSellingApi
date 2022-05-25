@@ -49,6 +49,20 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpGet]
         [Route("[action]")]
+        public async Task<ActionResult> GetToken()
+        {
+            try
+            {
+                return Ok(await _paymentService.GetToken(GetUserId()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
         public async Task<ActionResult> GetAll()
         {
             try

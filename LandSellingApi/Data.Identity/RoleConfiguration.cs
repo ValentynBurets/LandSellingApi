@@ -11,18 +11,13 @@ namespace Data.Identity
             builder.HasData(
                new IdentityRole
                {
-                   Name = "Customer",
-                   NormalizedName = "CUSTOMER"
+                   Name = "User",
+                   NormalizedName = "USER"
                },
                new IdentityRole
                {
                    Name = "Admin",
                    NormalizedName = "ADMIN"
-               },
-               new IdentityRole
-               {
-                   Name = "Manager",
-                   NormalizedName = "MANAGER"
                });
         }
     }

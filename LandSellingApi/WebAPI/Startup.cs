@@ -34,6 +34,8 @@ namespace WebAPI
             services.AddAuthorization();
             services.AddAuthentication();
 
+            services.ConfigurePayment(Configuration);
+
             services.ConfigureJWT(Configuration);
 
             services.AddRepository();

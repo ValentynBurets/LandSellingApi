@@ -8,9 +8,9 @@ namespace Business.Contract.Services.LotManagement
 {
     public interface ILotService  
     {
-        public Task Create(LotDTO createLot, Guid ownerId);
+        public Task Create(CreateLotDTO createLot, Guid ownerId);
         public Task Delete(Guid id);
-        public Task Update(LotDTO updateLot, Guid lotId);
+        public Task Update(UpdateLotDTO updateLot, Guid lotId);
         public Task<ReturnLotDTO> GetById(Guid lotId);
         public Task<IEnumerable<ReturnLotDTO>> GetAll();
     }

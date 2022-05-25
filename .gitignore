@@ -44,3 +44,5 @@
 /LandSellingApi/WebAPI/obj
 /LandSellingApi/Business.Tests/bin
 /LandSellingApi/Business.Tests/obj
+/LandSellingApi/AuthorizationTests/bin
+/LandSellingApi/AuthorizationTests/obj

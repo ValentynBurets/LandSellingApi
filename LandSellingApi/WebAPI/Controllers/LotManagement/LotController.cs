@@ -1,4 +1,5 @@
 ﻿using Business.Contract.Model.LotManagement;
+using Business.Contract.Model.LotManagement.Lot;
 using Business.Contract.Services.LotManagement;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,7 +20,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> Create(LotDTO newLot)
+        public async Task<ActionResult> Create(CreateLotDTO newLot)
         {
             try
             {
@@ -34,7 +35,7 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<ActionResult> Update(LotDTO newLot, Guid lotId)
+        public async Task<ActionResult> Update(UpdateLotDTO newLot, Guid lotId)
         {
             try
             {

@@ -11,6 +11,5 @@ namespace Data.Contract.Repository.LotManagement.AgreementManagement
         Task<IEnumerable<Payment>> GetByUserId(Guid userId);
         Task<IEnumerable<Payment>> GetByAgreementId(Guid agreementId);
         Task<IEnumerable<Payment>> GetByDate(DateTime date);
-
     }
 }
