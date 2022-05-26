@@ -10,7 +10,7 @@ namespace Data.Repository.Authentication
 {
     public class AdminRepository : EntityRepository<Admin>, IAdminRepository
     {
-        public AdminRepository(LandSellingContext exerciseDbContext) : base(exerciseDbContext)
+        public AdminRepository(LandSellingContext dbContext) : base(dbContext)
         {
         }
 

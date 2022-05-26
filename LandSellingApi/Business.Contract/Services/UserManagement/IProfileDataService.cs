@@ -12,5 +12,6 @@ namespace Business.Contract.Services.Authentication
         public Task<UserInfoViewModel> GetAdminProfileInfoById(Guid id);
         public Task UpdateCustomerProfileInfoById(ProfileInfoModel model, Guid id);
         public Task UpdateAdminProfileInfoById(ProfileInfoModel model, Guid id);
+        public Task<string> GetRole(Guid userId);
     }
 }

@@ -88,17 +88,17 @@ namespace Business.Services.Authentication
         {
             List<UserInfoViewModel> userList = new List<UserInfoViewModel>();
 
-            var customers = (await _unitOfWork.UserRepository.GetAll()).ToList();
+            var users = (await _unitOfWork.UserRepository.GetAll()).ToList();
 
-            if (customers == null)
+            if (users == null)
             {
                 throw new Exception("Customer not found!");
             }
 
-            foreach (var item in customers)
+            foreach (var item in users)
             {
                 var email = await _profileManager.GetEmailByUserId(item.IdLink);
-                var user = _mapper.Map<Person, UserInfoViewModel>(item);
+                var user = _mapper.Map<User, UserInfoViewModel>(item);
                 user.Email = email;
                 userList.Add(user);
             }
@@ -119,6 +119,13 @@ namespace Business.Services.Authentication
             }
 
             return userList;
+        }
+
+        public async Task<string> GetRole(Guid userId)
+        {
+            var tempUser = await _unitOfWork.UserRepository.GetById(userId);
+            var user = _mapper.Map<User, UserInfoViewModel>(tempUser);
+            return user.Role;
         }
     }
 }

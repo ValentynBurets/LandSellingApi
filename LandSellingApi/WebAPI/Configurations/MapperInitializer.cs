@@ -37,6 +37,17 @@ namespace WebAPI.Configurations
             CreateMap<Bid, BidDTO>().ReverseMap();
             CreateMap<Location, LocationDTO>().ReverseMap();
             CreateMap<PriceCoef, PriceCoefDTO>().ReverseMap();
+
+            CreateMap<User, UserInfoViewModel>();
+
+            CreateMap<User, UserInfoViewModel>()
+                .ForMember("Role", opt => opt.MapFrom(c => "User"));
+            CreateMap<Admin, UserInfoViewModel>()
+                .ForMember("Role", opt => opt.MapFrom(a => "Admin"));
+
+            CreateMap<User, ProfileInfoModel>();
+
+            CreateMap<Admin, ProfileInfoModel>();
         }
     }
 }

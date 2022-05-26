@@ -11,7 +11,7 @@ namespace Data.Repository.Authentication
 {
     public class UserRepository : EntityRepository<User>, IUserRepository
     {
-        public UserRepository(LandSellingContext exerciseDbContext) : base(exerciseDbContext)
+        public UserRepository(LandSellingContext dbContext) : base(dbContext)
         {
         }
         public async Task<User> GetByIdLink(Guid idLink)

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ProfileController : BaseController
     {
         private readonly IProfileDataService _profileDataService;
@@ -22,6 +24,7 @@ namespace WebAPI.Controllers
         #region Info data
 
         [HttpGet]
+        [Authorize]
         [Route("getAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -29,17 +32,15 @@ namespace WebAPI.Controllers
 
             try
             {
-                /*
-                 */
                 if (User.IsInRole("Admin"))
                 {
                     usersInfoList = (List<UserInfoViewModel>)await _profileDataService.GetAllUsersInfo();
-                }
-                else
-                {
-                    throw new Exception("Invalid user role!");
-                }
             }
+                else
+            {
+                throw new Exception("Invalid role!");
+            }
+        }
             catch (Exception exception)
             {
                 return StatusCode(500, exception.Message);
@@ -56,7 +57,11 @@ namespace WebAPI.Controllers
 
             try
             {
-                if (User.IsInRole("Customer"))
+                //var userId = GetUserId();
+
+                //string role = await _profileDataService.GetRole(GetUserId());
+
+                if (User.IsInRole("User"))
                 {
                     profileInfo = await _profileDataService.GetCustomerProfileInfoById(GetUserId());
                 }
@@ -66,7 +71,7 @@ namespace WebAPI.Controllers
                 }
                 else
                 {
-                    throw new Exception("Invalid user role!");
+                    throw new Exception("Invalid role!");
                 }
             }
             catch (Exception exception)
@@ -88,7 +93,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                if (User.IsInRole("Customer"))
+                if (User.IsInRole("User"))
                 {
                     await _profileDataService.UpdateCustomerProfileInfoById(userInfo, GetUserId());
                 }

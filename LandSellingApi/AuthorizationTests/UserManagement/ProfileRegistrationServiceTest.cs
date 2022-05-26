@@ -78,7 +78,7 @@ namespace AuthorizationTests.UserManagement
 
             ProfileRegistrationService profileRegistrationService = new(mockUserManager.Object, mockIOrderUnitOfWork.Object);
             //Act
-            Action act = async () => await profileRegistrationService.CreateProfile(systemUserElem, Name, LastName);
+            await profileRegistrationService.CreateProfile(systemUserElem, Name, LastName);
             //Assert
             Exception exception = await Assert.ThrowsAsync<Exception>(() => profileRegistrationService.CreateProfile(systemUserElem, Name, LastName));
             Assert.Equal(expectedMessege, exception.Message);

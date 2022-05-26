@@ -24,6 +24,7 @@ namespace WebAPI
         public static IServiceCollection AddRepository(this IServiceCollection services)
         {
             services.AddTransient<ILotUnitOfWork, LotUnitOfWork>();
+            services.AddTransient<IAuthentificationUnitOfWork, AuthentificationUnitOfWork>();
 
             //add here new services
             services.AddTransient<ILotService, LotService>();
@@ -34,12 +35,10 @@ namespace WebAPI
             services.AddTransient<IPaymentService, PaymentService>();
             services.AddTransient<IPaymentHelper, PaymentHelper>();
 
-            services.AddTransient<IAuthentificationUnitOfWork, AuthentificationUnitOfWork>();
             services.AddTransient<IProfileRegistrationService, ProfileRegistrationService>();
 
-            services.AddScoped<IAuthManager, AuthManager>();
-
-            //services.AddTransient<IProfileManager, ProfileManager<AuthorisationUser>>();
+            services.AddTransient<IProfileManager, ProfileManager<AuthorisationUser>>();
+            services.AddTransient<IProfileDataService, ProfileDataService>();
 
             return services;
         }

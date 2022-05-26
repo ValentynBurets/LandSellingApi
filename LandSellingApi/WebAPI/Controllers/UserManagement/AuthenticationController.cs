@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class AuthenticationController : BaseController
     {
         private readonly UserManager<AuthorisationUser> _userManager;

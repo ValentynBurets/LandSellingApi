@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Business.Contract.Services.Authentication;
+using Business.Services.Authentication;
 
 namespace WebAPI
 {
@@ -37,15 +39,43 @@ namespace WebAPI
             services.ConfigurePayment(Configuration);
 
             services.ConfigureJWT(Configuration);
-
+            
+            services.AddControllers();
             services.AddRepository();
+
+            services.AddScoped<IAuthManager, AuthManager>();
+            services.AddTransient<IProfileRegistrationService, ProfileRegistrationService>();
+
 
             services.AddAutoMapper(typeof(MapperInitializer));
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+        
+            services.AddSwaggerGen(option =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Land Selling WebAPI v1", Version = "v1" });
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Land Selling WebAPI v1", Version = "v1" });
+                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
             });
         }
 
@@ -54,17 +84,35 @@ namespace WebAPI
         {
             if (env.IsDevelopment())
             {
+                //This middleware is used reports app runtime errors in development environment.  
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
+            else
+            {
+                //This middleware is catches exceptions thrown in production environment.   
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.    
+                app.UseHsts(); //adds the Strict-Transport-Security header.    
+            }
 
+            //This middleware is used to redirects HTTP requests to HTTPS.  
             app.UseHttpsRedirection();
 
+            //This middleware is used to route requests.   
             app.UseRouting();
 
+            app.UseCors(x => x
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true) // allow any origin
+               .AllowCredentials()); // allow credentials
+
+            //This middleware is used to authorizes a user to access secure resources.  
             app.UseAuthorization();
 
+            //This middleware is used to add Razor Pages endpoints to the request pipeline.  
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
