@@ -69,12 +69,12 @@ namespace WebAPI.Controllers
 
         }
 
-        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "User")]
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> RegisterCustomer([FromBody] RegisterUserModel userModel)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserModel userModel)
         {
-            return await RegisterUser(userModel, "Customer");
+            return await RegisterUser(userModel, "User");
         }
 
         //[Authorize(Roles = "Admin")]
