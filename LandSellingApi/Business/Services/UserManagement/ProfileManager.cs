@@ -27,8 +27,12 @@ namespace Business.Services.Authentication
         public async Task<string> GetEmailByUserId(Guid id)
         {
             var user = await FindByIdAsync(id.ToString());
-
-            return user.Email;
+            if(user != null)
+            {
+                return user.Email;
+            }
+            
+            return "";
         }
 
         public async Task UpdateEmailByUserId(UpdateEmailModel model, Guid id)

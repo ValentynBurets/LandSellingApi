@@ -20,6 +20,7 @@ namespace Domain.Entity
         public Guid LocationId { get; set; }
         public State Status { get; set; }
         public DateTime PublicationDate { get; set; }
+        public string Header { get; set; }
         public string Description { get; set; }
         public decimal BuyPrice { get; set; }
         public decimal? MinBidPrice { get; set; }

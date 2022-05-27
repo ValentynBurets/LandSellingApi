@@ -1,4 +1,4 @@
-using WebAPI.Configurations;
+﻿using WebAPI.Configurations;
 using Data.EF;
 using Data.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +10,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Business.Contract.Services.Authentication;
 using Business.Services.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI
 {
@@ -77,6 +80,17 @@ namespace WebAPI
                     }
                 });
             });
+            
+
+            services.AddMvc(option =>
+            {
+                // Отключаем маршрутизацию конечных точек на основе endpoint-based logic из EndpointMiddleware
+                // и продолжаем использование маршрутизации на основе IRouter. 
+                option.EnableEndpointRouting = false;
+                var policy = new AuthorizationPolicyBuilder()
+                                    .RequireAuthenticatedUser().RequireAuthenticatedUser().Build();
+                option.Filters.Add(new AuthorizeFilter(policy));
+            }).SetCompatibilityVersion(CompatibilityVersion.Latest);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

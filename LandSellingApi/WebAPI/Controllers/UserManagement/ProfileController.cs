@@ -26,6 +26,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         [Authorize]
         [Route("getAll")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetAll()
         {
             List<UserInfoViewModel> usersInfoList = null;
@@ -35,12 +36,12 @@ namespace WebAPI.Controllers
                 if (User.IsInRole("Admin"))
                 {
                     usersInfoList = (List<UserInfoViewModel>)await _profileDataService.GetAllUsersInfo();
-            }
+                }
                 else
-            {
+                {
                 throw new Exception("Invalid role!");
+                }
             }
-        }
             catch (Exception exception)
             {
                 return StatusCode(500, exception.Message);
@@ -51,6 +52,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("info")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetMyInfo()
         {
             UserInfoViewModel profileInfo = null;
@@ -84,6 +86,7 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("info/update")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> UpdateMyInfo([FromBody] ProfileInfoModel userInfo)
         {
             if (!ModelState.IsValid)

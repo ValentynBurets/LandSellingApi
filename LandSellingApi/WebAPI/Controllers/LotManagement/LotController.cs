@@ -1,6 +1,7 @@
 ﻿using Business.Contract.Model.LotManagement;
 using Business.Contract.Model.LotManagement.Lot;
 using Business.Contract.Services.LotManagement;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -65,6 +66,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("[action]")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetById(Guid lotId)
         {
             try
@@ -79,6 +81,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("[action]")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetAll()
         {
             try
