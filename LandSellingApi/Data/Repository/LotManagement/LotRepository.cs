@@ -52,5 +52,10 @@ namespace Data.Repository.LotManagement
         {
             return await _DbContext.Lots.Where(l => l.Status == state).ToListAsync();
         }
+
+        public async Task<int> GetViewsByLotId(Guid lotId)
+        {
+            return (await _DbContext.Lots.Where(l => l.Id == lotId).FirstAsync()).Views;
+        }
     }
 }

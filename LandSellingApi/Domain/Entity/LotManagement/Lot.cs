@@ -22,6 +22,7 @@ namespace Domain.Entity
         public DateTime PublicationDate { get; set; }
         public string Header { get; set; }
         public string Description { get; set; }
+        public int Views { get; set; }
         public decimal BuyPrice { get; set; }
         public decimal? MinBidPrice { get; set; }
         public bool IsRent { get; set; }

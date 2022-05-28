@@ -11,6 +11,7 @@ namespace Domain.Entity
         public string Region { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
+        public string House { get; set; }
 
         public virtual Lot Lot { get; set; }
     }

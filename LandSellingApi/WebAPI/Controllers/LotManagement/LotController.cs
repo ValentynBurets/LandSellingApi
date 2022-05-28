@@ -25,8 +25,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                await _lotService.Create(newLot, GetUserId());
-                return Ok("new lot craeted");
+                return Ok(await _lotService.Create(newLot, GetUserId()));
             }
             catch (Exception ex)
             {
@@ -87,6 +86,21 @@ namespace WebAPI.Controllers
             try
             {
                 return Ok(await _lotService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetViewsByLotId(Guid lotId)
+        {
+            try
+            {
+                return Ok(await _lotService.GetViewsByLotId(lotId));
             }
             catch (Exception ex)
             {

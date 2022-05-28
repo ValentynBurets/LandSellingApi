@@ -17,6 +17,7 @@ namespace Data.Contract.Repository.LotManagement
         Task<IEnumerable<Lot>> GetByLocation(Location location);
         Task<IEnumerable<Lot>> GetByCostRaising();
         Task<IEnumerable<Lot>> GetByСostDescending();
+        Task<int> GetViewsByLotId(Guid lotId);
         
     }
 }

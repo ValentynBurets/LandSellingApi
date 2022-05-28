@@ -6,6 +6,7 @@ using Data.Contract.UnitOfWork;
 using Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Services.LotManagement
@@ -20,7 +21,7 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(CreateLotDTO createLot, Guid ownerId)
+        public async Task<Guid> Create(CreateLotDTO createLot, Guid ownerId)
         {
             Lot newLot = _mapper.Map<Lot>(createLot);
             newLot.Status = Domain.Entity.Constants.State.Open;
@@ -43,6 +44,8 @@ namespace Business.Services.LotManagement
 
             await _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.Save();
+            Guid lotId = (await _unitOfWork.LotRepository.GetByLocation(location)).First().Id;
+            return lotId;
         }
 
         public async Task Delete(Guid id)
@@ -85,5 +88,11 @@ namespace Business.Services.LotManagement
             }
             return lotDTOs;
         }
+
+        public async Task<int> GetViewsByLotId(Guid lotId)
+        {
+            return await _unitOfWork.LotRepository.GetViewsByLotId(lotId);
+        }
     }
 }
+
