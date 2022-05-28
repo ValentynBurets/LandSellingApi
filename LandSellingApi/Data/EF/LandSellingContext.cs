@@ -1,4 +1,5 @@
 ﻿using Domain.Entity;
+using Domain.Entity.LotManagement;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.EF
@@ -28,8 +29,7 @@ namespace Data.EF
         public virtual DbSet<Bid> Bids { get; set; }
         public virtual DbSet<Agreement> Agreements { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
-
-
+        public virtual DbSet<LotManager> LotManagers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,13 +68,24 @@ namespace Data.EF
                 .WithMany(b => b.Lots)
                 .IsRequired(true)
                 .HasForeignKey(k => k.OwnerId);
-
-                entity.HasOne(p => p.Manager)
-                .WithMany(b => b.Lots)
-                .IsRequired(true)
-                .HasForeignKey(k => k.ManagerId);
             });
 
+            //LotManager
+            modelBuilder.Entity<LotManager>(entity =>
+            {
+                entity.HasIndex(i => i.Id)
+               .IsUnique();
+
+                entity.HasOne(p => p.Lot)
+               .WithMany(b => b.LotManagers)
+               .IsRequired(true)
+               .HasForeignKey(k => k.ManagerId);
+
+                entity.HasOne(p => p.Manager)
+               .WithMany(b => b.LotManagers)
+               .IsRequired(true)
+               .HasForeignKey(k => k.ManagerId);
+            });
 
             //Price Coef
             modelBuilder.Entity<PriceCoef>(entity =>

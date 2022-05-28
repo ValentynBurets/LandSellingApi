@@ -33,10 +33,10 @@ namespace Data.Repository.LotManagement.AgreementManagement
 
         public async Task<IEnumerable<Agreement>> GetByManagerId(Guid managerId)
         {
-            var lots = await _DbContext.Lots.Where(i => i.ManagerId == managerId).ToListAsync();
+            var lotManagers = await _DbContext.LotManagers.Where(l => l.ManagerId == managerId).ToListAsync();
             List <Agreement> Agreements = new List<Agreement>();
 
-            foreach (var lot in lots)
+            foreach (var lot in lotManagers)
             {
                 Agreements.Add(await _DbContext.Agreements.Where(i => i.LotId == lot.Id).FirstAsync());
             }

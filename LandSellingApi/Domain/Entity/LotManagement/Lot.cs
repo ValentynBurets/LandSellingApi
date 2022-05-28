@@ -1,5 +1,6 @@
 ﻿using Domain.Entity.Base;
 using Domain.Entity.Constants;
+using Domain.Entity.LotManagement;
 using System;
 using System.Collections.Generic;
 
@@ -12,11 +13,10 @@ namespace Domain.Entity
             Images = new HashSet<Image>();
             PriceCoefs = new HashSet<PriceCoef>();
             Bids = new HashSet<Bid>();
+            LotManagers = new HashSet<LotManager>();
         }
 
         public Guid? OwnerId { get; set; }
-        public Guid ManagerId { get; set; }
-
         public Guid LocationId { get; set; }
         public State Status { get; set; }
         public DateTime PublicationDate { get; set; }
@@ -29,10 +29,10 @@ namespace Domain.Entity
         public bool IsAuction { get; set; }
         public virtual Location Location { get; set; }
         public virtual User Owner { get; set; }
-        public virtual Admin Manager { get; set; }
         public virtual Agreement Agreement { get; set; }
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<PriceCoef> PriceCoefs { get; set; }
         public virtual ICollection<Bid> Bids { get; set; }
+        public virtual ICollection<LotManager> LotManagers { get; set; }
     }
 }

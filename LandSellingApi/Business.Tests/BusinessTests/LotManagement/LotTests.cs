@@ -55,7 +55,6 @@ namespace Business.Tests.BusinessTests.LotManagement
         {
             Id = new Guid("b8e1f1c3-a156-4db7-9"),
             OwnerId = new Guid("2bef5669-55ee-4261-91ab-bd4281cfba3c"),
-            ManagerId = new Guid("81929761-10bf-4e5c-9eeb-4d3c91a05683"),
             LocationId = new Guid("928bd058-ef62-411f-a214-05f5541dac5d"),
             Status = Domain.Entity.Constants.State.Open,
             PublicationDate = DateTime.Now,

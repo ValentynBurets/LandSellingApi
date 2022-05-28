@@ -38,7 +38,7 @@ namespace Business.Services.LotManagement
                 Street = createLot.Location.Street
             };
             await _unitOfWork.LocationRepository.Add(location);
-            await _unitOfWork.Save();
+            //await _unitOfWork.Save();
 
             newLot.LocationId = await _unitOfWork.LocationRepository.GetByLongitudeAndLatitude(createLot.Location.Longitude, createLot.Location.Latitude);
 

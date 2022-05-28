@@ -32,11 +32,6 @@ namespace Data.Repository.LotManagement
             return await _DbContext.Lots.Where(l => l.Location == location).ToListAsync();
         }
 
-        public async Task<IEnumerable<Lot>> GetByMangerId(Guid managerId)
-        {
-            return await _DbContext.Lots.Where(l => l.ManagerId == managerId).ToListAsync();
-        }
-
         public async Task<IEnumerable<Lot>> GetByOwnerId(Guid ownerId)
         {
             return await _DbContext.Lots.Where(l => l.OwnerId == ownerId).ToListAsync();

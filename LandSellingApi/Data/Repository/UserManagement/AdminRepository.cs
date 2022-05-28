@@ -12,6 +12,7 @@ namespace Data.Repository.Authentication
     {
         public AdminRepository(LandSellingContext dbContext) : base(dbContext)
         {
+
         }
 
         public async Task<Admin> GetByIdLink(Guid idLink)

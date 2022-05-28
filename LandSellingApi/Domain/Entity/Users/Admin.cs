@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entity.LotManagement;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Entity
@@ -7,10 +8,10 @@ namespace Domain.Entity
     {
         public Admin(Guid idLink) : base(idLink)
         {
-            Lots = new HashSet<Lot>();
+            LotManagers = new HashSet<LotManager>();
         }
         public decimal Salary { get; set; }
 
-        public virtual ICollection<Lot> Lots { get; set; }
+        public virtual ICollection<LotManager> LotManagers { get; set; }
     }
 }

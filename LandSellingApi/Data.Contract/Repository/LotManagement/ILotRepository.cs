@@ -11,7 +11,6 @@ namespace Data.Contract.Repository.LotManagement
     public interface ILotRepository : IEntityRepository<Lot>
     {
         Task<IEnumerable<Lot>> GetByOwnerId(Guid ownerId);
-        Task<IEnumerable<Lot>> GetByMangerId(Guid managerId);
         Task<IEnumerable<Lot>> GetByPublicationDate(DateTime date);
         Task<IEnumerable<Lot>> GetByState(State state);
         Task<IEnumerable<Lot>> GetByLocation(Location location);
