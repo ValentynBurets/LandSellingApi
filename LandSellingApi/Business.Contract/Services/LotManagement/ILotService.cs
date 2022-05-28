@@ -13,7 +13,9 @@ namespace Business.Contract.Services.LotManagement
         public Task Update(UpdateLotDTO updateLot, Guid lotId);
         public Task<ReturnLotDTO> GetById(Guid lotId);
         public Task<IEnumerable<ReturnLotDTO>> GetAll();
+        public Task<IEnumerable<ReturnLotDTO>> GetMy(Guid ownerIdLink);
         public Task<int> GetViewsByLotId(Guid lotId);
-        
+        public Task Take(Guid lotId, Guid managerId);
+        public Task Approve(Guid lotId);
     }
 }

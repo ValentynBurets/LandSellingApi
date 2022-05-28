@@ -4,6 +4,7 @@ using Business.Contract.Model.LotManagement.Lot;
 using Business.Contract.Services.LotManagement;
 using Data.Contract.UnitOfWork;
 using Domain.Entity;
+using Domain.Entity.LotManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,11 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Guid> Create(CreateLotDTO createLot, Guid ownerId)
+        public async Task<Guid> Create(CreateLotDTO createLot, Guid ownerIdLink)
         {
             Lot newLot = _mapper.Map<Lot>(createLot);
             newLot.Status = Domain.Entity.Constants.State.Open;
-            newLot.OwnerId = ownerId;
+            newLot.OwnerId = (await _unitOfWork.UserRepository.GetByIdLink(ownerIdLink)).Id;
             newLot.PublicationDate = DateTime.Now;
                 
             Location location = new Location()
@@ -38,7 +39,7 @@ namespace Business.Services.LotManagement
                 Street = createLot.Location.Street
             };
             await _unitOfWork.LocationRepository.Add(location);
-            //await _unitOfWork.Save();
+            await _unitOfWork.Save();
 
             newLot.LocationId = await _unitOfWork.LocationRepository.GetByLongitudeAndLatitude(createLot.Location.Longitude, createLot.Location.Latitude);
 
@@ -72,6 +73,22 @@ namespace Business.Services.LotManagement
             lotDTO.Location = locationDTO;
             return lotDTO;
         }
+        public async Task<IEnumerable<ReturnLotDTO>> GetMy(Guid ownerIdLink)
+        {
+            var ownerId = (await _unitOfWork.UserRepository.GetByIdLink(ownerIdLink)).Id;
+            IEnumerable<Lot> lots = await _unitOfWork.LotRepository.GetByOwnerId(ownerId);
+            List<ReturnLotDTO> lotDTOs = new List<ReturnLotDTO>();
+
+            foreach (Lot lot in lots)
+            {
+                ReturnLotDTO lotDTO = _mapper.Map<ReturnLotDTO>(lot);
+                Location location = await _unitOfWork.LocationRepository.GetById(lot.LocationId);
+                LocationDTO locationDTO = _mapper.Map<LocationDTO>(location);
+                lotDTO.Location = locationDTO;
+                lotDTOs.Add(lotDTO);
+            }
+            return lotDTOs;
+        }
 
         public async Task<IEnumerable<ReturnLotDTO>> GetAll()
         {
@@ -93,6 +110,25 @@ namespace Business.Services.LotManagement
         {
             return await _unitOfWork.LotRepository.GetViewsByLotId(lotId);
         }
+
+        //add manager Id to lot
+        //should approve manager
+        public async Task Take(Guid lotId, Guid managerIdLink)
+        {
+            var lotManager = new LotManager();
+            lotManager.LotId = lotId;
+            lotManager.ManagerId = (await _unitOfWork.UserRepository.GetByIdLink(managerIdLink)).Id;
+
+            await _unitOfWork.LotManagerRepository.Add(lotManager);
+            await _unitOfWork.Save();
+        }
+
+        public async Task Approve(Guid lotId)
+        {
+            LotManager lotManager = await _unitOfWork.LotManagerRepository.GetByLotId(lotId);
+            lotManager.Approved = true;
+            await _unitOfWork.LotManagerRepository.Update(lotManager);
+            await _unitOfWork.Save();
+        }
     }
 }
-

@@ -12,8 +12,11 @@ namespace Business.Contract.Services.LotManagement.AgreementManagement
         public Task Delete(Guid id);
         public Task Update(AgreementDTO updateAgreemen, Guid AgreemenId);
         public Task<AgreementDTO> GetByLotId(Guid lotId);
-        public Task<IEnumerable<AgreementDTO>> GetByOwnerId(Guid ownerId);
+        public Task<IEnumerable<AgreementDTO>> GetByOwnerId(Guid ownerIdLink);
+        public Task<IEnumerable<AgreementDTO>> GetMy(Guid ownerId);
         public Task<IEnumerable<AgreementDTO>> GetByCustomerId(Guid customerId);
         public Task<IEnumerable<AgreementDTO>> GetByManagerId(Guid managerId);
+        public Task Take(Guid lotId, Guid managerId);
+        public Task Approve(Guid lotId);
     }
 }

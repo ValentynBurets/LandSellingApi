@@ -30,7 +30,6 @@ namespace Business.Tests.BusinessTests.LotManagement
         static UpdateLotDTO lotDTO = new UpdateLotDTO()
         {
             OwnerId = new Guid("09bb8262-8971-48f4-a"),
-            ManagerId = new Guid("fe24830d-cb22-4a05-92b7-c9483109f5e8"),
             Status = "Open",
             Description = "description",
             BuyPrice = 100,
@@ -42,7 +41,6 @@ namespace Business.Tests.BusinessTests.LotManagement
 
         static CreateLotDTO createLotDTO = new CreateLotDTO()
         {
-            ManagerId = new Guid("fe24830d-cb22-4a05-92b7-c9483109f5e8"),
             Description = "description",
             BuyPrice = 100,
             MinBidPrice = 90,
@@ -69,7 +67,6 @@ namespace Business.Tests.BusinessTests.LotManagement
         {
             Id = new Guid("b8e1f1c3-a156-4db7-9"),
             OwnerId = new Guid("2bef5669-55ee-4261-91ab-bd4281cfba3c"),
-            ManagerId = new Guid("81929761-10bf-4e5c-9eeb-4d3c91a05683"),
             Status = "Open",
             PublicationDate = DateTime.Now,
             Description = "Description",

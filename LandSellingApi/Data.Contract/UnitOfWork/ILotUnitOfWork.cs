@@ -17,5 +17,7 @@ namespace Data.Contract.UnitOfWork
         IAdminRepository AdminRepository { get; }
         IAgreementRepository AgreementRepository { get; }
         IPaymentRepository PaymentRepository { get; }
+        ILotManagerRepository LotManagerRepository { get; }
+        IAgreementManagerRepository AgreementManagerRepository { get; }
     }
 }

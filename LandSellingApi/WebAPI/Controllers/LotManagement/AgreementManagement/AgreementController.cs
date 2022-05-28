@@ -35,6 +35,23 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
             }
         }
 
+        [HttpPost]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> Take(Guid lotId)
+        {
+            try
+            {
+                await _agreementService.Take(lotId, GetUserId());
+                return Ok("new agreement craeted");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
         [HttpPut]
         [Route("[action]")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -43,6 +60,22 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
             try
             {
                 await _agreementService.Update(newAgreement, agreementId);
+                return Ok(agreementId + " agreement updated");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> Approve(Guid agreementId)
+        {
+            try
+            {
+                await _agreementService.Approve(agreementId);
                 return Ok(agreementId + " agreement updated");
             }
             catch (Exception ex)
@@ -91,6 +124,22 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
             try
             {
                 var result = await _agreementService.GetByOwnerId(ownerId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> GetMy()
+        {
+            try
+            {
+                var result = await _agreementService.GetMy(GetUserId());
                 return Ok(result);
             }
             catch (Exception ex)

@@ -34,6 +34,23 @@ namespace WebAPI.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> Create(Guid lotId)
+        {
+            try
+            {
+                var IdLink = GetUserId();
+                await _lotService.Take(lotId, IdLink);
+                return Ok("lot taken by manager idLink: " + IdLink);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut]
         [Route("[action]")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -43,6 +60,22 @@ namespace WebAPI.Controllers
             {
                 await _lotService.Update(newLot, lotId);
                 return Ok(lotId + " lot updated");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> Approve(Guid lotId)
+        {
+            try
+            {
+                await _lotService.Approve(lotId);
+                return Ok(lotId + " lot approved");
             }
             catch (Exception ex)
             {
@@ -74,6 +107,21 @@ namespace WebAPI.Controllers
             try
             {
                 return Ok(await _lotService.GetById(lotId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetMy(Guid lotId)
+        {
+            try
+            {
+                return Ok(await _lotService.GetMy(GetUserId()));
             }
             catch (Exception ex)
             {

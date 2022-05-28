@@ -1,5 +1,7 @@
 ﻿using Domain.Entity.Base;
 using Domain.Entity.Constants;
+using Domain.Entity.LotManagement;
+using Domain.Entity.LotManagement.AgreementManagement;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +12,7 @@ namespace Domain.Entity
         public Agreement()
         {
             Payments = new HashSet<Payment>();
+            AgreementManagers = new HashSet<AgreementManager>();
         }
         public Guid LotId { get; set; }
         public Guid CustomerId { get; set; }
@@ -23,5 +26,6 @@ namespace Domain.Entity
         public virtual User Customer { get; set; }
 
         public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<AgreementManager> AgreementManagers { get; set; }
     }
 }

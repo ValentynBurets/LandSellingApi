@@ -10,5 +10,6 @@ namespace Data.Contract.Repository.LotManagement
     public interface ILotManagerRepository : IEntityRepository<LotManager>
     {
         Task<IEnumerable<Lot>> GetLotByMangerId(Guid managerId);
+        Task<LotManager> GetByLotId(Guid lotId);
     }
 }

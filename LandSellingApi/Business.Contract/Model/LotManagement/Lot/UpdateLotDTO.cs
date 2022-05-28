@@ -6,7 +6,6 @@ namespace Business.Contract.Model.LotManagement
     public class UpdateLotDTO
     {
         public Guid OwnerId { get; set; }
-        public Guid ManagerId { get; set; }
         public string Status { get; set; }
         public string Header { get; set; }
         public string Description { get; set; }

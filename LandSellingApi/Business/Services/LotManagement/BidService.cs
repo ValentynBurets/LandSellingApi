@@ -21,10 +21,10 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(BidDTO createBid, Guid userId)
+        public async Task Create(BidDTO createBid, Guid userIdLink)
         {
             Bid newBid = _mapper.Map<Bid>(createBid);
-            newBid.BidderId = userId;
+            newBid.BidderId = (await _unitOfWork.UserRepository.GetByIdLink(userIdLink)).Id;
             newBid.Date = DateTime.Now;
             await _unitOfWork.BidRepository.Add(newBid);
             await _unitOfWork.Save();

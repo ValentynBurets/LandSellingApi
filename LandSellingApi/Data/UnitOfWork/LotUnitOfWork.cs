@@ -8,10 +8,6 @@ using Data.Repository;
 using Data.Repository.Authentication;
 using Data.Repository.LotManagement;
 using Data.Repository.LotManagement.AgreementManagement;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.UnitOfWork
@@ -31,8 +27,10 @@ namespace Data.UnitOfWork
         private IPriceCoefRepository _priceCoefRepository;
 
         private IUserRepository _userRepository;
-
         private IAdminRepository _adminRepository;
+
+        private ILotManagerRepository _lotManagerRepository;
+        private IAgreementManagerRepository _agreementManagerRepository;
 
         public LotUnitOfWork(LandSellingContext dbContext)
         {
@@ -48,6 +46,8 @@ namespace Data.UnitOfWork
         public IPriceCoefRepository PriceCoefRepository => _priceCoefRepository ??= new PriceCoefRepository(_dbContext);
         public IUserRepository UserRepository => _userRepository ??= new UserRepository(_dbContext);
         public IAdminRepository AdminRepository => _adminRepository ??= new AdminRepository(_dbContext);
+        public ILotManagerRepository LotManagerRepository => _lotManagerRepository ??= new LotManagerRepository(_dbContext);
+        public IAgreementManagerRepository AgreementManagerRepository => _agreementManagerRepository ??= new AgreementManagerRepository(_dbContext);
         public async Task<int> Save() => await _dbContext.SaveChangesAsync();
     }
 }

@@ -4,6 +4,7 @@ using Business.Contract.Model.LotManagement.AgreementManagement.Agreement;
 using Business.Contract.Services.LotManagement.AgreementManagement;
 using Data.Contract.UnitOfWork;
 using Domain.Entity;
+using Domain.Entity.LotManagement.AgreementManagement;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -52,6 +53,12 @@ namespace Business.Services.LotManagement.AgreementManagement
             IEnumerable<Agreement> agreement = await _unitOfWork.AgreementRepository.GetByOwnerId(ownerId);
             return _mapper.Map< IEnumerable<AgreementDTO>>(agreement);
         }
+        public async Task<IEnumerable<AgreementDTO>> GetMy(Guid ownerIdLink)
+        {
+            var ownerId = (await _unitOfWork.UserRepository.GetByIdLink(ownerIdLink)).Id;
+            IEnumerable<Agreement> agreement = await _unitOfWork.AgreementRepository.GetByOwnerId(ownerId);
+            return _mapper.Map<IEnumerable<AgreementDTO>>(agreement);
+        }
 
         public async Task<IEnumerable<AgreementDTO>> GetByCustomerId(Guid customerId)
         {
@@ -63,6 +70,24 @@ namespace Business.Services.LotManagement.AgreementManagement
         {
             IEnumerable<Agreement> agreement = await _unitOfWork.AgreementRepository.GetByManagerId(managerId);
             return _mapper.Map<IEnumerable<AgreementDTO>>(agreement);
+        }
+
+        public async Task Take(Guid agreementId, Guid managerIdLink)
+        {
+            var agreementManager = new AgreementManager();
+            agreementManager.AgreementId = agreementId;
+            agreementManager.ManagerId = (await _unitOfWork.UserRepository.GetByIdLink(managerIdLink)).Id;
+
+            await _unitOfWork.AgreementManagerRepository.Add(agreementManager);
+            await _unitOfWork.Save();
+        }
+
+        public async Task Approve(Guid agreementId)
+        {
+            AgreementManager agreementManager = await _unitOfWork.AgreementManagerRepository.GetByAgreementId(agreementId);
+            agreementManager.Approved = true;
+            await _unitOfWork.AgreementManagerRepository.Update(agreementManager);
+            await _unitOfWork.Save();
         }
     }
 }

@@ -18,6 +18,11 @@ namespace Data.Repository.LotManagement
         {
         }
 
+        public async Task<LotManager> GetByLotId(Guid lotId)
+        {
+            return await _DbContext.LotManagers.Where(l => l.LotId == lotId).FirstAsync();
+        }
+
         public async Task<IEnumerable<Lot>> GetLotByMangerId(Guid managerId)
         {
             var LotManagers = await _DbContext.LotManagers.Where(l => l.ManagerId == managerId).ToListAsync();

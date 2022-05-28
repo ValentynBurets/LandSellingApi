@@ -1,5 +1,6 @@
 ﻿using Domain.Entity;
 using Domain.Entity.LotManagement;
+using Domain.Entity.LotManagement.AgreementManagement;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.EF
@@ -30,6 +31,7 @@ namespace Data.EF
         public virtual DbSet<Agreement> Agreements { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<LotManager> LotManagers { get; set; }
+        public virtual DbSet<AgreementManager> AgreementManagers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -83,6 +85,23 @@ namespace Data.EF
 
                 entity.HasOne(p => p.Manager)
                .WithMany(b => b.LotManagers)
+               .IsRequired(true)
+               .HasForeignKey(k => k.ManagerId);
+            });
+
+            //AgreementManager
+            modelBuilder.Entity<AgreementManager>(entity =>
+            {
+                entity.HasIndex(i => i.Id)
+               .IsUnique();
+
+                entity.HasOne(p => p.Agreement)
+               .WithMany(b => b.AgreementManagers)
+               .IsRequired(true)
+               .HasForeignKey(k => k.ManagerId);
+
+                entity.HasOne(p => p.Manager)
+               .WithMany(b => b.AgreementManagers)
                .IsRequired(true)
                .HasForeignKey(k => k.ManagerId);
             });

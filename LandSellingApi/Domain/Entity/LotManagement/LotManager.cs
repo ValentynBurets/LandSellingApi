@@ -7,6 +7,7 @@ namespace Domain.Entity.LotManagement
     {
         public Guid LotId { get; set; }
         public Guid ManagerId { get; set; }
+        public bool Approved { get; set; }
         virtual public Lot Lot { get; set; }
         virtual public Admin Manager { get; set; }
     }
