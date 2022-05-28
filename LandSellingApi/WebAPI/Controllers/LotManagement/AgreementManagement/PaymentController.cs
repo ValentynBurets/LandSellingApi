@@ -1,5 +1,6 @@
 ﻿using Business.Contract.Model.LotManagement.AgreementManagement;
 using Business.Contract.Services.LotManagement.AgreementManagement;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpPost]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Create(PaymentDTO newPayment)
         {
             try
@@ -35,6 +37,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetById(Guid paymentId)
         {
             try
@@ -49,6 +52,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetToken()
         {
             try
@@ -63,6 +67,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetAll()
         {
             try

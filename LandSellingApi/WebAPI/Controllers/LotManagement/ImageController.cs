@@ -19,6 +19,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpPost]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Create(ImageDTO newImage)
         {
             try
@@ -34,6 +35,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpPut]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Update(ImageDTO newImage, Guid imageId)
         {
             try
@@ -49,6 +51,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpDelete]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Delete(Guid imageId)
         {
             try

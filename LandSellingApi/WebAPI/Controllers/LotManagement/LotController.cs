@@ -21,6 +21,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Create(CreateLotDTO newLot)
         {
             try
@@ -35,6 +36,7 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Update(UpdateLotDTO newLot, Guid lotId)
         {
             try
@@ -50,6 +52,7 @@ namespace WebAPI.Controllers
 
         [HttpDelete]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Delete(Guid lotId)
         {
             try

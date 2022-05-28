@@ -1,5 +1,6 @@
 ﻿using Business.Contract.Model.LotManagement;
 using Business.Contract.Services.LotManagement;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpPost]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Create(PriceCoefDTO newPriceCoef)
         {
             try
@@ -33,6 +35,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpPut]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Update(PriceCoefDTO newPriceCoef, Guid priceCoefId)
         {
             try
@@ -48,6 +51,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpDelete]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Delete(Guid priceCoefId)
         {
             try
@@ -63,6 +67,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpGet]
         [Route("[action]")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetAllByLotId(Guid lotId)
         {
             try

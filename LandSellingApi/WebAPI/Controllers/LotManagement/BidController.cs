@@ -1,5 +1,6 @@
 ﻿using Business.Contract.Model.LotManagement;
 using Business.Contract.Services.LotManagement;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpPost]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Create(BidDTO createBid)
         {
             try
@@ -34,6 +36,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpGet]
         [Route("[action]")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetById(Guid bidId)
         {
             try
@@ -48,6 +51,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpGet]
         [Route("[action]")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetBidWinerByLotId(Guid lotId)
         {
             try
@@ -62,6 +66,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpGet]
         [Route("[action]")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetAllByLotId(Guid lotId)
         {
             try
@@ -76,6 +81,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetAllByBidderId(Guid bidderId)
         {
             try
@@ -90,6 +96,7 @@ namespace WebAPI.Controllers.LotManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetAllBidWinnersByBidderId(Guid bidderId)
         {
             try

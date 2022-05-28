@@ -1,6 +1,7 @@
 ﻿using Business.Contract.Model.LotManagement.AgreementManagement;
 using Business.Contract.Model.LotManagement.AgreementManagement.Agreement;
 using Business.Contract.Services.LotManagement.AgreementManagement;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpPost]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Create(CreateAgreementDTO newAgreement)
         {
             try
@@ -35,6 +37,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpPut]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Update(AgreementDTO newAgreement, Guid agreementId)
         {
             try
@@ -50,6 +53,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpDelete]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Delete(Guid lotId)
         {
             try
@@ -65,6 +69,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetByLotId(Guid lotId)
         {
             try
@@ -80,6 +85,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetByOwnerId(Guid ownerId)
         {
             try
@@ -95,6 +101,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetByCustomerId(Guid customerId)
         {
             try
@@ -110,6 +117,7 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
 
         [HttpGet]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetByManagerId(Guid managerId)
         {
             try
