@@ -4,6 +4,7 @@ using Business.Contract.Model.LotManagement.Lot;
 using Business.Contract.Services.LotManagement;
 using Data.Contract.UnitOfWork;
 using Domain.Entity;
+using Domain.Entity.Constants;
 using Domain.Entity.LotManagement;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace Business.Services.LotManagement
 
             await _unitOfWork.LotRepository.Add(newLot);
             await _unitOfWork.Save();
-            Guid lotId = (await _unitOfWork.LotRepository.GetByLocation(location)).First().Id;
+            Guid lotId = await _unitOfWork.LotRepository.GetByLocationId(newLot.LocationId);
             return lotId;
         }
 
@@ -61,6 +62,24 @@ namespace Business.Services.LotManagement
             Lot newLot = _mapper.Map<Lot>(updateLot);
             newLot.Id = lotId;
             await _unitOfWork.LotRepository.Update(newLot);
+            await _unitOfWork.Save();
+        }
+
+        public async Task Viewed(Guid lotId)
+        {
+            Lot lot = await _unitOfWork.LotRepository.GetById(lotId);
+            
+            lot.Views++;
+            
+            await _unitOfWork.LotRepository.Update(lot);
+            await _unitOfWork.Save();
+        }
+
+        public async Task Approve(Guid lotId)
+        {
+            LotManager lotManager = await _unitOfWork.LotManagerRepository.GetByLotId(lotId);
+            lotManager.Approved = true;
+            await _unitOfWork.LotManagerRepository.Update(lotManager);
             await _unitOfWork.Save();
         }
 
@@ -106,6 +125,43 @@ namespace Business.Services.LotManagement
             return lotDTOs;
         }
 
+        public async Task<IEnumerable<ReturnSimpleLotDTO>> Get(GetLotOptionsDTO getLotOptionsDTO)
+        {
+            GetLotOptions getLotOptions = _mapper.Map<GetLotOptions>(getLotOptionsDTO);
+
+            IEnumerable<Lot> lots = await _unitOfWork.LotRepository.GetByLotType(getLotOptions.LotType);
+            
+            if (getLotOptions.State == State.Open)
+            {
+                lots = lots.Where(l => l.Status == State.Open).ToArray();
+            }
+            else if (getLotOptions.State == State.Close)
+            {
+                lots = lots.Where(l => l.Status == State.Close).ToArray();
+            }
+
+            if(getLotOptions.SortType == SortType.ByCostRaising)
+            {
+                lots = lots.OrderBy(l => l.BuyPrice);
+            }
+            else if (getLotOptions.SortType == SortType.ByСostDescending)
+            {
+                lots = lots.OrderByDescending(l => l.BuyPrice);
+            }
+
+            List<ReturnSimpleLotDTO> lotDTOs = new List<ReturnSimpleLotDTO>();
+
+            foreach (Lot lot in lots)
+            {
+                ReturnSimpleLotDTO lotDTO = _mapper.Map<ReturnSimpleLotDTO>(lot);
+                Location location = await _unitOfWork.LocationRepository.GetById(lot.LocationId);
+                LocationDTO locationDTO = _mapper.Map<LocationDTO>(location);
+                lotDTO.Location = locationDTO;
+                lotDTOs.Add(lotDTO);
+            }
+            return lotDTOs;
+        }
+
         public async Task<int> GetViewsByLotId(Guid lotId)
         {
             return await _unitOfWork.LotRepository.GetViewsByLotId(lotId);
@@ -120,14 +176,6 @@ namespace Business.Services.LotManagement
             lotManager.ManagerId = (await _unitOfWork.UserRepository.GetByIdLink(managerIdLink)).Id;
 
             await _unitOfWork.LotManagerRepository.Add(lotManager);
-            await _unitOfWork.Save();
-        }
-
-        public async Task Approve(Guid lotId)
-        {
-            LotManager lotManager = await _unitOfWork.LotManagerRepository.GetByLotId(lotId);
-            lotManager.Approved = true;
-            await _unitOfWork.LotManagerRepository.Update(lotManager);
             await _unitOfWork.Save();
         }
     }

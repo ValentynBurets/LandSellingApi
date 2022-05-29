@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entity.Constants
 {
-    public enum State
+    public enum LotType
     {
         All = 0,
-        Open = 1,
-        Close = 2
+        Rent = 1,
+        Auction = 2
     }
 }

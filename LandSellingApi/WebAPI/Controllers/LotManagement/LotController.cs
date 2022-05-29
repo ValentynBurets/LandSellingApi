@@ -1,6 +1,7 @@
 ﻿using Business.Contract.Model.LotManagement;
 using Business.Contract.Model.LotManagement.Lot;
 using Business.Contract.Services.LotManagement;
+using Domain.Entity.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -37,7 +38,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         [Route("[action]")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<ActionResult> Create(Guid lotId)
+        public async Task<ActionResult> Take(Guid lotId)
         {
             try
             {
@@ -60,6 +61,22 @@ namespace WebAPI.Controllers
             {
                 await _lotService.Update(newLot, lotId);
                 return Ok(lotId + " lot updated");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> Viewed(Guid lotId)
+        {
+            try
+            {
+                await _lotService.Viewed(lotId);
+                return Ok(lotId + "lot updated");
             }
             catch (Exception ex)
             {
@@ -137,6 +154,21 @@ namespace WebAPI.Controllers
             try
             {
                 return Ok(await _lotService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        public async Task<ActionResult> Get(GetLotOptionsDTO getLotOptionsDTO)
+        {
+            try
+            {
+                return Ok(await _lotService.Get(getLotOptionsDTO));
             }
             catch (Exception ex)
             {

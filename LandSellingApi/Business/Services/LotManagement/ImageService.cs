@@ -30,6 +30,7 @@ namespace Business.Services.LotManagement
                 imageDataString = imageDataString.Split("base64,")[1];
             }
 
+            newImage.LotId = createImage.LotId;
             newImage.ImageData = Convert.FromBase64String(imageDataString);
             await _unitOfWork.ImageRepository.Add(newImage);
             await _unitOfWork.Save();

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entity.Constants
 {
-    public enum State
+    public enum SortType
     {
-        All = 0,
-        Open = 1,
-        Close = 2
+        Default = 0,
+        ByCostRaising = 1,
+        ByСostDescending = 2
     }
 }

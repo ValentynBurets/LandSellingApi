@@ -22,6 +22,7 @@ namespace WebAPI.Configurations
             CreateMap<CreateLotDTO, Lot>();
             CreateMap<Lot, ReturnLotDTO>()
                 .ForMember("Status", opt => opt.MapFrom(lot => lot.Status.ToString()));
+            CreateMap<Lot, ReturnSimpleLotDTO>();
             CreateMap<UpdateLotDTO, Lot>()
                 .ForMember("Status", opt => opt.MapFrom(lot => (State)Enum.Parse(typeof(State), lot.Status)));
 
@@ -48,6 +49,12 @@ namespace WebAPI.Configurations
             CreateMap<User, ProfileInfoModel>();
 
             CreateMap<Admin, ProfileInfoModel>();
+
+            CreateMap<GetLotOptionsDTO, GetLotOptions>()
+                .ForMember("LotType", opt => opt.MapFrom(opt => Enum.Parse(typeof(LotType), opt.LotType)))
+                .ForMember("SortType", opt => opt.MapFrom(opt => Enum.Parse(typeof(SortType), opt.SortType)))
+                .ForMember("State", opt => opt.MapFrom(opt => Enum.Parse(typeof(State), opt.State)));
+
         }
     }
 }

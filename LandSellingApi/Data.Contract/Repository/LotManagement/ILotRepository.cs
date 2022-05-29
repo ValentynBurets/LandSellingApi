@@ -12,8 +12,10 @@ namespace Data.Contract.Repository.LotManagement
     {
         Task<IEnumerable<Lot>> GetByOwnerId(Guid ownerId);
         Task<IEnumerable<Lot>> GetByPublicationDate(DateTime date);
+        Task<IEnumerable<Lot>> GetByLotType(LotType lotType);
         Task<IEnumerable<Lot>> GetByState(State state);
         Task<IEnumerable<Lot>> GetByLocation(Location location);
+        Task<Guid> GetByLocationId(Guid locationId);
         Task<IEnumerable<Lot>> GetByCostRaising();
         Task<IEnumerable<Lot>> GetByСostDescending();
         Task<int> GetViewsByLotId(Guid lotId);

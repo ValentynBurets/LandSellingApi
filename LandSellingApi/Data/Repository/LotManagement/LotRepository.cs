@@ -32,6 +32,11 @@ namespace Data.Repository.LotManagement
             return await _DbContext.Lots.Where(l => l.Location == location).ToListAsync();
         }
 
+        public async Task<Guid> GetByLocationId(Guid locationId)
+        {
+            return (await _DbContext.Lots.Where(l => l.LocationId == locationId).FirstAsync()).Id;
+        }
+
         public async Task<IEnumerable<Lot>> GetByOwnerId(Guid ownerId)
         {
             return await _DbContext.Lots.Where(l => l.OwnerId == ownerId).ToListAsync();
@@ -51,6 +56,22 @@ namespace Data.Repository.LotManagement
         public async Task<int> GetViewsByLotId(Guid lotId)
         {
             return (await _DbContext.Lots.Where(l => l.Id == lotId).FirstAsync()).Views;
+        }
+
+        public async Task<IEnumerable<Lot>> GetByLotType(LotType lotType)
+        {
+            if(lotType == LotType.Auction)
+            {
+                return await _DbContext.Lots.Where(l => l.IsAuction == true && l.IsRent == false).ToListAsync();
+            }
+            else if(lotType == LotType.Rent)
+            {
+                return await _DbContext.Lots.Where(l => l.IsAuction == false && l.IsRent == true).ToListAsync();
+            }
+            else
+            {
+                return await _DbContext.Lots.ToListAsync();
+            }
         }
     }
 }
