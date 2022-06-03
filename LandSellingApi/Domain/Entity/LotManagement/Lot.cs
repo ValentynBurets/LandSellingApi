@@ -14,6 +14,7 @@ namespace Domain.Entity
             PriceCoefs = new HashSet<PriceCoef>();
             Bids = new HashSet<Bid>();
             LotManagers = new HashSet<LotManager>();
+            Agreements = new HashSet<Agreement>();
         }
 
         public Guid? OwnerId { get; set; }
@@ -31,7 +32,7 @@ namespace Domain.Entity
         public bool IsAuction { get; set; }
         public virtual Location Location { get; set; }
         public virtual User Owner { get; set; }
-        public virtual Agreement Agreement { get; set; }
+        public virtual ICollection<Agreement> Agreements { get; set; }
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<PriceCoef> PriceCoefs { get; set; }
         public virtual ICollection<Bid> Bids { get; set; }

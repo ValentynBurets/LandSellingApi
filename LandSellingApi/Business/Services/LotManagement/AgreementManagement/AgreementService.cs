@@ -44,10 +44,10 @@ namespace Business.Services.LotManagement.AgreementManagement
             await _unitOfWork.Save();
         }
 
-        public async Task<AgreementDTO> GetByLotId(Guid lotId)
+        public async Task<IEnumerable<AgreementDTO>> GetByLotId(Guid lotId)
         {
-            Agreement agreement = await _unitOfWork.AgreementRepository.GetByLotId(lotId); 
-            return _mapper.Map<AgreementDTO>(agreement);
+            IEnumerable<Agreement> agreements = await _unitOfWork.AgreementRepository.GetByLotId(lotId); 
+            return _mapper.Map<IEnumerable<AgreementDTO>>(agreements);
         }
 
         public async Task<IEnumerable<AgreementDTO>> GetByOwnerId(Guid ownerId)

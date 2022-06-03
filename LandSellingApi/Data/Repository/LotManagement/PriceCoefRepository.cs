@@ -16,9 +16,9 @@ namespace Data.Repository
         {
         }
 
-        public async Task<IEnumerable<PriceCoef>> GetByDaysCount(int daysCount)
+        public async Task<IEnumerable<PriceCoef>> GetByDaysCount(int monthCount)
         {
-            return await _DbContext.PriceCoefs.Where(p => p.DaysCount == daysCount).ToListAsync();
+            return await _DbContext.PriceCoefs.Where(p => p.MonthCount == monthCount).ToListAsync();
         }
 
         public async Task<IEnumerable<PriceCoef>> GetByLotId(Guid lotId)

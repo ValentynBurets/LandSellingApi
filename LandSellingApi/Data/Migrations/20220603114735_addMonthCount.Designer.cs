@@ -4,14 +4,16 @@ using Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(LandSellingContext))]
-    partial class LandSellingContextModelSnapshot : ModelSnapshot
+    [Migration("20220603114735_addMonthCount")]
+    partial class addMonthCount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +84,8 @@ namespace Data.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("LotId");
+                    b.HasIndex("LotId")
+                        .IsUnique();
 
                     b.ToTable("Agreements");
                 });
@@ -379,8 +382,8 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entity.Lot", "Lot")
-                        .WithMany("Agreements")
-                        .HasForeignKey("LotId")
+                        .WithOne("Agreement")
+                        .HasForeignKey("Domain.Entity.Agreement", "LotId")
                         .IsRequired();
 
                     b.Navigation("Customer");
@@ -522,7 +525,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Domain.Entity.Lot", b =>
                 {
-                    b.Navigation("Agreements");
+                    b.Navigation("Agreement");
 
                     b.Navigation("Bids");
 

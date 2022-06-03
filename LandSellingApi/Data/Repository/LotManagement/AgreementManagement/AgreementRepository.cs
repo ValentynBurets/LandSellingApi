@@ -26,9 +26,9 @@ namespace Data.Repository.LotManagement.AgreementManagement
             return await _DbContext.Agreements.Where(i => i.StartDate == date).ToListAsync();
         }
 
-        public async Task<Agreement> GetByLotId(Guid lotId)
+        public async Task<IEnumerable<Agreement>> GetByLotId(Guid lotId)
         {
-            return await _DbContext.Agreements.Where(i => i.LotId == lotId).FirstAsync();
+            return await _DbContext.Agreements.Where(i => i.LotId == lotId).ToListAsync();
         }
 
         public async Task<IEnumerable<Agreement>> GetByManagerId(Guid managerId)

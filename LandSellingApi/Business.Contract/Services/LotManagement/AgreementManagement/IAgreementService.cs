@@ -11,7 +11,7 @@ namespace Business.Contract.Services.LotManagement.AgreementManagement
         public Task<Guid> Create(CreateAgreementDTO createAgreemen, Guid customerIdLink);
         public Task Delete(Guid id);
         public Task Update(AgreementDTO updateAgreemen, Guid AgreemenId);
-        public Task<AgreementDTO> GetByLotId(Guid lotId);
+        public Task<IEnumerable<AgreementDTO>> GetByLotId(Guid lotId);
         public Task<IEnumerable<AgreementDTO>> GetByOwnerId(Guid ownerIdLink);
         public Task<IEnumerable<AgreementDTO>> GetMy(Guid ownerId);
         public Task<IEnumerable<AgreementDTO>> GetByCustomerId(Guid customerId);

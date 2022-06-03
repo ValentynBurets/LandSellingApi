@@ -151,8 +151,8 @@ namespace Data.EF
                 .IsUnique();
 
                 entity.HasOne(p => p.Lot)
-                .WithOne(b => b.Agreement)
-                .HasForeignKey<Agreement>(k => k.LotId)
+                .WithMany(b => b.Agreements)
+                .HasForeignKey(k => k.LotId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(p => p.Customer)
