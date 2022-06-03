@@ -1,4 +1,4 @@
-﻿using Business.Contract.Model.LotManagement;
+﻿using Business.Contract.Model.LotManagement.Bid;
 using Business.Contract.Services.LotManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,7 @@ namespace WebAPI.Controllers.LotManagement
         [HttpPost]
         [Route("[action]")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<ActionResult> Create(BidDTO createBid)
+        public async Task<ActionResult> Create(CreateBidDTO createBid)
         {
             try
             {

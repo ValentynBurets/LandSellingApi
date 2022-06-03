@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Contract.Model.LotManagement;
+using Business.Contract.Model.LotManagement.Bid;
 using Business.Contract.Services.LotManagement;
 using Data.Contract.UnitOfWork;
 using Domain.Entity;
@@ -20,7 +21,7 @@ namespace Business.Services.LotManagement
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(BidDTO createBid, Guid userIdLink)
+        public async Task Create(CreateBidDTO createBid, Guid userIdLink)
         {
             Bid newBid = _mapper.Map<Bid>(createBid);
             newBid.BidderId = (await _unitOfWork.UserRepository.GetByIdLink(userIdLink)).Id;
