@@ -7,7 +7,6 @@ namespace Domain.Entity.LotManagement.AgreementManagement
     {
         public Guid AgreementId { get; set; }
         public Guid ManagerId { get; set; }
-        public bool Approved { get; set; }
         virtual public Agreement Agreement { get; set; }
         virtual public Admin Manager { get; set; }
     }

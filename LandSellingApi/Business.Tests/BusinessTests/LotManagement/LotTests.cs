@@ -19,8 +19,8 @@ namespace Business.Tests.BusinessTests.LotManagement
     {
         static LocationDTO locationDTO = new LocationDTO()
         {
-            Latitude = "20",
-            Longitude = "30",
+            Latitude = 20,
+            Longitude = 30,
             Country = " Ukraine",
             Region = "LvivRegion",
             City = "Lviv",
@@ -93,7 +93,7 @@ namespace Business.Tests.BusinessTests.LotManagement
         LotService lotService;
 
         [SetUp]
-        public void SetUp(string longitude, string latitude)
+        public void SetUp(double longitude, double latitude)
         {
             ILocationRepository stubLocationRepository = 
                 Mock.Of<ILocationRepository>(lR => lR.Add(It.IsAny<Location>()) == Task.CompletedTask &&

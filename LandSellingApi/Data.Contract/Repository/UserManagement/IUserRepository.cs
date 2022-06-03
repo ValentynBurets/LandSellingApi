@@ -8,6 +8,7 @@ namespace Data.Contract.Repository.Authentication
     public interface IUserRepository : IEntityRepository<User>
     {
         public Task<User> GetByIdLink(Guid idLink);
-        Task<string> GetUserCustomerIdAsync(Guid userId);
+        public Task<Guid> GeIdLinkById(Guid id);
+        Task<string> GetByUserIdAsync(Guid userId);
     }
 }

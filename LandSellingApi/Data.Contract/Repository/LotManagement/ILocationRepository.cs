@@ -7,6 +7,6 @@ namespace Data.Contract.Repository.LotManagement
 {
     public interface ILocationRepository : IEntityRepository<Location>
     {
-        Task<Guid> GetByLongitudeAndLatitude(string longitude, string latitude);
+        Task<Guid> GetByLongitudeAndLatitude(double longitude, double latitude);
     }
 }

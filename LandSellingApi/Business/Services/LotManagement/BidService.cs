@@ -6,7 +6,6 @@ using Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Services.LotManagement
@@ -38,10 +37,13 @@ namespace Business.Services.LotManagement
 
         public async Task<BidDTO> GetBidWinerByLotId(Guid lotId)
         {
-            IEnumerable<Bid> bidsWinners = await _unitOfWork.BidRepository.GetBidsWinners();
-            Bid BidWinerByLotId = bidsWinners.Where(b => b.LotId == lotId).First();
+            IEnumerable<Bid> bidsByLotId = await _unitOfWork.BidRepository.GetByLotId(lotId);
 
-            return _mapper.Map<BidDTO>(BidWinerByLotId);
+            Bid bidWinner = bidsByLotId.OrderByDescending(x => x.Value).ToList()[0];
+            bidWinner.IsWinner = true;
+            await _unitOfWork.BidRepository.Update(bidWinner);
+
+            return _mapper.Map<BidDTO>(bidWinner);
         }
 
         public async Task<IEnumerable<BidDTO>> GetAllByLotId(Guid bidId)

@@ -25,6 +25,8 @@ namespace Domain.Entity
         public int Views { get; set; }
         public decimal BuyPrice { get; set; }
         public decimal? MinBidPrice { get; set; }
+        public decimal? MinBidStep { get; set; }
+        public int ?AuctionDuration { get; set; }
         public bool IsRent { get; set; }
         public bool IsAuction { get; set; }
         public virtual Location Location { get; set; }

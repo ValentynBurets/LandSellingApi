@@ -9,7 +9,7 @@ namespace Domain.Entity
         public Guid LotId { get; set; }
         public int DaysCount { get; set; }
         public decimal Value { get; set; }
-
+        public bool IsSelected { get; set; }
         public virtual Lot Lot { get; set; }
     }
 }

@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
 
                 if (User.IsInRole("User"))
                 {
-                    profileInfo = await _profileDataService.GetCustomerProfileInfoById(GetUserId());
+                    profileInfo = await _profileDataService.GetUserProfileInfoByIdLink(GetUserId());
                 }
                 else if (User.IsInRole("Admin"))
                 {
@@ -170,6 +170,7 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("password/update")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> UpdateMyPassword([FromBody] UpdatePasswordModel passwordModel)
         {
             if (!ModelState.IsValid)
@@ -192,5 +193,20 @@ namespace WebAPI.Controllers
         #endregion
 
         #endregion
+
+        [HttpGet]
+        [Route("info/getById")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUserProfileInfoById(Guid userId)
+        {
+            try 
+            { 
+                return Ok(await _profileDataService.GetUserProfileInfoById(userId));                
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, exception.Message);
+            }
+        }
     }
 }

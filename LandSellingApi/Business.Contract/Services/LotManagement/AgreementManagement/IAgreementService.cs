@@ -8,7 +8,7 @@ namespace Business.Contract.Services.LotManagement.AgreementManagement
 {
     public interface IAgreementService
     {
-        public Task Create(CreateAgreementDTO createAgreemen);
+        public Task<Guid> Create(CreateAgreementDTO createAgreemen, Guid customerIdLink);
         public Task Delete(Guid id);
         public Task Update(AgreementDTO updateAgreemen, Guid AgreemenId);
         public Task<AgreementDTO> GetByLotId(Guid lotId);
@@ -17,6 +17,7 @@ namespace Business.Contract.Services.LotManagement.AgreementManagement
         public Task<IEnumerable<AgreementDTO>> GetByCustomerId(Guid customerId);
         public Task<IEnumerable<AgreementDTO>> GetByManagerId(Guid managerId);
         public Task Take(Guid lotId, Guid managerId);
-        public Task Approve(Guid lotId);
+        public Task Approve(Guid agreementId);
+        public Task Disapprove(Guid agreementId);
     }
 }

@@ -53,7 +53,6 @@ namespace Data.EF
                 entity.HasIndex(i => i.Id)
                 .IsUnique();
 
-
                 entity.HasOne(p => p.Lot)
                 .WithOne(b => b.Location)
                 .IsRequired(true)

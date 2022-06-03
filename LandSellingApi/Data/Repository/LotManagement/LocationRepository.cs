@@ -17,7 +17,7 @@ namespace Data.Repository.LotManagement
         {
         }
 
-        public async Task<Guid> GetByLongitudeAndLatitude(string longitude, string latitude)
+        public async Task<Guid> GetByLongitudeAndLatitude(double longitude, double latitude)
         {
             return (await _DbContext.Locations.Where(i => i.Latitude == latitude && i.Longitude == longitude).FirstAsync()).Id;
         }

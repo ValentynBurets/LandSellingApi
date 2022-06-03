@@ -39,13 +39,10 @@ namespace Business.Services.LotManagement
                 City = createLot.Location.City,
                 Street = createLot.Location.Street
             };
-            await _unitOfWork.LocationRepository.Add(location);
-            await _unitOfWork.Save();
 
-            newLot.LocationId = await _unitOfWork.LocationRepository.GetByLongitudeAndLatitude(createLot.Location.Longitude, createLot.Location.Latitude);
+            newLot.LocationId = await _unitOfWork.LocationRepository.Add(location);
 
             await _unitOfWork.LotRepository.Add(newLot);
-            await _unitOfWork.Save();
             Guid lotId = await _unitOfWork.LotRepository.GetByLocationId(newLot.LocationId);
             return lotId;
         }
@@ -156,6 +153,17 @@ namespace Business.Services.LotManagement
                 ReturnSimpleLotDTO lotDTO = _mapper.Map<ReturnSimpleLotDTO>(lot);
                 Location location = await _unitOfWork.LocationRepository.GetById(lot.LocationId);
                 LocationDTO locationDTO = _mapper.Map<LocationDTO>(location);
+                if (locationDTO.Country == null)
+                    locationDTO.Country = "";
+                if (locationDTO.City == null)
+                    locationDTO.City = "";
+                if (locationDTO.House == null)
+                    locationDTO.House = "";
+                if (locationDTO.Street == null)
+                    locationDTO.Street = "";
+                if (locationDTO.Region == null)
+                    locationDTO.Region = "";
+
                 lotDTO.Location = locationDTO;
                 lotDTOs.Add(lotDTO);
             }

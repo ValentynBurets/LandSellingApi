@@ -4,14 +4,16 @@ using Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(LandSellingContext))]
-    partial class LandSellingContextModelSnapshot : ModelSnapshot
+    [Migration("20220530075349_addMinBidStep")]
+    partial class addMinBidStep
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +52,6 @@ namespace Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Approved")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -158,11 +157,11 @@ namespace Data.Migrations
                     b.Property<string>("House")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
+                    b.Property<string>("Latitude")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
+                    b.Property<string>("Longitude")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Region")
                         .HasColumnType("nvarchar(max)");
@@ -183,9 +182,6 @@ namespace Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("AuctionDuration")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("BuyPrice")
                         .HasColumnType("decimal(18,2)");
@@ -245,6 +241,9 @@ namespace Data.Migrations
 
                     b.Property<Guid>("AgreementId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("ManagerId")
                         .HasColumnType("uniqueidentifier");
@@ -325,9 +324,6 @@ namespace Data.Migrations
 
                     b.Property<int>("DaysCount")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsSelected")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("LotId")
                         .HasColumnType("uniqueidentifier");

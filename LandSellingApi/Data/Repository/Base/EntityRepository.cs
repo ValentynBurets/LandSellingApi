@@ -20,9 +20,11 @@ namespace Data.Repository.Base
 
         protected internal LandSellingContext _DbContext { get; set; }
 
-        public async Task Add(TEntity entity)
+        public async Task<Guid> Add(TEntity entity)
         {
-            await _DbContext.Set<TEntity>().AddAsync(entity);
+            var newEntity = await _DbContext.Set<TEntity>().AddAsync(entity);
+            await _DbContext.SaveChangesAsync();
+            return newEntity.Entity.Id;
         }
 
         public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> expression)

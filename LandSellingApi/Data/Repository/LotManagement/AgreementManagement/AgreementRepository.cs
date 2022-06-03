@@ -51,7 +51,10 @@ namespace Data.Repository.LotManagement.AgreementManagement
 
             foreach (var lot in lots)
             {
-                Agreements.Add(await _DbContext.Agreements.Where(i => i.LotId == lot.Id).FirstAsync());
+                if(_DbContext.Agreements.Any(a => a.LotId == lot.Id))
+                {
+                    Agreements.Add(await _DbContext.Agreements.Where(i => i.LotId == lot.Id).FirstAsync());
+                }
             }
 
             return Agreements;

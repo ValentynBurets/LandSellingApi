@@ -35,6 +35,17 @@ namespace Business.Services.Authentication
             return "";
         }
 
+        public async Task<string> GetPhoneNumberByUserId(Guid id)
+        {
+            var user = await FindByIdAsync(id.ToString());
+            if (user != null)
+            {
+                return user.PhoneNumber;
+            }
+
+            return "";
+        }
+
         public async Task UpdateEmailByUserId(UpdateEmailModel model, Guid id)
         {
             var user = await FindByIdAsync(id.ToString());

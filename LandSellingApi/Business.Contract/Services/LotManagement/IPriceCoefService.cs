@@ -11,5 +11,6 @@ namespace Business.Contract.Services.LotManagement
         public Task Delete(Guid id);
         public Task Update(PriceCoefDTO updatePriceCoef, Guid priceCoefId);
         public Task<IEnumerable<PriceCoefDTO>> GetAllByLotId(Guid lotId);
+        public Task Select (Guid priceCoefId);
     }
 }

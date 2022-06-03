@@ -37,7 +37,7 @@ namespace AuthorizationTests.UserManagement
             ProfileDataService ProfileDataService = new ProfileDataService(authentificationUnitOfWorkStub.Object, mapper, _profileManager);
             // Act
 
-            var expect = await ProfileDataService.GetCustomerProfileInfoById(testedUser.Id);
+            var expect = await ProfileDataService.GetUserProfileInfoById(testedUser.Id);
 
             // Assert
             Assert.NotNull(expect);

@@ -46,5 +46,12 @@ namespace Business.Services.LotManagement
             await _unitOfWork.PriceCoefRepository.Update(newPriceCoef);
             await _unitOfWork.Save();
         }
+
+        public async Task Select(Guid priceCoefId)
+        {
+            PriceCoef priceCoef = await _unitOfWork.PriceCoefRepository.GetById(priceCoefId);
+            priceCoef.IsSelected = true;
+            await _unitOfWork.PriceCoefRepository.Update(priceCoef);
+        }
     }
 }

@@ -20,7 +20,6 @@ namespace Business.Tests.BusinessTests.LotManagement.AgreementManagement
         static CreateAgreementDTO createAgreementDTO = new CreateAgreementDTO()
         {
             LotId = new Guid("e15a1540-9225-429a-aa1c-028f0023451b"),
-            CustomerId = new Guid(""),
             Description = "Agreement description",
             StartDate = DateTime.Now,
             EndDate = DateTime.Now
@@ -75,7 +74,7 @@ namespace Business.Tests.BusinessTests.LotManagement.AgreementManagement
         public void CreateNewAgreement()
         {
             // Act
-            var result = agreementService.Create(createAgreementDTO);
+            var result = agreementService.Create(createAgreementDTO, new Guid("234"));
 
             // Assert
             Assert.That(result.Exception, Is.Null);

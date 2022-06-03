@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Contract.Model.LotManagement;
+using Business.Contract.Model.LotManagement.Image;
 using Business.Contract.Services.LotManagement;
 using Data.Contract.UnitOfWork;
 using Domain.Entity;
@@ -50,21 +51,20 @@ namespace Business.Services.LotManagement
             await _unitOfWork.Save();
         }
 
-        public async Task<IEnumerable<ImageDTO>> GetAllByLotId(Guid lotId)
+        public async Task<IEnumerable<ReturnImageDTO>> GetAllByLotId(Guid lotId)
         {
             IEnumerable<Image> images = await _unitOfWork.ImageRepository.GetByLotId(lotId);
 
-            List<ImageDTO> imageDTOs = new List<ImageDTO>();
+            List<ReturnImageDTO> imagesData = new List<ReturnImageDTO>();
 
             foreach (Image image in images)
             {
-                ImageDTO imageDTO = new ImageDTO();
-                imageDTO.ImageData = Convert.ToBase64String(image.ImageData);
-                imageDTO.LotId = image.LotId;
-                imageDTOs.Add(imageDTO);
+                ReturnImageDTO returnImageDTO = _mapper.Map<ReturnImageDTO>(image);
+                returnImageDTO.Picture = Convert.ToBase64String(image.ImageData);
+                imagesData.Add(returnImageDTO);
             }
 
-            return imageDTOs;
+            return imagesData;
         }
     }
 }

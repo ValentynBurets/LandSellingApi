@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Repository
@@ -29,7 +28,7 @@ namespace Data.Repository
 
         public async Task<IEnumerable<Bid>> GetByLotId(Guid lotId)
         {
-            return await _DbContext.Bids.Where(b => b.LotId == lotId).ToListAsync();
+            return await _DbContext.Bids.Where(b => b.LotId == lotId).OrderBy(b => b.Value).ToListAsync();
         }
 
         public async Task<IEnumerable<Bid>> GetByValue(decimal value)

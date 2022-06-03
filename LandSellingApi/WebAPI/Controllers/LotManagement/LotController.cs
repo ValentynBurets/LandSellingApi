@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("[action]")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [AllowAnonymous]
         public async Task<ActionResult> Viewed(Guid lotId)
         {
             try
@@ -161,7 +161,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("[action]")]
         [AllowAnonymous]
         public async Task<ActionResult> Get(GetLotOptionsDTO getLotOptionsDTO)

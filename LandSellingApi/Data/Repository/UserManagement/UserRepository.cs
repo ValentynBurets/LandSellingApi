@@ -14,12 +14,18 @@ namespace Data.Repository.Authentication
         public UserRepository(LandSellingContext dbContext) : base(dbContext)
         {
         }
+
+        public async Task<Guid> GeIdLinkById(Guid id)
+        {
+            return (await _DbContext.Users.Where(u => u.Id == id).FirstAsync()).Id;
+        }
+
         public async Task<User> GetByIdLink(Guid idLink)
         {
             return await _DbContext.Users.FirstAsync(e => e.IdLink == idLink);
         }
 
-        public async Task<string> GetUserCustomerIdAsync(Guid userId)
+        public async Task<string> GetByUserIdAsync(Guid userId)
         {
             return (await _DbContext.Users.Where(i => i.Id == userId).FirstAsync()).CustomerId;
         }

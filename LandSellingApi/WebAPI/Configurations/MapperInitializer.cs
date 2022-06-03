@@ -3,6 +3,7 @@ using Business.Contract.Model;
 using Business.Contract.Model.LotManagement;
 using Business.Contract.Model.LotManagement.AgreementManagement;
 using Business.Contract.Model.LotManagement.AgreementManagement.Agreement;
+using Business.Contract.Model.LotManagement.Image;
 using Business.Contract.Model.LotManagement.Lot;
 using Data.Identity;
 using Domain.Entity;
@@ -37,6 +38,7 @@ namespace WebAPI.Configurations
             CreateMap<Payment, PaymentDTO>().ReverseMap();
             CreateMap<Bid, BidDTO>().ReverseMap();
             CreateMap<Location, LocationDTO>().ReverseMap();
+
             CreateMap<PriceCoef, PriceCoefDTO>().ReverseMap();
 
             CreateMap<User, UserInfoViewModel>();
@@ -54,6 +56,8 @@ namespace WebAPI.Configurations
                 .ForMember("LotType", opt => opt.MapFrom(opt => Enum.Parse(typeof(LotType), opt.LotType)))
                 .ForMember("SortType", opt => opt.MapFrom(opt => Enum.Parse(typeof(SortType), opt.SortType)))
                 .ForMember("State", opt => opt.MapFrom(opt => Enum.Parse(typeof(State), opt.State)));
+
+            CreateMap<Image, ReturnImageDTO>();
 
         }
     }

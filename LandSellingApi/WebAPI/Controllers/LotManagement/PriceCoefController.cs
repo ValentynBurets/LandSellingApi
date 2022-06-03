@@ -49,6 +49,24 @@ namespace WebAPI.Controllers.LotManagement
             }
         }
 
+        [HttpPut]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> Select(Guid priceCoefId)
+        {
+            try
+            {
+                await _priceCoefService.Select(priceCoefId);
+                return Ok(priceCoefId + " priceCoef selected");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
         [HttpDelete]
         [Route("[action]")]
         [Authorize(AuthenticationSchemes = "Bearer")]

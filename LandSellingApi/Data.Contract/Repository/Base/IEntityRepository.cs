@@ -13,7 +13,7 @@ namespace Data.Identity.Repository.Base
         Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> expression);
         Task<TEntity> FirstOrDefault(Expression<Func<TEntity, bool>> expression);
         Task<TEntity> GetById(Guid id);
-        Task Add(TEntity entity);
+        Task<Guid> Add(TEntity entity);
         Task Update(TEntity entity);
         Task Remove(TEntity entity);
     }

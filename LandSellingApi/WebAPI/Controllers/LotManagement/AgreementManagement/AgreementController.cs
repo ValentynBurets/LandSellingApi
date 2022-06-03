@@ -26,8 +26,8 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
         {
             try
             {
-                await _agreementService.Create(newAgreement);
-                return Ok("new agreement craeted");
+                var id = await _agreementService.Create(newAgreement, GetUserId());
+                return Ok($"new agreement with id {id} craeted");
             }
             catch (Exception ex)
             {
@@ -76,6 +76,22 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
             try
             {
                 await _agreementService.Approve(agreementId);
+                return Ok(agreementId + " agreement updated");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> Disapprove(Guid agreementId)
+        {
+            try
+            {
+                await _agreementService.Disapprove(agreementId);
                 return Ok(agreementId + " agreement updated");
             }
             catch (Exception ex)

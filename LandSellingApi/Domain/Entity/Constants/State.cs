@@ -8,7 +8,7 @@ namespace Domain.Entity.Constants
 {
     public enum State
     {
-        All = 0,
+        Default = 0,
         Open = 1,
         Close = 2
     }

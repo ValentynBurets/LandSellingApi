@@ -18,6 +18,7 @@ namespace Domain.Entity
         public Guid CustomerId { get; set; }
         public string Description { get; set; }
         public State Status { get; set; }
+        public bool Approved { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

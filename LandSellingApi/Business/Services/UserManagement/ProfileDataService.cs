@@ -23,10 +23,10 @@ namespace Business.Services.Authentication
             _profileManager = profileManager;
         }
 
-        public async Task<UserInfoViewModel> GetCustomerProfileInfoById(Guid id)
+        public async Task<UserInfoViewModel> GetUserProfileInfoByIdLink(Guid idLink)
         {
-            var customer = await _unitOfWork.UserRepository.FirstOrDefault(x => x.IdLink == id);
-            var email = await _profileManager.GetEmailByUserId(id);
+            var customer = await _unitOfWork.UserRepository.FirstOrDefault(x => x.IdLink == idLink);
+            var email = await _profileManager.GetEmailByUserId(idLink);
             if (customer == null)
             {
                 throw new Exception("User with this id was not found!");
@@ -34,6 +34,24 @@ namespace Business.Services.Authentication
 
             var profileInfo = _mapper.Map<Person, UserInfoViewModel>(customer);
             profileInfo.Email = email;
+
+            return profileInfo;
+        }
+
+        public async Task<UserInfoViewModel> GetUserProfileInfoById(Guid id)
+        {
+            var idLink = await _unitOfWork.UserRepository.GeIdLinkById(id);
+            var customer = await _unitOfWork.UserRepository.FirstOrDefault(x => x.Id == idLink);
+            var email = await _profileManager.GetEmailByUserId(idLink);
+            var phoneNumber = await _profileManager.GetPhoneNumberByUserId(idLink);
+            if (customer == null)
+            {
+                throw new Exception("User with this id was not found!");
+            }
+
+            var profileInfo = _mapper.Map<Person, UserInfoViewModel>(customer);
+            profileInfo.Email = email;
+            profileInfo.PhoneNumber = phoneNumber;
 
             return profileInfo;
         }

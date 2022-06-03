@@ -4,6 +4,7 @@ using Business.Contract.Model.LotManagement.AgreementManagement.Agreement;
 using Business.Contract.Services.LotManagement.AgreementManagement;
 using Data.Contract.UnitOfWork;
 using Domain.Entity;
+using Domain.Entity.Constants;
 using Domain.Entity.LotManagement.AgreementManagement;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,13 @@ namespace Business.Services.LotManagement.AgreementManagement
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public async Task Create(CreateAgreementDTO createAgreement)
+        public async Task<Guid> Create(CreateAgreementDTO createAgreement, Guid customerIdLink)
         {
             Agreement newAgreement = _mapper.Map<Agreement>(createAgreement);
+            newAgreement.Status = Domain.Entity.Constants.State.Default;
+            newAgreement.CustomerId = (await _unitOfWork.UserRepository.GetByIdLink(customerIdLink)).Id;
             newAgreement.CreationDate = DateTime.Now;
-            await _unitOfWork.AgreementRepository.Add(newAgreement);
-            await _unitOfWork.Save();
+            return await _unitOfWork.AgreementRepository.Add(newAgreement);
         }
 
         public async Task Delete(Guid id)
@@ -84,9 +86,19 @@ namespace Business.Services.LotManagement.AgreementManagement
 
         public async Task Approve(Guid agreementId)
         {
-            AgreementManager agreementManager = await _unitOfWork.AgreementManagerRepository.GetByAgreementId(agreementId);
-            agreementManager.Approved = true;
-            await _unitOfWork.AgreementManagerRepository.Update(agreementManager);
+            Agreement agreement = await _unitOfWork.AgreementRepository.GetById(agreementId);
+            agreement.Approved = true;
+            agreement.Status = State.Open;
+            await _unitOfWork.AgreementRepository.Update(agreement);
+            await _unitOfWork.Save();
+        }
+
+        public async Task Disapprove(Guid agreementId)
+        {
+            Agreement agreement = await _unitOfWork.AgreementRepository.GetById(agreementId);
+            agreement.Approved = false;
+            agreement.Status = State.Close;
+            await _unitOfWork.AgreementRepository.Update(agreement);
             await _unitOfWork.Save();
         }
     }

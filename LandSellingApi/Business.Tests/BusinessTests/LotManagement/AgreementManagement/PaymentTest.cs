@@ -27,7 +27,7 @@ namespace Business.Tests.BusinessTests.LotManagement.AgreementManagement
         {
             // Arrange
             IUserRepository paymentRepository =
-            Mock.Of<IUserRepository>(iR => iR.GetUserCustomerIdAsync(It.IsAny<Guid>()) == Task.FromResult<string>(CustomerId));
+            Mock.Of<IUserRepository>(iR => iR.GetByUserIdAsync(It.IsAny<Guid>()) == Task.FromResult<string>(CustomerId));
 
             ILotUnitOfWork unitOfWork =
                 Mock.Of<ILotUnitOfWork>(of => of.ImageRepository == null &&
