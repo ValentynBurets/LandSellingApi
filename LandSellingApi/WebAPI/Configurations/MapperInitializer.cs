@@ -10,6 +10,7 @@ using Data.Identity;
 using Domain.Entity;
 using Domain.Entity.Constants;
 using System;
+using Business.Contract.Model.LotManagement.AgreementManagement.Payment;
 
 namespace WebAPI.Configurations
 {
@@ -37,8 +38,12 @@ namespace WebAPI.Configurations
                 .ForMember("Status", opt => opt.MapFrom(lot => (State)Enum.Parse(typeof(State), lot.Status)));
 
             CreateMap<Payment, PaymentDTO>().ReverseMap();
+            CreateMap<CreatePaymentDTO, Payment>();
+
             CreateMap<Bid, BidDTO>().ReverseMap();
+            
             CreateMap<CreateBidDTO, Bid>().ReverseMap();
+            
             CreateMap<Location, LocationDTO>().ReverseMap();
 
             CreateMap<PriceCoef, PriceCoefDTO>().ReverseMap();

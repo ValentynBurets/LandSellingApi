@@ -73,5 +73,10 @@ namespace Data.Repository.LotManagement
                 return await _DbContext.Lots.ToListAsync();
             }
         }
+
+        public int GetQuantity()
+        {
+            return _DbContext.Lots.Count();
+        }
     }
 }

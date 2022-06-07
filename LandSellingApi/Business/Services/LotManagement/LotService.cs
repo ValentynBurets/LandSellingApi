@@ -26,7 +26,7 @@ namespace Business.Services.LotManagement
         public async Task<Guid> Create(CreateLotDTO createLot, Guid ownerIdLink)
         {
             Lot newLot = _mapper.Map<Lot>(createLot);
-            newLot.Status = Domain.Entity.Constants.State.Open;
+            newLot.Status = State.Open;
             newLot.OwnerId = (await _unitOfWork.UserRepository.GetByIdLink(ownerIdLink)).Id;
             newLot.PublicationDate = DateTime.Now;
                 
@@ -185,6 +185,28 @@ namespace Business.Services.LotManagement
 
             await _unitOfWork.LotManagerRepository.Add(lotManager);
             await _unitOfWork.Save();
+        }
+
+        public int GetQuantity()
+        {
+            return _unitOfWork.LotRepository.GetQuantity();
+        }
+
+        public async Task<int> GetAverageViewsPerLot()
+        {
+            var lots = await _unitOfWork.LotRepository.GetAll();
+            int quantity = 0;
+            int sum = 0;
+
+            foreach(var lot in lots)
+            {
+                quantity++;
+                sum += lot.Views;
+            }
+
+            int avarage = sum / quantity;
+
+            return avarage;
         }
     }
 }

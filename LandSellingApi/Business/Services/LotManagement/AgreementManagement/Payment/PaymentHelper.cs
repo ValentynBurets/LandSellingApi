@@ -42,9 +42,9 @@ namespace Business.Services.LotManagement.AgreementManagement
             var request = new TransactionRequest
             {
                 Amount = Convert.ToDecimal(data.RentPrice),
-                CurrencyIsoCode = "UAH",
+                CurrencyIsoCode = "USD",
                 PaymentMethodNonce = data.Nonce,
-                DeviceData = data.DeviceData,
+                //DeviceData = data.DeviceData,
                 Options = new TransactionOptionsRequest
                 {
                     SubmitForSettlement = true

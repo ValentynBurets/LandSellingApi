@@ -13,5 +13,6 @@ namespace Data.Contract.Repository.LotManagement
         Task<IEnumerable<Agreement>> GetByCustomerId(Guid customerId);
         Task<IEnumerable<Agreement>> GetByLotId(Guid lotId);
         Task<IEnumerable<Agreement>> GetByDate(DateTime date);
+        int GetQuantity();
     }
 }

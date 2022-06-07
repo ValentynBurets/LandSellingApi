@@ -167,6 +167,22 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
         [HttpGet]
         [Route("[action]")]
         [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> GetMyAsCustomer()
+        {
+            try
+            {
+                var result = await _agreementService.GetMyAsCustomer(GetUserId());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> GetByCustomerId(Guid customerId)
         {
             try
@@ -189,6 +205,21 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
             {
                 var result = await _agreementService.GetByManagerId(managerId);
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        public ActionResult GetQuantity()
+        {
+            try
+            {
+                return Ok(_agreementService.GetQuantity());
             }
             catch (Exception ex)
             {

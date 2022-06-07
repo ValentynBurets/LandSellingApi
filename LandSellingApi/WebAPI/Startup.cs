@@ -49,10 +49,8 @@ namespace WebAPI
             services.AddScoped<IAuthManager, AuthManager>();
             services.AddTransient<IProfileRegistrationService, ProfileRegistrationService>();
 
-
             services.AddAutoMapper(typeof(MapperInitializer));
 
-        
             services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Land Selling WebAPI v1", Version = "v1" });

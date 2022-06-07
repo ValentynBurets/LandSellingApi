@@ -108,5 +108,20 @@ namespace WebAPI.Controllers.LotManagement
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        public ActionResult GetQuantity()
+        {
+            try
+            {
+                return Ok(_bidService.GetQuantity());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

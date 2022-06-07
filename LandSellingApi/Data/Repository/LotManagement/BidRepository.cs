@@ -35,5 +35,10 @@ namespace Data.Repository
         {
             return await _DbContext.Bids.Where(b => b.Value == value).ToListAsync();
         }
+
+        public int GetQuantity()
+        {
+            return _DbContext.Lots.Count();
+        }
     }
 }

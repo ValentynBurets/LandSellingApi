@@ -66,5 +66,9 @@ namespace Business.Services.LotManagement
 
             return _mapper.Map<IEnumerable<BidDTO>>(BidWinerByBidderId);
         }
+        public int GetQuantity()
+        {
+            return _unitOfWork.LotRepository.GetQuantity();
+        }
     }
 }

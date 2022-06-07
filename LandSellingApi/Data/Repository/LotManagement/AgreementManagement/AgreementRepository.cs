@@ -59,5 +59,10 @@ namespace Data.Repository.LotManagement.AgreementManagement
 
             return Agreements;
         }
+
+        public int GetQuantity()
+        {
+            return _DbContext.Lots.Count();
+        }
     }
 }

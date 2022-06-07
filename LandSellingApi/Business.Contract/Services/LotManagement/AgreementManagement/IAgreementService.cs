@@ -8,16 +8,18 @@ namespace Business.Contract.Services.LotManagement.AgreementManagement
 {
     public interface IAgreementService
     {
-        public Task<Guid> Create(CreateAgreementDTO createAgreemen, Guid customerIdLink);
-        public Task Delete(Guid id);
-        public Task Update(AgreementDTO updateAgreemen, Guid AgreemenId);
-        public Task<IEnumerable<AgreementDTO>> GetByLotId(Guid lotId);
-        public Task<IEnumerable<AgreementDTO>> GetByOwnerId(Guid ownerIdLink);
-        public Task<IEnumerable<AgreementDTO>> GetMy(Guid ownerId);
-        public Task<IEnumerable<AgreementDTO>> GetByCustomerId(Guid customerId);
-        public Task<IEnumerable<AgreementDTO>> GetByManagerId(Guid managerId);
-        public Task Take(Guid lotId, Guid managerId);
-        public Task Approve(Guid agreementId);
-        public Task Disapprove(Guid agreementId);
+        Task<Guid> Create(CreateAgreementDTO createAgreemen, Guid customerIdLink);
+        Task Delete(Guid id);
+        Task Update(AgreementDTO updateAgreemen, Guid AgreemenId);
+        Task<IEnumerable<AgreementDTO>> GetByLotId(Guid lotId);
+        Task<IEnumerable<AgreementDTO>> GetByOwnerId(Guid ownerIdLink);
+        Task<IEnumerable<AgreementDTO>> GetMy(Guid ownerId);
+        Task<IEnumerable<AgreementDTO>> GetMyAsCustomer(Guid CustomerId);
+        Task<IEnumerable<AgreementDTO>> GetByCustomerId(Guid customerId);
+        Task<IEnumerable<AgreementDTO>> GetByManagerId(Guid managerId);
+        Task Take(Guid lotId, Guid managerId);
+        Task Approve(Guid agreementId);
+        Task Disapprove(Guid agreementId);
+        int GetQuantity();
     }
 }

@@ -8,12 +8,13 @@ namespace Business.Contract.Services.LotManagement
 {
     public interface IBidService
     {
-        public Task Create(CreateBidDTO createBid, Guid userId);
-        public Task<BidDTO> GetById(Guid bidId);
-        public Task<BidDTO> GetBidWinerByLotId(Guid bidId);
-        public Task<IEnumerable<BidDTO>> GetAllByLotId(Guid bidId);
-        public Task<IEnumerable<BidDTO>> GetAllByBidderId(Guid userId);
-        public Task<IEnumerable<BidDTO>> GetAllBidWinnersByBidderId(Guid userId);
+        Task Create(CreateBidDTO createBid, Guid userId);
+        Task<BidDTO> GetById(Guid bidId);
+        Task<BidDTO> GetBidWinerByLotId(Guid bidId);
+        Task<IEnumerable<BidDTO>> GetAllByLotId(Guid bidId);
+        Task<IEnumerable<BidDTO>> GetAllByBidderId(Guid userId);
+        Task<IEnumerable<BidDTO>> GetAllBidWinnersByBidderId(Guid userId);
+        int GetQuantity();
 
     }
 }

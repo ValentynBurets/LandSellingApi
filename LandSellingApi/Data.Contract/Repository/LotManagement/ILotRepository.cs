@@ -19,6 +19,6 @@ namespace Data.Contract.Repository.LotManagement
         Task<IEnumerable<Lot>> GetByCostRaising();
         Task<IEnumerable<Lot>> GetByСostDescending();
         Task<int> GetViewsByLotId(Guid lotId);
-        
+        int GetQuantity();
     }
 }

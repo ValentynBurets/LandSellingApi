@@ -8,6 +8,7 @@ using Domain.Entity.Constants;
 using Domain.Entity.LotManagement.AgreementManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Services.LotManagement.AgreementManagement
@@ -62,6 +63,55 @@ namespace Business.Services.LotManagement.AgreementManagement
             return _mapper.Map<IEnumerable<AgreementDTO>>(agreement);
         }
 
+        public async Task<IEnumerable<AgreementDTO>> GetMyAsCustomer(Guid customerIdLink)
+        {
+            var ownerId = (await _unitOfWork.UserRepository.GetByIdLink(customerIdLink)).Id;
+            IEnumerable<Agreement> agreements = await _unitOfWork.AgreementRepository.GetByCustomerId(ownerId);
+
+            List<AgreementDTO> result = new List<AgreementDTO>();
+            foreach (var agreement in agreements)
+            {
+                AgreementDTO agreementDTO = _mapper.Map<AgreementDTO>(agreement);
+                Lot lot = await _unitOfWork.LotRepository.GetById(agreement.LotId);
+                if (lot.IsRent)
+                {
+                    IEnumerable<PriceCoef> priceCoefs = await _unitOfWork.PriceCoefRepository.GetByLotId(lot.Id);
+
+                    if(priceCoefs != null)
+                    {
+                        foreach (var priceCoef in priceCoefs)
+                        {
+                            if(priceCoef.IsSelected == true)
+                            {
+                                agreementDTO.Price = priceCoef.Value;
+                            }
+                        }
+                    }
+                }
+                else if (lot.IsAuction)
+                {
+                    agreementDTO.Price = lot.BuyPrice;
+
+                    IEnumerable<Bid> bids = await _unitOfWork.BidRepository.GetByLotId(lot.Id);
+
+                    if (bids != null)
+                    {
+                        foreach (var bid in bids)
+                        {
+                            if (bid.IsWinner == true)
+                            {
+                                agreementDTO.Price = bid.Value;
+                            }
+                        }
+                    }
+                }
+
+                result.Add(agreementDTO);
+            }
+
+            return result;
+        }
+
         public async Task<IEnumerable<AgreementDTO>> GetByCustomerId(Guid customerId)
         {
             IEnumerable<Agreement> agreement = await _unitOfWork.AgreementRepository.GetByCustomerId(customerId);
@@ -100,6 +150,11 @@ namespace Business.Services.LotManagement.AgreementManagement
             agreement.Status = State.Close;
             await _unitOfWork.AgreementRepository.Update(agreement);
             await _unitOfWork.Save();
+        }
+
+        public int GetQuantity()
+        {
+            return _unitOfWork.LotRepository.GetQuantity();
         }
     }
 }

@@ -12,5 +12,6 @@ namespace Data.Contract.Repository
         Task<IEnumerable<Bid>> GetByLotId(Guid lotId);
         Task<IEnumerable<Bid>> GetByValue(decimal value);
         Task<IEnumerable<Bid>> GetBidsWinners();
+        int GetQuantity();
     }
 }

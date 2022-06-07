@@ -190,5 +190,35 @@ namespace WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        public ActionResult GetQuantity()
+        {
+            try
+            {
+                return Ok(_lotService.GetQuantity());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetAverageViewsPerLot()
+        {
+            try
+            {
+                return Ok(await _lotService.GetAverageViewsPerLot());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

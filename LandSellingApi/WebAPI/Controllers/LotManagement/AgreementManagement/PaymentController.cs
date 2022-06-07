@@ -1,4 +1,5 @@
 ﻿using Business.Contract.Model.LotManagement.AgreementManagement;
+using Business.Contract.Model.LotManagement.AgreementManagement.Payment;
 using Business.Contract.Services.LotManagement.AgreementManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +22,12 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
         [HttpPost]
         [Route("[action]")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<ActionResult> Create(PaymentDTO newPayment)
+        public async Task<ActionResult> Create(CreatePaymentDTO newPayment)
         {
             try
             {
                 await _paymentService.Create(newPayment, GetUserId());
-                return Ok("new lot craeted");
+                return Ok("new payment created");
             }
             catch (Exception ex)
             {
@@ -43,6 +44,21 @@ namespace WebAPI.Controllers.LotManagement.AgreementManagement
             try
             {
                 return Ok(await _paymentService.GetById(paymentId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<ActionResult> GetByAgreementId(Guid agreementId)
+        {
+            try
+            {
+                return Ok(await _paymentService.GetByAgreementId(agreementId));
             }
             catch (Exception ex)
             {
