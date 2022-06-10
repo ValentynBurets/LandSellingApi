@@ -42,7 +42,20 @@ namespace WebAPI
             services.ConfigurePayment(Configuration);
 
             services.ConfigureJWT(Configuration);
-            
+
+
+            //Define and use the default CORS policy to allow everyone and anything
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowAnyOrigin()
+                          .Build();
+                });
+            });
+
             services.AddControllers();
             services.AddRepository();
 
@@ -121,6 +134,10 @@ namespace WebAPI
                .SetIsOriginAllowed(origin => true) // allow any origin
                .AllowCredentials()); // allow credentials
 
+            app.UseRouting();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             //This middleware is used to authorizes a user to access secure resources.  
             app.UseAuthorization();
 
@@ -128,6 +145,8 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

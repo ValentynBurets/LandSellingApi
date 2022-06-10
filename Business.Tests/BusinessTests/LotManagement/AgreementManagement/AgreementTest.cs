@@ -55,8 +55,7 @@ namespace Business.Tests.BusinessTests.LotManagement.AgreementManagement
         {
             // Arrange
             IAgreementRepository agreementRepository =
-            Mock.Of<IAgreementRepository>(iR => iR.Add(It.IsAny<Agreement>()) == Task.CompletedTask &&
-                                                iR.GetByLotId(It.IsAny<Guid>()) == Task.FromResult(agreement));
+            Mock.Of<IAgreementRepository>(iR => iR.Add(It.IsAny<Agreement>()) == Task.CompletedTask);
 
             ILotUnitOfWork unitOfWork =
                 Mock.Of<ILotUnitOfWork>(of => of.ImageRepository == null &&
