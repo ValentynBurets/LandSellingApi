@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Business.Contract.Model.LotManagement.AgreementManagement;
-using Business.Contract.Model.LotManagement.AgreementManagement.Agreement;
 using Business.Services.LotManagement.AgreementManagement;
 using Data.Contract.Repository.LotManagement;
 using Data.Contract.UnitOfWork;

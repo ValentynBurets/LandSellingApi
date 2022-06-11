@@ -1,5 +1,4 @@
 ﻿using Business.Contract.Model.LotManagement;
-using Business.Contract.Model.LotManagement.Lot;
 using Business.Contract.Services.LotManagement;
 using Domain.Entity.Constants;
 using Microsoft.AspNetCore.Authorization;

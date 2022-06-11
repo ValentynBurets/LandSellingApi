@@ -1,6 +1,6 @@
 ﻿using Domain.Entity.Constants;
 
-namespace Business.Contract.Model.LotManagement.Lot
+namespace Business.Contract.Model.LotManagement
 {
     public class GetLotOptions
     {

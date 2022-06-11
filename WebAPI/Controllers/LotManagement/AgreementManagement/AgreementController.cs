@@ -1,5 +1,4 @@
 ﻿using Business.Contract.Model.LotManagement.AgreementManagement;
-using Business.Contract.Model.LotManagement.AgreementManagement.Agreement;
 using Business.Contract.Services.LotManagement.AgreementManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

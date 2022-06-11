@@ -1,5 +1,5 @@
 ﻿
-namespace Business.Contract.Model.LotManagement.Lot
+namespace Business.Contract.Model.LotManagement
 {
     public class GetLotOptionsDTO
     {

@@ -1,4 +1,4 @@
-﻿using Business.Contract.Model.LotManagement.Bid;
+﻿using Business.Contract.Model.LotManagement;
 using Business.Contract.Services.LotManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Business.Contract.Model.LotManagement.Bid
+namespace Business.Contract.Model.LotManagement
 {
     public class CreateBidDTO
     {

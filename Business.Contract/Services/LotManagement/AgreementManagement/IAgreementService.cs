@@ -1,5 +1,4 @@
 ﻿using Business.Contract.Model.LotManagement.AgreementManagement;
-using Business.Contract.Model.LotManagement.AgreementManagement.Agreement;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

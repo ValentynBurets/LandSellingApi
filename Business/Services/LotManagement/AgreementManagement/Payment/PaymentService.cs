@@ -29,6 +29,7 @@ namespace Business.Services.PaymentManagement.PaymentManagement
             var userId = (await _unitOfWork.UserRepository.GetByIdLink(userIdLink)).Id;
             newPayment.UserId = userId;
             newPayment.Date = DateTime.Now;
+            newPayment.Value = createPayment.Price;
 
             TransactionDataModel transactionDataModel = new TransactionDataModel()
             {

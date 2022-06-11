@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using Business.Contract.Model;
 using Business.Contract.Model.LotManagement;
-using Business.Contract.Model.LotManagement.Bid;
 using Business.Contract.Model.LotManagement.AgreementManagement;
-using Business.Contract.Model.LotManagement.AgreementManagement.Agreement;
 using Business.Contract.Model.LotManagement.Image;
-using Business.Contract.Model.LotManagement.Lot;
 using Data.Identity;
 using Domain.Entity;
 using Domain.Entity.Constants;
