@@ -8,6 +8,7 @@ namespace Business.Contract.Model.LotManagement.AgreementManagement
         public Guid Id { get; set; }
         public Guid LotId { get; set; }
         public Guid CustomerId { get; set; }
+        public bool Approved { get; set; }
         public string Status { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }

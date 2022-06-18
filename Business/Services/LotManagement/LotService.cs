@@ -49,6 +49,61 @@ namespace Business.Services.LotManagement
         public async Task Delete(Guid id)
         {
             var lot = await _unitOfWork.LotRepository.GetById(id);
+            
+            //var lotManager = await _unitOfWork.LotManagerRepository.GetByLotId(id);
+            
+            //if(lotManager != null)
+            //{
+            //    await _unitOfWork.LotManagerRepository.Remove(lotManager);
+            //}
+
+            var priceCoefs = await _unitOfWork.PriceCoefRepository.GetByLotId(id);
+
+            if(priceCoefs != null)
+            {
+                foreach (var priceCoef in priceCoefs)
+                {
+                    await _unitOfWork.PriceCoefRepository.Remove(priceCoef);
+                }
+            }
+
+            var images = await _unitOfWork.ImageRepository.GetByLotId(id);
+
+            if(images != null)
+            {
+                foreach(var image in images)
+                {
+                    await _unitOfWork.ImageRepository.Remove(image);
+                }
+            }
+
+            var location = await _unitOfWork.LocationRepository.GetById(lot.LocationId);
+
+            if(location != null)
+            {
+                await _unitOfWork.LocationRepository.Remove(location);
+            }
+
+            var bids = await _unitOfWork.BidRepository.GetByLotId(id);
+
+            if(bids != null)
+            {
+                foreach(Bid bid in bids)
+                {
+                    await _unitOfWork.BidRepository.Remove(bid);
+                }
+            }
+
+            var agreements = await _unitOfWork.AgreementRepository.GetByLotId(id);
+
+            if(agreements != null)
+            {
+                foreach(Agreement agreement in agreements)
+                {
+                    await _unitOfWork.AgreementRepository.Remove(agreement);
+                }
+            }
+
             await _unitOfWork.LotRepository.Remove(lot);
             await _unitOfWork.Save();
         }
