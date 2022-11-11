@@ -1,4 +1,7 @@
 Land Selling Website
+
+As part of this thesis, a web system for the sale and lease of land and real estate was designed and implemented. The system provides for its use by real estate companies. To do this, the system has a user-friendly interface and various opportunities for sale or lease of land and real estate.
+
 The developed web system has a server part written in C # 9.0 in the environment of MS Visual Studio 2022. To save data on the server part, the MS SQL Server database is used.
 The client part is written using the React library in the TypeScript programming language in the MS Visual Studio Code programming environment.
 Successful operation of the web system requires the appropriate hardware characteristics, which are given in the specifications and you need to download the appropriate files
